@@ -1,0 +1,77 @@
+.hero {
+  height: 1080px;
+  padding: 23px 0 80px;
+  background: center / cover no-repeat url('../../../../assets/img/background.jpg');
+  color: #424551;
+  &__container {
+    max-width: 1320px;
+    padding: 0 20px;
+    margin: 0 auto;
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 160%;
+  &_text {
+  }
+  &__wrapper {
+    display: flex;
+    align-items: center;
+  }
+
+  &__logo {
+    width: 143px;
+    height: 37px;
+    background-image: url("../../../../assets/img/logo.svg");
+    flex: 1 1 auto;
+  }
+
+  &__nav {
+    display: flex;
+    margin-left: 60px;
+    white-space: nowrap;
+  }
+
+  &__link{
+    position: relative;
+    margin-left: 40px;
+    &:first-of-type {
+      margin-left: 0;
+    }
+    &:after {
+      position: absolute;
+      content: "";
+      top: 110%;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: red;
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.5s;
+    }
+    &:hover {
+      &:after {
+        transform: scaleX(1);
+        transform-origin: left;
+      }
+    }
+  }
+
+  &__login {
+    display: flex;
+    align-items: center;
+  }
+
+  &__icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+    background-image: url("../../../../assets/img/login.svg");
+  }
+}
