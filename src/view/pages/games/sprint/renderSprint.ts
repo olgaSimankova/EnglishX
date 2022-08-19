@@ -1,3 +1,9 @@
+import createElement from '../../../../utils/createElement';
+
 export default function renderSprint(): void {
-    console.log('do later');
+    const sprintContainer = createElement({
+        type: 'div',
+        parentElement: document.body,
+        classes: ['sprint-container', 'game-background'],
+    });
 }
