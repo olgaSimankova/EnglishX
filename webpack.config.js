@@ -7,14 +7,17 @@ const isDev = process.env.NODE_ENV === 'development';
 const isProd = !isDev;
 
 const baseConfig = {
-    entry: path.resolve(__dirname, './src/index.ts'),
+    entry: { 
+        index: path.resolve(__dirname, './src/index.ts'),
+        sprint: path.resolve(__dirname, './src/view/pages/games/sprint/sprint.ts'),
+    },
     mode: 'development',
     stats: {children: true},
     module: {
         rules: [
             {
-                test: /\.css$/i,
-                use: ['style-loader', 'css-loader'],
+                test: /.s[ac]ss$/i,
+                use: ['style-loader', 'css-loader', 'sass-loader'],
             },
             { 
                 test: /\.ts$/i, use: 'ts-loader' 
@@ -35,16 +38,22 @@ const baseConfig = {
     resolve: {
         extensions: ['.ts', '.js'],
     },
-    output: {
-        filename: 'index.js',
-        path: path.resolve(__dirname, './dist'),
-     
+    output:{
+        filename: '[name].js',
+        path: __dirname + '/build',
+        chunkFilename: '[id].[chunkhash].js'
     },
     plugins: [
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, './src/index.html'),
             filename: 'index.html',
+            chunks: ['index'],
         }),
+        new HtmlWebpackPlugin({
+            filename: 'sprint.html',
+            template: 'src/view/pages/games/sprint/sprint.html',
+            chunks: ['sprint']
+          }),
         new CleanWebpackPlugin(),
         new EslingPlugin({ extensions: 'ts' })
     ],
