@@ -1,0 +1,110 @@
+.game-background {
+    background-color: rgb(226, 238, 234);
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+
+    .sprint-container {
+        max-width: 1440px;
+        width: 100%;
+        position: relative;
+        display: flex;
+        justify-content: end;
+    }
+    
+}
+
+.game-buttons {
+    width: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.close-span-container {
+    position: relative;
+    width: 28px;
+    height: 28px;
+    left: -3px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+
+    &:hover {
+        .close-span {
+            filter: opacity(100%);
+        }
+    }
+
+    .close-span {
+        position:absolute;
+        top:12px;
+        width: 100%;
+        height: 1px;
+        background-color: black;
+        font-size: large;
+        content: '';
+        filter: opacity(25%);
+        border-radius: 10px;
+    }
+
+    .first-span {
+        transform: rotate(45deg);
+    }
+    
+    .second-span {
+        transform: rotate(-45deg);
+    }
+}
+.fullscreen-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+        .fullscreen-svg {
+           filter: opacity(100%);
+           cursor: pointer;
+        }
+    }
+
+    .fullscreen-svg {
+        padding: 10px;
+        width: 24px;
+        height: 24px;
+        background-image: url('../../../../assets/icons/fullscreen.svg');
+        border: 0;
+        filter: opacity(25%);
+        box-sizing: border-box;
+    }
+}
+
+.sound-container {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 3px;
+
+    &:hover {
+        .sound-svg{
+            filter: opacity(100%);
+            cursor: pointer;
+        }
+    }
+
+    .sound-svg {
+        width: 24px;
+        height: 24px;
+        background-image: url('../../../../assets/icons/sound-icon.svg');
+        background-size: contain;
+        padding: 14px;
+        filter: opacity(25%);
+        box-sizing: border-box;
+    }
+}
+
+
