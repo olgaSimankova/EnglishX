@@ -1,5 +1,6 @@
 import createElement from '../../utils/createElement';
 import { BUTTON_NAMES } from '../../constants/constants';
+import burger from '../../logic/main/burger';
 
 export default function renderHeader(parent: HTMLElement): void {
     const header = createElement({
@@ -12,6 +13,17 @@ export default function renderHeader(parent: HTMLElement): void {
         type: 'div',
         parentElement: header,
         classes: ['header__wrapper'],
+    });
+
+    const burgerIcon = createElement({
+        type: 'button',
+        parentElement: wrapper,
+        classes: ['menu__icon', 'icon-menu'],
+    });
+
+    createElement({
+        type: 'span',
+        parentElement: burgerIcon,
     });
 
     createElement({
@@ -64,4 +76,6 @@ export default function renderHeader(parent: HTMLElement): void {
         classes: ['header__text'],
         text: 'Log in / Register',
     });
+
+    burger();
 }
