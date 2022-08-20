@@ -185,4 +185,22 @@
 .clock-counter {
     font-size: 24px;
 }
+.points-container,
+.multiply-container,
+.result-container {
+    display: flex;
+    gap: 10px;
+}
+
+.multiply-container {
+    border: 3px rgb(237, 186, 35) solid;
+    border-radius: 30px;
+    padding: 0 10px;
+}
+
+.result-container {
+    border: 3px rgb(30, 184, 19) solid;
+    border-radius: 30px;
+    padding: 0 10px;
+}
 

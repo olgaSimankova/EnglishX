@@ -6,3 +6,6 @@ export const SPRINT_GAME_DESCRIPTION =
 export const CHOOSE_LEVEL = 'Выбери уровень:';
 export const START = 'Начать';
 export const SPRINT_START_TIME = 30;
+export const MULTIPLY = 'УМНОЖЕНИЕ';
+export const START_POINTS = '10';
+export const POINTS = 'ОЧКИ: ';
