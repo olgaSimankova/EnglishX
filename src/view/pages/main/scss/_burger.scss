@@ -1,0 +1,40 @@
+@import "../../../../global.scss";
+
+.icon-menu {
+  display: none;
+  @media (max-width: $mobile) {
+    display: block;
+    position: absolute;
+    width: 28px;
+    height: 20px;
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
+    z-index: 15;
+    top: 31px;
+    right: 23px;
+    span,
+    &::before,
+    &::after {
+      content: "";
+      transition: all 0.3s ease 0s;
+      right: 0;
+      position: absolute;
+      width: 100%;
+      height: 3px;
+      border-radius: 30%;
+      background-color: $red;
+    }
+    &::before {
+      top: 0;
+    }
+    &::after {
+      bottom: 0;
+    }
+    span {
+      top: calc(50% - 1px);
+    }
+    .menu-open & {
+      transform: rotate(90deg);
+    }
+  }
+}

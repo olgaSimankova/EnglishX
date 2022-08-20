@@ -1,0 +1,20 @@
+@import "../../../../global.scss";
+
+.hero {
+  height: 100vh;
+  padding: 23px 0 80px;
+  background: center / cover no-repeat url('../../../../assets/img/background.jpg');
+  color: $darkGray;
+
+  &__container {
+    max-width: 1320px;
+    padding: 0 20px;
+    margin: 0 auto;
+  }
+
+  &__main {
+    margin-top: 80px;
+  }
+}
+
+
