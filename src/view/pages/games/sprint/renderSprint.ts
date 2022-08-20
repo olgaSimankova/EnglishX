@@ -98,7 +98,7 @@ function renderLowerBlock(parentElement: HTMLElement): void {
     createElement({
         type: 'button',
         parentElement: lowerContainer,
-        classes: ['start-button', 'inactive'],
+        classes: ['start-button'],
         text: START,
     });
 }
