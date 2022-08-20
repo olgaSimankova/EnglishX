@@ -5,3 +5,8 @@ export interface CreateElementInterface {
     text?: string;
     attributes?: [string, string][];
 }
+
+export interface User {
+    email: string;
+    password: string;
+}
