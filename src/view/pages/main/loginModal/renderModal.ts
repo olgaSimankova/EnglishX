@@ -1,4 +1,5 @@
 import createElement from '../../../../utils/createElement';
+import './modal.scss'
 
 export default function renderModal(): void {
     const body = document.querySelector('body') as HTMLElement;

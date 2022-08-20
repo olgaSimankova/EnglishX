@@ -1,8 +1,15 @@
 import { loginUser } from './api/login-register';
 import './global.scss';
 import renderModal from './view/pages/main/loginModal/renderModal';
+import renderMain from './view/pages/main/renderMain';
+import './view/pages/main/scss/style.scss';
 
 renderModal();
+
+(function startMainPage() {
+    renderMain();
+})();
+console.log('test');
 
 const modal = document.querySelector('.modal') as HTMLElement;
 modal.addEventListener('click', (event: Event) => {
