@@ -3,7 +3,7 @@
   height: 50%;
   left: 35%;
   top: 25%;
-  display: flex;
+  display: none;
   position: absolute;
   flex-direction: column;
   justify-items: center;
@@ -11,6 +11,10 @@
   border-radius: 7px;
   background-color: lightblue;
   z-index: 10;
+}
+
+.modal.active {
+  display: block;
 }
 
 .modal__cross {
@@ -46,7 +50,7 @@
   border-radius: 5px;
   color: white;
   font-weight: bold;
-  background-color: #d97415;
+  background-color: #FF3F3A;
   cursor: pointer;
   outline: none;
 }/*# sourceMappingURL=modal.css.map */

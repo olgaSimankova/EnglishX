@@ -1,16 +1,1 @@
-.modal {
-  width: 30%;
-  height: 50%;
-  display: flex;
-  justify-items: center;
-  align-items: center;
-  border-radius: 7px;
-  background-color: lightseagreen;
-}
-
-.modal__cross {
-  height: 20px;
-  width: 20px;
-  display: block;
-  margin: 15px auto;
-}/*# sourceMappingURL=global.css.map */
+/*# sourceMappingURL=global.css.map */

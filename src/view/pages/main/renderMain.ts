@@ -1,5 +1,6 @@
 import createElement from '../../../utils/createElement';
 import renderHeader from '../../common/renderHeader';
+import renderModal from './loginModal/renderModal';
 import './scss/style.scss';
 
 export default function renderMain(): void {
@@ -9,4 +10,5 @@ export default function renderMain(): void {
         classes: ['hero'],
     });
     renderHeader(heroSection);
+    renderModal();
 }
