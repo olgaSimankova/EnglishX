@@ -4,124 +4,17 @@
   height: 100vh;
   padding: 23px 0 80px;
   background: center / cover no-repeat url('../../../../assets/img/background.jpg');
-  color: #424551;
+  color: $darkGray;
 
   &__container {
     max-width: 1320px;
     padding: 0 20px;
     margin: 0 auto;
   }
-}
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 160%;
-
-  &__text {
-    @media (max-width: $mobile) {
-      display: none;
-    }
-  }
-
-  &__wrapper {
-    display: flex;
-    align-items: center;
-  }
-
-  &__logo {
-    width: 143px;
-    height: 37px;
-    background-image: url("../../../../assets/img/logo.svg");
-    flex: 1 1 auto;
-    z-index: 20;
-  }
-
-  &__nav {
-    display: flex;
-    margin-left: 60px;
-    white-space: nowrap;
-
-    @media (max-width: $tablet) {
-      margin-left: 30px;
-    }
-
-    @media (max-width: $mobile) {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      height: 100vh;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      background: #fdfdfd;
-      z-index: 10;
-      padding: 60px 0 0 0;
-      overflow-y: auto;
-      right: -100%;
-      transition: all 0.3s ease 0s;
-
-      .header__link {
-        margin: 0 0 30px;
-        font-size: 25px;
-
-        &:last-of-type {
-          margin: 0;
-        }
-      }
-      &_active {
-        right: 0;
-      }
-    }
-  }
-
-  &__link {
-    position: relative;
-    margin-left: 40px;
-    @media (max-width: $tablet) {
-      margin-left: 15px;
-    }
-
-    &:first-of-type {
-      margin-left: 0;
-    }
-
-    &:after {
-      position: absolute;
-      content: "";
-      top: 110%;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: red;
-      transform: scaleX(0);
-      transform-origin: right;
-      transition: transform 0.5s;
-    }
-
-    &:hover {
-      &:after {
-        transform: scaleX(1);
-        transform-origin: left;
-      }
-    }
-  }
-
-  &__login {
-    display: flex;
-    align-items: center;
-  }
-
-  &__icon {
-    width: 20px;
-    height: 20px;
-    margin-right: 8px;
-    background-image: url("../../../../assets/icons/login.svg");
-    @media (max-width: $mobile) {
-      margin-right: 60px;
-    }
+  &__main {
+    margin-top: 80px;
   }
 }
+
+
