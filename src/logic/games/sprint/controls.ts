@@ -1,3 +1,4 @@
+import { Word } from '../../../constants/types';
 import { getHTMLElementContent, setHTMLElementContent } from '../../../utils/handleHTMLTextContent';
 import listenLevelButtons, { listerStartButton } from './events';
 
@@ -18,6 +19,6 @@ function startTimer(): void {
     }, 1000);
 }
 
-export function sprintGameControls(): void {
+export function sprintGameControls(data: Word[]): void {
     startTimer();
 }

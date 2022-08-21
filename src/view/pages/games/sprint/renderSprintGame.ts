@@ -6,6 +6,7 @@ import {
     START_POINTS,
     TRUE_FALSE_OBJ,
 } from '../../../../constants/constants';
+import { Word } from '../../../../constants/types';
 import createElement from '../../../../utils/createElement';
 
 function renderClockBlock(parentElement: HTMLElement): void {
@@ -137,15 +138,23 @@ function renderButtonsBlock(parentElement: HTMLElement): void {
     });
 }
 
-export default function renderSprintGame(parentElement: HTMLElement): void {
+export function setAnswerBlock(data: Word[]): void {
+    const engWord = document.querySelector('.eng-word');
+    const ruWord = document.querySelector('.ru-word');
+    //stooped here
+}
+
+export default function renderSprintGame(parentElement: HTMLElement, data: Word[]): void {
     const gameContainer = createElement({
         type: 'div',
         parentElement,
         classes: ['game-container'],
     });
+    console.log(data);
     renderClockBlock(gameContainer);
     renderPointsBlock(gameContainer);
     renderTickBlock(gameContainer);
     renderAnswerBlock(gameContainer);
     renderButtonsBlock(gameContainer);
+    setAnswerBlock(data);
 }
