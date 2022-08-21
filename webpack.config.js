@@ -3,45 +3,47 @@ const { merge } = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const EslingPlugin = require('eslint-webpack-plugin');
+
 const isDev = process.env.NODE_ENV === 'development';
 const isProd = !isDev;
 
 const baseConfig = {
-    entry: { 
+    entry: {
         index: path.resolve(__dirname, './src/index.ts'),
         sprint: path.resolve(__dirname, './src/view/pages/games/sprint/sprint.ts'),
     },
     mode: 'development',
-    stats: {children: true},
+    stats: { children: true },
     module: {
         rules: [
             {
                 test: /.s[ac]ss$/i,
                 use: ['style-loader', 'css-loader', 'sass-loader'],
             },
-            { 
-                test: /\.ts$/i, use: 'ts-loader' 
+            {
+                test: /\.ts$/i,
+                use: 'ts-loader',
             },
             {
                 test: /\.html$/i,
-                use: ["html-loader"],
+                use: ['html-loader'],
             },
             {
-                test: /\.(jpe?g|png|gif|svg)$/i, 
+                test: /\.(jpe?g|png|gif|svg)$/i,
                 loader: 'file-loader',
                 options: {
-                  name: 'assets/img/[name].[ext]'
-                }
+                    name: 'assets/img/[name].[ext]',
+                },
             },
         ],
     },
     resolve: {
         extensions: ['.ts', '.js'],
     },
-    output:{
+    output: {
         filename: '[name].js',
-        path: __dirname + '/build',
-        chunkFilename: '[id].[chunkhash].js'
+        path: `${__dirname}/build`,
+        chunkFilename: '[id].[chunkhash].js',
     },
     plugins: [
         new HtmlWebpackPlugin({
@@ -52,10 +54,10 @@ const baseConfig = {
         new HtmlWebpackPlugin({
             filename: 'sprint.html',
             template: 'src/view/pages/games/sprint/sprint.html',
-            chunks: ['sprint']
-          }),
+            chunks: ['sprint'],
+        }),
         new CleanWebpackPlugin(),
-        new EslingPlugin({ extensions: 'ts' })
+        new EslingPlugin({ extensions: 'ts' }),
     ],
 };
 

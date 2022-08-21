@@ -16,3 +16,4 @@ export const TRUE_FALSE_OBJ = {
     false: 'НЕВЕРНО',
 };
 export const WORDS = 'https://eng-guru.herokuapp.com/words';
+export const BUTTON_NAMES = ['About Us', 'TextBook', 'Games', 'Statistic'];

@@ -1,0 +1,10 @@
+@import "../../../../global.scss";
+@import "null";
+@import "hero-section";
+@import "header";
+@import "burger";
+@import "hero-main";
+
+body {
+  font-family: $mainFont;
+}
