@@ -50,7 +50,7 @@
   @include font-face('Lato', 14px, 400, 21px, center);
 }
 
-#login-form {
+.login-form {
     align-self: flex-start;
     display: flex;
     flex-direction: column;
@@ -58,8 +58,11 @@
     justify-items: center;
     align-items: left;
     width: 390px;
-    height: 320px;
   }
+
+.register-form {
+  gap: 10px;
+}
 
   label[for=email],
   label[for=password] {

@@ -1,6 +1,6 @@
 import createElement from '../../../utils/createElement';
 import renderHeader from '../../common/renderHeader';
-import renderModal from './loginModal/renderModal';
+import renderModal from './loginRegisterModal/renderModal';
 import './scss/style.scss';
 
 export default function renderMain(): void {

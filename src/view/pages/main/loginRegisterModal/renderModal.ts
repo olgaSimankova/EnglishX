@@ -1,4 +1,4 @@
-import loginModal from '../../../../logic/main/loginModal';
+import { loginModal } from '../../../../logic/main/loginModal';
 import createElement from '../../../../utils/createElement';
 import './modal.scss';
 
@@ -81,7 +81,7 @@ function renderLoginForm(parentElement: HTMLElement) {
         ],
     });
 
-    const forgotPass = createElement({
+    const noAccount = createElement({
         type: 'div',
         parentElement: form,
         classes: ['login-form__links-wrapper'],
@@ -89,15 +89,15 @@ function renderLoginForm(parentElement: HTMLElement) {
 
     createElement({
         type: 'span',
-        parentElement: forgotPass,
+        parentElement: noAccount,
         classes: ['modal_text'],
         text: "Don't have an account?",
     });
 
     createElement({
         type: 'a',
-        parentElement: forgotPass,
-        classes: ['link_colored'],
+        parentElement: noAccount,
+        classes: ['link_colored', 'open_registration_modal'],
         text: 'Sign up',
     });
 }

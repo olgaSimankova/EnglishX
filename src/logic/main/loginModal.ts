@@ -2,6 +2,7 @@
 
 import { INVALID_COLOR_RED, VALID_COLOR_GREEN } from '../../constants/constants';
 import isEmailValid from '../../utils/validation';
+import renderRegistrationModal from '../../view/pages/main/loginRegisterModal/renderRegistrationModal';
 
 // modal.addEventListener('click', (event: Event) => {
 //     if ((event.target as HTMLInputElement).type === 'submit') {
@@ -17,7 +18,7 @@ function toggleModal(todo: boolean) {
     (document.querySelector('.modal_BG') as HTMLElement).classList.toggle('active', todo);
 }
 
-export default function loginModal(): void {
+function loginModal(): void {
     const login = document.querySelector('.header__login') as HTMLElement;
     login.addEventListener('click', () => {
         toggleModal(true);
@@ -35,4 +36,9 @@ export default function loginModal(): void {
             emailField.style.backgroundColor = `${INVALID_COLOR_RED}`;
         }
     });
+    (document.querySelector('.open_registration_modal') as HTMLElement).addEventListener('click', () => {
+        renderRegistrationModal();
+    });
 }
+
+export { loginModal, toggleModal };
