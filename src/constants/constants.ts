@@ -9,3 +9,8 @@ export const SPRINT_START_TIME = 30;
 export const MULTIPLY = 'УМНОЖЕНИЕ';
 export const START_POINTS = '10';
 export const POINTS = 'ОЧКИ: ';
+export const DELIMITOR = 'это';
+export const TRUE_FALSE_OBJ = {
+    true: 'ВЕРНО',
+    false: 'НЕВЕРНО',
+};

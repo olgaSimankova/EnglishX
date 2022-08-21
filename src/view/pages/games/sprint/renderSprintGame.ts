@@ -1,26 +1,31 @@
-import { MULTIPLY, POINTS, SPRINT_START_TIME, START_POINTS } from '../../../../constants/constants';
+import {
+    DELIMITOR,
+    MULTIPLY,
+    POINTS,
+    SPRINT_START_TIME,
+    START_POINTS,
+    TRUE_FALSE_OBJ,
+} from '../../../../constants/constants';
 import createElement from '../../../../utils/createElement';
 
-export default function renderSprintGame(parentElement: HTMLElement): void {
-    const gameContainer = createElement({
+function renderClockBlock(parentElement: HTMLElement): void {
+    createElement({
         type: 'div',
         parentElement,
-        classes: ['game-container'],
-    });
-    const clock = createElement({
-        type: 'div',
-        parentElement: gameContainer,
         classes: ['clock'],
     });
-    const clockCount = createElement({
+    createElement({
         type: 'p',
-        parentElement: gameContainer,
+        parentElement,
         classes: ['clock-counter'],
         text: SPRINT_START_TIME.toString(),
     });
+}
+
+function renderPointsBlock(parentElement: HTMLElement): void {
     const pointsContainer = createElement({
         type: 'div',
-        parentElement: gameContainer,
+        parentElement,
         classes: ['points-container'],
     });
     const multiplyContainer = createElement({
@@ -63,4 +68,84 @@ export default function renderSprintGame(parentElement: HTMLElement): void {
         classes: ['result-label', 'label', 'result'],
         text: '0',
     });
+}
+
+function renderTickBlock(parentElement: HTMLElement): void {
+    const tickContainer = createElement({
+        type: 'div',
+        parentElement,
+        classes: ['tick-container'],
+    });
+    const tick = createElement({
+        type: 'div',
+        parentElement: tickContainer,
+        classes: ['tick'],
+    });
+    createElement({
+        type: 'div',
+        parentElement: tick,
+        classes: ['answers-queue'],
+        text: '3',
+    });
+}
+
+function renderAnswerBlock(parentElement: HTMLElement): void {
+    const answerContainer = createElement({
+        type: 'div',
+        parentElement,
+        classes: ['answer-container'],
+    });
+    createElement({
+        type: 'p',
+        parentElement: answerContainer,
+        classes: ['eng-word', 'word'],
+        text: 'eng-word',
+    });
+    createElement({
+        type: 'p',
+        parentElement: answerContainer,
+        classes: ['delimiter'],
+        text: DELIMITOR,
+    });
+    createElement({
+        type: 'p',
+        parentElement: answerContainer,
+        classes: ['ru-word', 'word'],
+        text: 'ru-word',
+    });
+    createElement({
+        type: 'p',
+        parentElement: answerContainer,
+        classes: ['delimiter'],
+        text: '?',
+    });
+}
+
+function renderButtonsBlock(parentElement: HTMLElement): void {
+    const buttonsContainer = createElement({
+        type: 'div',
+        parentElement,
+        classes: ['buttons-container'],
+    });
+    Object.keys(TRUE_FALSE_OBJ).forEach((key) => {
+        createElement({
+            type: 'button',
+            parentElement: buttonsContainer,
+            classes: ['answer-button', `${key}-button`],
+            text: TRUE_FALSE_OBJ[key as keyof typeof TRUE_FALSE_OBJ],
+        });
+    });
+}
+
+export default function renderSprintGame(parentElement: HTMLElement): void {
+    const gameContainer = createElement({
+        type: 'div',
+        parentElement,
+        classes: ['game-container'],
+    });
+    renderClockBlock(gameContainer);
+    renderPointsBlock(gameContainer);
+    renderTickBlock(gameContainer);
+    renderAnswerBlock(gameContainer);
+    renderButtonsBlock(gameContainer);
 }

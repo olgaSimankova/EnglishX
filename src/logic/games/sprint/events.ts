@@ -1,5 +1,6 @@
 import removeClassElement from '../../../utils/removeClassElement';
 import renderSprintGame from '../../../view/pages/games/sprint/renderSprintGame';
+import { sprintGameControls } from './controls';
 
 export default function listenLevelButtons(): void {
     const levelsContainer = document.querySelector('.level-container');
@@ -24,6 +25,7 @@ export function listerStartButton(): void {
             const sprintContainer = document.querySelector('.sprint-container') as HTMLElement;
             if (sprintContainer) {
                 renderSprintGame(sprintContainer);
+                sprintGameControls();
             }
         }
     });
