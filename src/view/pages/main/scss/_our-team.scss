@@ -1,0 +1,158 @@
+@import "../../../../global";
+
+.our-team {
+  display: flex;
+  justify-content: center;
+  padding-top: 51px;
+  padding-bottom: 51px;
+  // .our-team__wrapper
+  &__wrapper {
+  }
+
+  // .our-team__subtitle
+  &__subtitle {
+    margin-bottom: 8px;
+  }
+
+  // .our-team__title
+  &__title {
+    margin-bottom: 67px;
+
+    @media (max-width: $mobile) {
+      margin-bottom: 40px;
+    }
+  }
+
+  // .our-team__cards
+  &__cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+  }
+}
+
+.subtitle {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 150%;
+  text-align: center;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: $dark;
+
+  @media (max-width: $mobile) {
+    font-size: 14px;
+  }
+}
+
+.title {
+  text-align: center;
+  font-weight: 900;
+  font-size: 46px;
+  line-height: 130%;
+  color: $dark;
+
+  @media (max-width: $mobile) {
+    font-size: 42px;
+  }
+}
+
+.card {
+  width: 285px;
+  height: 416px;
+  cursor: pointer;
+
+  &:hover {
+    .card__hover {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  // .card__background
+  &__background {
+    position: relative;
+    width: inherit;
+    height: 340px;
+    background: #FFCF2D;
+    border-radius: 4px;
+    margin-bottom: 16px;
+  }
+
+  // .card__name
+  &__name {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 150%;
+    text-align: center;
+    color: $darkGray;
+    margin-bottom: 4px;
+  }
+
+  // .card__descr
+  &__descr {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 160%;
+    text-align: center;
+    color: $gray;
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+
+    &_0 {
+      background: center bottom no-repeat url("../../../../assets/img/woman.png");
+    }
+
+    &_1 {
+      background: center bottom no-repeat url("../../../../assets/img/man.png");
+    }
+
+    &_2 {
+      background: center bottom no-repeat url("../../../../assets/img/man.png");
+    }
+
+    &_3 {
+      background: center bottom no-repeat url("../../../../assets/img/man2.png");
+    }
+  }
+
+  // .card__hover
+  &__hover {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: inherit;
+    height: inherit;
+    background: linear-gradient(180deg, rgba(30, 33, 44, 0) 43.9%, rgba(30, 33, 44, 0.03) 55.21%, rgba(30, 33, 44, 0.33) 68.73%, rgba(30, 33, 44, 0.56) 76.17%, rgba(30, 33, 44, 0.768225) 83.75%, rgba(30, 33, 44, 0.92) 91.49%, #1E212C 100%);
+    border-radius: 4px;
+    transition: all .4s ease 0s;
+  }
+
+  // .card__github
+  &__github {
+    position: absolute;
+    bottom: 22px;
+    right: 56px;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-image: url("../../../../assets/icons/github.svg");
+  }
+
+  // .card__linkedIn
+  &__linkedIn {
+    position: absolute;
+    bottom: 22px;
+    right: 24px;
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    background-image: url("../../../../assets/icons/linkedIn.svg");
+  }
+}

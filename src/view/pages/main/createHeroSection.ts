@@ -1,6 +1,6 @@
 import createElement from '../../../utils/createElement';
 
-export default function createHeroSection(parent: HTMLElement) {
+export default function createHeroSection(parent: HTMLElement): void {
     const heroMain = createElement({
         type: 'div',
         parentElement: parent,

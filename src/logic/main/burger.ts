@@ -1,4 +1,4 @@
-const menuClose = () => {
+const menuClose = (): void => {
     const navBody = document.querySelector('.header__nav') as HTMLElement;
     document.documentElement.classList.remove('menu-open');
     navBody.classList.remove('header__nav_active');
@@ -10,7 +10,7 @@ const linksListener = (event: Event): void => {
     if (target.tagName === 'A') menuClose();
 };
 
-const checkNavLinks = () => {
+const checkNavLinks = (): void => {
     const navBody = document.querySelector('.header__nav_active') as HTMLElement;
     if (document.documentElement.classList.contains('menu-open')) {
         navBody.addEventListener('click', linksListener);
