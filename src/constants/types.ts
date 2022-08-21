@@ -31,3 +31,13 @@ export interface Word {
     textMeaningTranslate: string;
     textExampleTranslate: string;
 }
+
+export interface SprintState {
+    currentLevel: string;
+    currentEngWord?: Word;
+    currentRuWord?: Word;
+}
+
+export interface StateInterface {
+    sprintGame: SprintState;
+}

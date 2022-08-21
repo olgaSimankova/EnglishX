@@ -7,7 +7,11 @@ import {
     TRUE_FALSE_OBJ,
 } from '../../../../constants/constants';
 import { Word } from '../../../../constants/types';
+import { resetSprintPoints } from '../../../../logic/games/sprint/controls';
+import state from '../../../../state/state';
 import createElement from '../../../../utils/createElement';
+import { setHTMLElementContent } from '../../../../utils/handleHTMLTextContent';
+import getRandomNumber from '../../../../utils/randomize';
 
 function renderClockBlock(parentElement: HTMLElement): void {
     createElement({
@@ -134,14 +138,18 @@ function renderButtonsBlock(parentElement: HTMLElement): void {
             parentElement: buttonsContainer,
             classes: ['answer-button', `${key}-button`],
             text: TRUE_FALSE_OBJ[key as keyof typeof TRUE_FALSE_OBJ],
+            attributes: [['data', key]],
         });
     });
 }
 
 export function setAnswerBlock(data: Word[]): void {
-    const engWord = document.querySelector('.eng-word');
-    const ruWord = document.querySelector('.ru-word');
-    //stooped here
+    const randomEng = data[getRandomNumber(0, data.length)];
+    state.sprintGame.currentEngWord = randomEng;
+    const randomRu = Math.random() < 0.5 ? randomEng : data[getRandomNumber(0, data.length)];
+    state.sprintGame.currentRuWord = randomRu;
+    setHTMLElementContent('eng-word', randomEng.word);
+    setHTMLElementContent('ru-word', randomRu.wordTranslate);
 }
 
 export default function renderSprintGame(parentElement: HTMLElement, data: Word[]): void {
@@ -150,11 +158,11 @@ export default function renderSprintGame(parentElement: HTMLElement, data: Word[
         parentElement,
         classes: ['game-container'],
     });
-    console.log(data);
     renderClockBlock(gameContainer);
     renderPointsBlock(gameContainer);
     renderTickBlock(gameContainer);
     renderAnswerBlock(gameContainer);
     renderButtonsBlock(gameContainer);
     setAnswerBlock(data);
+    resetSprintPoints();
 }
