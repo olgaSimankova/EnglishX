@@ -1,6 +1,7 @@
 import createElement from '../../../utils/createElement';
 import renderHeader from '../../common/renderHeader';
 import './scss/style.scss';
+import createHeroSection from './createHeroSection';
 
 export default function renderMain(): void {
     const heroSection = createElement({
@@ -9,4 +10,5 @@ export default function renderMain(): void {
         classes: ['hero'],
     });
     renderHeader(heroSection);
+    createHeroSection(heroSection);
 }
