@@ -12,7 +12,7 @@ function renderLoginForm(parentElement: HTMLElement) {
     createElement({
         type: 'label',
         parentElement: form,
-        text: 'Enter your email',
+        text: 'Email',
         attributes: [['for', 'email']],
     });
     createElement({
@@ -43,9 +43,14 @@ function renderLoginForm(parentElement: HTMLElement) {
             ['placeholder', 'Password'],
         ],
     });
+    const linksWrapper = createElement({
+        type: 'div',
+        parentElement: form,
+        classes: ['login-form__links-wrapper'],
+    });
     createElement({
         type: 'input',
-        parentElement: form,
+        parentElement: linksWrapper,
         attributes: [
             ['type', 'checkbox'],
             ['name', 'keep_signed_in'],
@@ -54,36 +59,56 @@ function renderLoginForm(parentElement: HTMLElement) {
     });
     createElement({
         type: 'label',
-        parentElement: form,
+        parentElement: linksWrapper,
         text: 'Keep me signed in',
         attributes: [['for', 'keep_signed_in']],
     });
     createElement({
         type: 'a',
-        parentElement: form,
+        parentElement: linksWrapper,
+        classes: ['link_colored', 'link_forgot_pass'],
         text: 'Forgot password?',
         attributes: [['href', '#']],
     });
+
     createElement({
         type: 'submit',
         parentElement: form,
-        text: 'Forgot password?',
+        text: 'Sign in',
         attributes: [
             ['value', 'login'],
             ['id', 'login-form-submit'],
         ],
     });
+
+    const forgotPass = createElement({
+        type: 'div',
+        parentElement: form,
+        classes: ['login-form__links-wrapper'],
+    });
+
+    createElement({
+        type: 'span',
+        parentElement: forgotPass,
+        classes: ['modal_text'],
+        text: "Don't have an account?",
+    });
+
+    createElement({
+        type: 'a',
+        parentElement: forgotPass,
+        classes: ['link_colored'],
+        text: 'Sign up',
+    });
 }
 
-//     <input type="password" name="password" id="password-field" class="login-form-field" placeholder="Password">
-//     <input type="checkbox" name="keep_signed_in" id="keep_signed_in">
-//     <label for="keep_signed_in">Keep me signed in</label>
-//     <a href="#">Forgot password?</a>
-//     <input type="submit" value="login" id="login-form-submit">`;
-// }
-
 export default function renderModal(): void {
-    const modal = createElement({
+    createElement({
+        type: 'div',
+        parentElement: document.body,
+        classes: ['modal_BG'],
+    });
+    const modalContent = createElement({
         type: 'div',
         parentElement: document.body,
         classes: ['modal'],
@@ -91,22 +116,22 @@ export default function renderModal(): void {
     });
     createElement({
         type: 'span',
-        parentElement: modal,
+        parentElement: modalContent,
         classes: ['modal__cross'],
         text: '╳',
     });
     createElement({
         type: 'h3',
-        parentElement: modal,
+        parentElement: modalContent,
         classes: ['modal__title'],
         text: 'Sign In',
     });
     createElement({
         type: 'p',
-        parentElement: modal,
+        parentElement: modalContent,
         classes: ['modal_text'],
         text: 'Sign in to your account using email and password provided during registration',
     });
-    renderLoginForm(modal);
+    renderLoginForm(modalContent);
     loginModal();
 }

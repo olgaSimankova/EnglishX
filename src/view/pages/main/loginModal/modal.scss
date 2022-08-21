@@ -1,49 +1,108 @@
 @import '../../../../global.scss';
 
+.modal_BG {
+  display: none;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0; 
+  left: 0;
+  background-color: rgba(0,0,0,0.7);
+}
+
+.modal_BG.active {
+  display: block;
+}
+
 .modal {
-  width: 30%;
-  height: 50%;
-  left: 35%;
-  top: 25%;
   display: none;
   position: absolute;
+  width: 486px;
+  height: 652px;
+  margin: 0 auto;
+  top: 5%;
+  left: calc((100% - 486px) / 2);
   flex-direction: column;
   justify-items: center;
   align-items: center;
+  gap: 18px;
+  background-color: whitesmoke;
   border-radius: 7px;
-  background-color: lightblue;
-  z-index: 10;
+  padding: 15px 48px;
+  color: $darkGray;
+  z-index: 100;
 }
 
 .modal.active {
-  display: block;
+  display: flex;
 }
 
 .modal__cross {
     height: 20px;
     width: 20px;
     display: block;
-    margin: 15px auto;
+    cursor: pointer;
+}
+
+.modal__title { @include font-face('Lato', 28px, 700, 42px, center) }
+
+.modal_text {
+  @include font-face('Lato', 14px, 400, 21px, center);
 }
 
 #login-form {
     align-self: flex-start;
-    display: grid;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
     justify-items: center;
-    align-items: center;
+    align-items: left;
+    width: 390px;
+    height: 320px;
+  }
+
+  label[for=email],
+  label[for=password] {
+    @include font-face('Lato', 14px, 400, 21px, left);
+  }
+
+  .login-form-field {
+    @include font-face('Lato', 14px, 400, 21px, left);
+    height: 44px;
+    border-radius: 4px;
+    padding: 0 15px;
+    border: $gray 1px solid;
   }
   
   .login-form-field::placeholder {
-    color: #3a3a3a;
+    color: $gray;
+  }
+
+  .login-form__links-wrapper{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .link_forgot_pass {
+    @include font-face('Lato', 14px, 700, 44px, right);
+    justify-content: flex-end;
+    display: inline-block;
+    margin-left: 33%;
+  }
+
+  .link_colored {
+    color: $red;
   }
 
   #login-form-submit {
+    @include font-face('Lato', 14px, 700, 44px, center);
+    letter-spacing: 0.5px;
     width: 100%;
-    padding: 7px;
     border: none;
     border-radius: 5px;
     color: white;
-    font-weight: bold;
     background-color: $red;
     cursor: pointer;
     outline: none;

@@ -1,5 +1,6 @@
 // const modal = document.querySelector('.modal') as HTMLElement;
 
+import { INVALID_COLOR_RED, VALID_COLOR_GREEN } from '../../constants/constants';
 import isEmailValid from '../../utils/validation';
 
 // modal.addEventListener('click', (event: Event) => {
@@ -11,22 +12,27 @@ import isEmailValid from '../../utils/validation';
 //     }
 // });
 
-function toggleModal() {
-    (document.querySelector('.modal') as HTMLElement).classList.toggle('active');
+function toggleModal(todo: boolean) {
+    (document.querySelector('.modal') as HTMLElement).classList.toggle('active', todo);
+    (document.querySelector('.modal_BG') as HTMLElement).classList.toggle('active', todo);
 }
 
 export default function loginModal(): void {
     const login = document.querySelector('.header__login') as HTMLElement;
     login.addEventListener('click', () => {
-        toggleModal();
+        toggleModal(true);
     });
+    (document.querySelector('.modal_BG') as HTMLElement).addEventListener('click', () => {
+        toggleModal(false);
+    });
+    (document.querySelector('.modal__cross') as HTMLElement).addEventListener('click', () => toggleModal(false));
 
     const emailField = document.querySelector('#email-field') as HTMLInputElement;
     emailField.addEventListener('keyup', () => {
         if (isEmailValid(emailField.value)) {
-            emailField.style.backgroundColor = 'lightgreen';
+            emailField.style.backgroundColor = `${VALID_COLOR_GREEN}`;
         } else {
-            emailField.style.backgroundColor = 'pink';
+            emailField.style.backgroundColor = `${INVALID_COLOR_RED}`;
         }
     });
 }
