@@ -6,6 +6,7 @@ export default function createOurTeamSection(parent: HTMLElement): void {
         type: 'section',
         parentElement: parent,
         classes: ['our-team', 'hero__container'],
+        attributes: [['id', 'team']],
     });
 
     const wrapper = createElement({

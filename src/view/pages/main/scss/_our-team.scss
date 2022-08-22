@@ -58,7 +58,6 @@
 .card {
   width: 285px;
   height: 416px;
-  cursor: pointer;
 
   &:hover {
     .card__hover {
@@ -74,6 +73,7 @@
     background: #FFCF2D;
     border-radius: 4px;
     margin-bottom: 16px;
+    cursor: pointer;
   }
 
   &__name {

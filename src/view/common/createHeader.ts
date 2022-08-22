@@ -1,8 +1,8 @@
 import createElement from '../../utils/createElement';
-import { BUTTON_NAMES } from '../../constants/constants';
+import { BUTTON_NAMES, HEADER_LINKS } from '../../constants/constants';
 import burger from '../../logic/main/burger';
 
-export default function renderHeader(parent: HTMLElement): void {
+export default function createHeader(parent: HTMLElement): void {
     const header = createElement({
         type: 'header',
         parentElement: parent,
@@ -43,7 +43,7 @@ export default function renderHeader(parent: HTMLElement): void {
         classes: ['header__nav'],
     });
 
-    BUTTON_NAMES.forEach((value) => {
+    BUTTON_NAMES.forEach((value, index) => {
         const navLink = createElement({
             type: 'li',
             parentElement: navList,
@@ -53,7 +53,7 @@ export default function renderHeader(parent: HTMLElement): void {
             type: 'a',
             parentElement: navLink,
             text: value,
-            attributes: [['href', '#']],
+            attributes: [['href', HEADER_LINKS[index]]],
         });
     });
 

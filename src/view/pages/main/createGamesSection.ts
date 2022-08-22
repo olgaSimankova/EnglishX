@@ -6,6 +6,7 @@ export default function createGamesSection(parent: HTMLElement): void {
         type: 'section',
         parentElement: parent,
         classes: ['games'],
+        attributes: [['id', 'games']],
     });
 
     const container = createElement({
