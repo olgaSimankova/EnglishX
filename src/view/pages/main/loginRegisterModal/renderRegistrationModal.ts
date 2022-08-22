@@ -66,7 +66,7 @@ export default function renderRegistrationModal() {
         attributes: [
             ['type', 'email'],
             ['name', 'email'],
-            ['id', 'email-field'],
+            ['id', 'email-field-reg'],
             ['placeholder', 'Your e-mail'],
         ],
     });
@@ -83,8 +83,12 @@ export default function renderRegistrationModal() {
         attributes: [
             ['type', 'password'],
             ['name', 'password'],
-            ['id', 'password-field'],
+            ['id', 'password-field-reg'],
             ['placeholder', 'Password'],
+            ['autocomplete', 'current-password'],
+            ['minlength', '8'],
+            ['maxlength', '16'],
+            ['title', 'minimum eight characters, at least one letter and one number'],
         ],
     });
     createElement({

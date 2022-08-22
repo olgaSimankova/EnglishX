@@ -4,10 +4,18 @@ function isEmailValid(value: string): boolean {
     return EMAIL_REGEXP.test(value);
 }
 
-// function isPasswordValid(value: string): boolean {
+// source: https://ru.hexlet.io/blog/posts/validatsiya-email-na-javascript (чтобы потом не рассказывали, что мы что-то откуда-то списали)
 
-// }
+const PASS_REGEXP = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
-// source: https://ru.hexlet.io/blog/posts/validatsiya-email-na-javascript
+function isPasswordValid(value: string) {
+    return PASS_REGEXP.test(value);
+}
 
-export default isEmailValid;
+function doPasswordsMatch(): boolean {
+    const passwordField = document.querySelector('#password-field-reg') as HTMLInputElement;
+    const confirmPasswordField = document.querySelector('#confirm-password') as HTMLInputElement;
+    return passwordField.value === confirmPasswordField.value;
+}
+
+export { isEmailValid, isPasswordValid, doPasswordsMatch };

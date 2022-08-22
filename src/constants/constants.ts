@@ -35,4 +35,3 @@ export const TEAM_INFO = [
         linkedIn: 'https://www.linkedin.com/in/aleh-harnizonau-0163801b2/',
     },
 ];
-

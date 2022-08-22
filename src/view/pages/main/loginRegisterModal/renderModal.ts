@@ -41,6 +41,10 @@ function renderLoginForm(parentElement: HTMLElement) {
             ['name', 'password'],
             ['id', 'password-field'],
             ['placeholder', 'Password'],
+            ['autocomplete', 'current-password'],
+            ['minlength', '8'],
+            ['maxlength', '16'],
+            ['title', 'minimum eight characters, at least one letter and one number'],
         ],
     });
     const linksWrapper = createElement({
