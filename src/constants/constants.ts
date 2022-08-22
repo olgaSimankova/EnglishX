@@ -30,3 +30,24 @@ export const TEAM_INFO = [
         linkedIn: 'https://www.linkedin.com/in/aleh-harnizonau-0163801b2/',
     },
 ];
+export const LEARNING_STEPS = [
+    {
+        title: 'Watch online tutorial video',
+        descr: 'In the video you will be presented with the main features of the project',
+    },
+
+    {
+        title: 'Learn words',
+        descr: 'You will be given 4000+ words with different difficulty levels from A1 to C2',
+    },
+
+    {
+        title: 'Play games',
+        descr: 'Consolidate the learned words in one of four games: Savannah, Oasis, Sprint and Audio call.',
+    },
+
+    {
+        title: 'Check the results',
+        descr: 'You can track your progress to stay motivated',
+    },
+];
