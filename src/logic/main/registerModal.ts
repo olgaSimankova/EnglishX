@@ -53,6 +53,9 @@ function listenRegisterModal(): void {
                     name: userName,
                     email: registerForm.email.value,
                     password: registerForm.password.value,
+                }).then(() => {
+                    deleteRegisterModal();
+                    toggleModal(false);
                 });
             } else {
                 console.log('Incorrect email/password');
