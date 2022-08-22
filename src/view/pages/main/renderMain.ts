@@ -4,6 +4,7 @@ import './scss/style.scss';
 import createHeroSection from './createHeroSection';
 import createOurTeamSection from './createOurTeamSection';
 import createProcessSection from './createProcessSection';
+import createGamesSection from './createGamesSection';
 
 export default function renderMain(): void {
     const heroSection = createElement({
@@ -16,4 +17,5 @@ export default function renderMain(): void {
     createHeroSection(heroSection);
     createOurTeamSection(document.body);
     createProcessSection(document.body);
+    createGamesSection(document.body);
 }

@@ -51,3 +51,28 @@ export const LEARNING_STEPS = [
         descr: 'You can track your progress to stay motivated',
     },
 ];
+export const GAMES = [
+    {
+        name: 'Savannah',
+        descr: 'Choose the correct translation of the falling down word',
+        link: '#',
+    },
+
+    {
+        name: 'Oasis',
+        descr: 'Write the missing word in the sentence',
+        link: '#',
+    },
+
+    {
+        name: 'Sprint',
+        descr: 'Determine the correct translation of the word as soon as possible',
+        link: '#',
+    },
+
+    {
+        name: 'Audio call',
+        descr: 'Try to understand what word was spoken',
+        link: '#',
+    },
+];
