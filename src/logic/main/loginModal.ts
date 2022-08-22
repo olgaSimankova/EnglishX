@@ -1,22 +1,18 @@
-// const modal = document.querySelector('.modal') as HTMLElement;
+import { loginUser } from '../../api/login-register';
 import renderRegistrationModal from '../../view/pages/main/loginRegisterModal/renderRegistrationModal';
 import { changeFieldBackgroundColor } from './registerModal';
-
-// modal.addEventListener('click', (event: Event) => {
-//     if ((event.target as HTMLInputElement).type === 'submit') {
-//         event.preventDefault();
-//         const loginForm = document.querySelector('form') as HTMLFormElement;
-//         console.log(loginForm.email.value, loginForm.password.value);
-//         // loginUser({ email: loginForm.email.value, password: loginForm.password.value });
-//     }
-// });
 
 function toggleModal(todo: boolean) {
     (document.querySelector('.modal') as HTMLElement).classList.toggle('active', todo);
     (document.querySelector('.modal_BG') as HTMLElement).classList.toggle('active', todo);
 }
 
-function loginModal(): void {
+function toggleFailLoginMessage(todo: boolean): void {
+    const message = document.querySelector('.wrong_pass_message') as HTMLElement;
+    message.style.visibility = todo ? 'visible' : 'hidden';
+}
+
+function listenLoginModal(): void {
     const login = document.querySelector('.header__login') as HTMLElement;
     login.addEventListener('click', () => {
         toggleModal(true);
@@ -36,6 +32,20 @@ function loginModal(): void {
     (document.querySelector('.open_registration_modal') as HTMLElement).addEventListener('click', () => {
         renderRegistrationModal();
     });
+
+    const modal = document.querySelector('.modal') as HTMLElement;
+    modal.addEventListener('click', async (event: Event) => {
+        if ((event.target as HTMLInputElement).type === 'submit') {
+            event.preventDefault();
+            const loginForm = document.querySelector('form') as HTMLFormElement;
+            try {
+                await loginUser({ email: loginForm.email.value, password: loginForm.password.value });
+                toggleModal(false);
+            } catch {
+                toggleFailLoginMessage(true);
+            }
+        }
+    });
 }
 
-export { loginModal, toggleModal };
+export { listenLoginModal, toggleModal };

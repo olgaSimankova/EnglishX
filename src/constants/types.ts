@@ -9,4 +9,5 @@ export interface CreateElementInterface {
 export interface User {
     email: string;
     password: string;
+    name?: string;
 }

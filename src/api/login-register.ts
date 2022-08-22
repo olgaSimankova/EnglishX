@@ -13,9 +13,11 @@ const createUser = async (user: User) => {
     const content = await rawResponse.json();
 
     console.log(content);
+
+    return content;
 };
 
-const loginUser = async (user: User) => {
+const loginUser = async (user: User): Promise<Response> => {
     const rawResponse = await fetch(`${API_BASE_LINK}/signin`, {
         method: 'POST',
         headers: {
@@ -24,9 +26,11 @@ const loginUser = async (user: User) => {
         },
         body: JSON.stringify(user),
     });
-    const content = await rawResponse.json();
+    const response = await rawResponse.json();
 
-    console.log(content);
+    console.log(response);
+
+    return response;
 };
 
 export { createUser, loginUser };

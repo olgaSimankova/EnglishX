@@ -1,4 +1,4 @@
-import { registerModal } from '../../../../logic/main/registerModal';
+import { listenRegisterModal } from '../../../../logic/main/registerModal';
 import createElement from '../../../../utils/createElement';
 import './modal.scss';
 
@@ -48,7 +48,6 @@ export default function renderRegistrationModal() {
         classes: ['login-form-field'],
         attributes: [
             ['type', 'name'],
-            ['name', 'name'],
             ['id', 'name-field'],
             ['placeholder', 'Your full name'],
         ],
@@ -130,12 +129,12 @@ export default function renderRegistrationModal() {
     });
 
     createElement({
-        type: 'submit',
+        type: 'input',
         parentElement: form,
-        text: 'Sign up',
         attributes: [
-            ['value', 'login'],
-            ['id', 'login-form-submit'],
+            ['type', 'submit'],
+            ['value', 'Sign up'],
+            ['id', 'register-form-submit'],
         ],
     });
 
@@ -158,5 +157,6 @@ export default function renderRegistrationModal() {
         classes: ['link_colored', 'open_login_modal'],
         text: 'Sign in',
     });
-    registerModal();
+
+    listenRegisterModal();
 }

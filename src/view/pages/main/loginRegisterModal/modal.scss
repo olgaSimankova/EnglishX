@@ -37,7 +37,7 @@
   display: flex;
 }
 
-.modal__cross {
+.modal__cross, .modal__cross_register {
     height: 20px;
     width: 20px;
     display: block;
@@ -86,6 +86,7 @@
     justify-content: flex-start;
     align-items: center;
     gap: 5px;
+    height: 15px;
   }
 
   .link_forgot_pass {
@@ -99,7 +100,7 @@
     color: $red;
   }
 
-  #login-form-submit {
+  #login-form-submit, #register-form-submit {
     @include font-face('Lato', 14px, 700, 44px, center);
     letter-spacing: 0.5px;
     width: 100%;
@@ -109,4 +110,10 @@
     background-color: $red;
     cursor: pointer;
     outline: none;
+  }
+
+  .wrong_pass_message {
+    @include font-face('Lato', 12px, 400, 44px, center);
+    color: $red;
+    height: 15px;
   }

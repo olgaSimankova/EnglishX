@@ -1,4 +1,4 @@
-import { loginModal } from '../../../../logic/main/loginModal';
+import { listenLoginModal } from '../../../../logic/main/loginModal';
 import createElement from '../../../../utils/createElement';
 import './modal.scss';
 
@@ -76,11 +76,19 @@ function renderLoginForm(parentElement: HTMLElement) {
     });
 
     createElement({
-        type: 'submit',
+        type: 'div',
         parentElement: form,
-        text: 'Sign in',
+        classes: ['wrong_pass_message'],
+        text: 'Wrong email/password',
+        attributes: [['style', 'visibility:hidden']],
+    });
+
+    createElement({
+        type: 'input',
+        parentElement: form,
         attributes: [
-            ['value', 'login'],
+            ['type', 'submit'],
+            ['value', 'Sign in'],
             ['id', 'login-form-submit'],
         ],
     });
@@ -137,5 +145,5 @@ export default function renderModal(): void {
         text: 'Sign in to your account using email and password provided during registration',
     });
     renderLoginForm(modalContent);
-    loginModal();
+    listenLoginModal();
 }
