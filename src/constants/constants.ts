@@ -1,19 +1,19 @@
 export const WRONG_DATA = `Wrong data! I can't create element with this input params!`;
 export const deleteMeLater = 'Please';
-export const SPRINT = 'Спринт';
+export const SPRINT = 'Sprint';
 export const SPRINT_GAME_DESCRIPTION =
-    'Спринт - тренировка на скорость. Попробуй угадать как можно больше слов за 30 секунд.';
-export const CHOOSE_LEVEL = 'Выбери уровень:';
-export const START = 'Начать';
-export const SPRINT_START_TIME = 30;
+    'Sprint is a speed training. Try to guess as much words as you can in 30 seconds.';
+export const CHOOSE_LEVEL = 'Chooce level:';
+export const START = 'Start';
+export const SPRINT_START_TIME = 10;
 export const MAX_PAGES = 30;
-export const MULTIPLY = 'УМНОЖЕНИЕ';
+export const MULTIPLY = 'multiply';
 export const START_POINTS = '10';
-export const POINTS = 'ОЧКИ: ';
-export const DELIMITOR = 'это';
+export const POINTS = 'Total: ';
+export const DELIMITOR = 'is';
 export const TRUE_FALSE_OBJ = {
-    true: 'ВЕРНО',
-    false: 'НЕВЕРНО',
+    true: 'YES',
+    false: 'NO',
 };
 export const WORDS = 'https://eng-guru.herokuapp.com/words';
 export const BUTTON_NAMES = ['About Us', 'TextBook', 'Games', 'Statistic'];

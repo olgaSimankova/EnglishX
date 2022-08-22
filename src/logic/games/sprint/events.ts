@@ -2,6 +2,7 @@ import getWords from '../../../api/words';
 import { MAX_PAGES } from '../../../constants/constants';
 import { Levels, Word } from '../../../constants/types';
 import { state } from '../../../state/state';
+import { deleteHTMLElement } from '../../../utils/createElement';
 import getRandomNumber from '../../../utils/randomize';
 import removeClassElement from '../../../utils/removeClassElement';
 import renderSprintGame, { setAnswerBlock } from '../../../view/pages/games/sprint/renderSprintGame';
@@ -24,10 +25,9 @@ export default function listenLevelButtons(): void {
 
 export function listerStartButton(): void {
     const startButton = document.querySelector('.start-button') as HTMLElement;
-    const startScreen = document.querySelector('.start-screen') as HTMLElement;
     startButton?.addEventListener('click', async () => {
         if (startButton.classList.contains('active')) {
-            startScreen.style.display = 'none';
+            deleteHTMLElement('start-screen');
             const sprintContainer = document.querySelector('.sprint-container') as HTMLElement;
             if (sprintContainer) {
                 const level = Levels[state.sprintGame.currentLevel as keyof typeof Levels];
@@ -48,7 +48,24 @@ export function listenChoiceButtons(data: Word[]): void {
         if (value) {
             const action = checkAnswerSprintGame(value);
             setPoints(action);
-            setAnswerBlock(data);
+            if (state.sprintGame.wordsLearnt < data.length) {
+                setAnswerBlock(data);
+            } else {
+                state.sprintGame.isGame = false;
+            }
         }
+    });
+}
+
+export function listenResultTabs(): void {
+    const tabs = document.querySelectorAll('.tab');
+    tabs.forEach((tab) => {
+        tab.addEventListener('click', (e) => {
+            const target = e.target as HTMLElement;
+            if (!target.classList.contains('active')) {
+                removeClassElement('tab', 'active');
+                target.classList.add('active');
+            }
+        });
     });
 }

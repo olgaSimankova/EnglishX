@@ -36,6 +36,15 @@ export interface SprintState {
     currentLevel: string;
     currentEngWord?: Word;
     currentRuWord?: Word;
+    currentBet: number;
+    currentPoints: number;
+    currentTick: number;
+    currentMultiply: number;
+    currentLearned: Word[];
+    currentMistakes: Word[];
+    usedNumbers: number[];
+    wordsLearnt: number;
+    isGame: boolean;
 }
 
 export interface StateInterface {
