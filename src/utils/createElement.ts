@@ -19,3 +19,8 @@ export default function createElement(options: CreateElementInterface): HTMLElem
     }
     throw new Error(WRONG_DATA);
 }
+
+export function deleteHTMLElement(target: string): void {
+    const elements = document.querySelectorAll(`.${target}`);
+    elements.forEach((element) => element.remove());
+}
