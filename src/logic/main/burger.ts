@@ -24,6 +24,7 @@ export default function burger(): void {
     burgerIcon.addEventListener('click', () => {
         document.documentElement.classList.toggle('menu-open');
         navBody.classList.toggle('header__nav_active');
+        document.body.classList.toggle('lock');
         checkNavLinks();
     });
 }

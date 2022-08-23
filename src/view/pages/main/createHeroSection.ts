@@ -26,9 +26,13 @@ export default function createHeroSection(parent: HTMLElement): void {
     });
 
     const videoButton = createElement({
-        type: 'div',
+        type: 'a',
         parentElement: video,
         classes: ['round', 'main-video__btn'],
+        attributes: [
+            ['href', 'https://www.youtube.com/watch?v=eJnQBXmZ7Ek'],
+            ['data-fancybox', ''],
+        ],
     });
 
     createElement({

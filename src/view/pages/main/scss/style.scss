@@ -1,6 +1,7 @@
 @import "../../../../global.scss";
 @import "null";
 @import "hero-section";
+@import "fancybox";
 @import "header";
 @import "burger";
 @import "hero-main";
@@ -15,4 +16,9 @@ html {
 
 body {
   font-family: $mainFont;
+}
+
+.lock {
+  overflow: hidden;
+  touch-action: none;
 }
