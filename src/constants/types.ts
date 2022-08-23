@@ -15,6 +15,15 @@ export enum Levels {
     'C2',
 }
 
+export enum Difficulty {
+    '0-600' = 'Easy',
+    '601-1200' = 'Easy',
+    '1201-1800' = 'Medium',
+    '1801-2400' = 'Medium',
+    '2401-3000' = 'Hard',
+    '3001-3600' = 'Hard',
+}
+
 export interface Word {
     id: string;
     group: number;
