@@ -210,6 +210,17 @@
 .round {
   position: relative;
 
+  &-count {
+    display: none;
+    position: absolute;
+    top: -13px;
+    left: -16px;
+    width: 86px;
+    height: 86px;
+    border-radius: 100%;
+    background: rgba(255, 63, 58, 0.12);
+  }
+
   &::after {
     display: block;
     position: absolute;

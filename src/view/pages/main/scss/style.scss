@@ -5,6 +5,13 @@
 @import "burger";
 @import "hero-main";
 @import "our-team";
+@import "process";
+@import "games";
+@import "footer";
+
+html {
+  scroll-behavior: smooth;
+}
 
 body {
   font-family: $mainFont;

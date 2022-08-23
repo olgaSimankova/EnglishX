@@ -1,0 +1,126 @@
+@import "../../../../global";
+
+.games {
+  padding: 31px 0 50px;
+
+  &__subtitle {
+    margin-bottom: 8px;
+  }
+
+  &__title {
+    margin-bottom: 66px;
+
+    @media (max-width: $mobileSmall) {
+      margin-bottom: 40px;
+    }
+  }
+
+  &__cards {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+}
+
+.game {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 280px;
+  padding-bottom: 15px;
+  border: 2px solid #FFCF2D;
+  border-radius: 30px;
+  transition: all .4s ease 0s;
+
+  &:hover {
+    transform: translate(0, -25px);
+    box-shadow: 0 0 26px rgba(255, 0, 10, 0.6);
+
+    .game__arrow {
+      animation: game__arrow 1s linear infinite;
+    }
+  }
+
+  &__image {
+    height: 310px;
+    margin-bottom: 16px;
+    &_0 {
+      background: center / contain no-repeat url("../../../../assets/img/savannah.svg");
+    }
+    &_1 {
+      background: center / contain no-repeat url("../../../../assets/img/oasis.svg");
+    }
+    &_2 {
+      background: center / contain no-repeat url("../../../../assets/img/sprint.svg");
+    }
+    &_3 {
+      background: center / contain no-repeat url("../../../../assets/img/audiocall.svg");
+    }
+  }
+
+  &__name {
+    width: 99px;
+    height: 23px;
+    margin-left: 17px;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 130%;
+    color: #FFFFFF;
+
+    &_0 {
+      background: #03CEA4;
+    }
+
+    &_1 {
+      background: #5A87FC;
+    }
+
+    &_2 {
+      background: #F52F6E;
+    }
+
+    &_3 {
+      background: #F89828;
+    }
+  }
+
+  &__descr {
+    margin: 0 17px 20px 17px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 160%;
+    color: $gray;
+  }
+
+  &__play {
+    margin-left: 17px;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 160%;
+    color: $darkGray;
+  }
+
+  &__arrow {
+    position: absolute;
+    bottom: 21px;
+    left: 104px;
+    width: 18px;
+    height: 11px;
+    background: url("../../../../assets/icons/arrow.svg");
+  }
+}
+
+@keyframes game__arrow {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
