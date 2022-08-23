@@ -39,7 +39,10 @@ function listenLoginModal(): void {
             event.preventDefault();
             const loginForm = document.querySelector('form') as HTMLFormElement;
             try {
-                await loginUser({ email: loginForm.email.value, password: loginForm.password.value });
+                await loginUser({
+                    email: loginForm.email.value,
+                    password: loginForm.password.value,
+                });
                 toggleModal(false);
             } catch {
                 toggleFailLoginMessage(true);
