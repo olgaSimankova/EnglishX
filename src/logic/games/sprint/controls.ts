@@ -1,4 +1,4 @@
-import { deleteMeLater, START_POINTS } from '../../../constants/constants';
+import { START_POINTS } from '../../../constants/constants';
 import { Word } from '../../../constants/types';
 import state from '../../../state/state';
 import { deleteHTMLElement } from '../../../utils/createElement';
