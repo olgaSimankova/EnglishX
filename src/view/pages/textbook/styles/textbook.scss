@@ -1,0 +1,13 @@
+@import '../../../../global.scss';
+
+.header {
+    margin-top: 13px; 
+}
+
+.levels_section {
+    padding: 0 30px;
+}
+
+.textbook_title {
+    @include font-face('Lato', 26px, 700, 44px, left);
+}
