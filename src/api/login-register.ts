@@ -1,7 +1,7 @@
 import { API_BASE_LINK } from '../constants/constants';
 import { User } from '../constants/types';
 
-const createUser = async (user: User) => {
+const createUser = async (user: User): Promise<Response> => {
     const rawResponse = await fetch(`${API_BASE_LINK}/users`, {
         method: 'POST',
         headers: {
@@ -10,11 +10,8 @@ const createUser = async (user: User) => {
         },
         body: JSON.stringify(user),
     });
-    const content = await rawResponse.json();
-
-    console.log(content);
-
-    return content;
+    const response = await rawResponse.json();
+    return response;
 };
 
 const loginUser = async (user: User): Promise<Response> => {
@@ -27,9 +24,6 @@ const loginUser = async (user: User): Promise<Response> => {
         body: JSON.stringify(user),
     });
     const response = await rawResponse.json();
-
-    console.log(response);
-
     return response;
 };
 
