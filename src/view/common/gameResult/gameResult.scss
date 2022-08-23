@@ -1,7 +1,6 @@
 .results-container {
     width: 320px;
     height: 500px;
-    padding: 20px;
     border-radius: 10px;
     background-color: yellow;
     overflow: hidden;
@@ -10,10 +9,21 @@
     .slider {
         display: flex;
         width: 640px;
+        transition: 1s ease-in-out;
 
         .side {
             width: 320px;
+            height: 350px;
+            padding: 0 10px;
         }
+
+        .right-side-container {
+            overflow-y: scroll;
+        }
+    }
+
+    .move-left {
+        transform: translateX(-320px);
     }
 }
 

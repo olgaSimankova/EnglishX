@@ -64,6 +64,8 @@ export function listenResultTabs(): void {
             if (!target.classList.contains('active')) {
                 removeClassElement('tab', 'active');
                 target.classList.add('active');
+                const slider = document.querySelector('.slider');
+                slider?.classList.toggle('move-left');
             }
         });
     });

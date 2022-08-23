@@ -5,6 +5,7 @@ export const START_GAME_LABELS = {
         description: 'Sprint is a speed training. Try to guess as much words as you can in 30 seconds.',
     },
 };
+export const RESULT_TAB_LABELS = ['RESULT', 'WATCH WORDS'];
 export const CHOOSE_LEVEL = 'Chooce level:';
 export const START = 'Start';
 export const SPRINT_START_TIME = 5;
@@ -13,10 +14,8 @@ export const MULTIPLY = 'multiply';
 export const START_POINTS = '10';
 export const POINTS = 'Total: ';
 export const DELIMITOR = 'is';
-export const TRUE_FALSE_OBJ = {
-    true: 'YES',
-    false: 'NO',
-};
+export const SPRINT_GAME_ANSWER_BUTTONS = ['YES', 'NO'];
+
 export const WORDS = 'https://eng-guru.herokuapp.com/words';
 export const BUTTON_NAMES = ['About Us', 'TextBook', 'Games', 'Statistic'];
 

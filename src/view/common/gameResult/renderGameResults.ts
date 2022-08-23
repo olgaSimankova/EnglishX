@@ -1,3 +1,4 @@
+import { RESULT_TAB_LABELS } from '../../../constants/constants';
 import { Word } from '../../../constants/types';
 import createElement from '../../../utils/createElement';
 import './gameResult.scss';
@@ -8,7 +9,7 @@ function renderResultTabs(parentElement: HTMLElement): void {
         parentElement,
         classes: ['tabs-container'],
     });
-    ['RESULT', 'WATCH WORDS'].forEach((tag) => {
+    RESULT_TAB_LABELS.forEach((tag) => {
         createElement({
             type: 'button',
             parentElement: tabsContainer,

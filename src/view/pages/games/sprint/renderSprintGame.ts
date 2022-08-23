@@ -2,9 +2,9 @@ import {
     DELIMITOR,
     MULTIPLY,
     POINTS,
+    SPRINT_GAME_ANSWER_BUTTONS,
     SPRINT_START_TIME,
     START_POINTS,
-    TRUE_FALSE_OBJ,
 } from '../../../../constants/constants';
 import { Word } from '../../../../constants/types';
 import { resetSprintPoints } from '../../../../logic/games/sprint/controls';
@@ -131,12 +131,12 @@ function renderButtonsBlock(parentElement: HTMLElement): void {
         parentElement,
         classes: ['buttons-container'],
     });
-    Object.keys(TRUE_FALSE_OBJ).forEach((key) => {
+    SPRINT_GAME_ANSWER_BUTTONS.forEach((key) => {
         createElement({
             type: 'button',
             parentElement: buttonsContainer,
-            classes: ['answer-button', `${key}-button`],
-            text: TRUE_FALSE_OBJ[key as keyof typeof TRUE_FALSE_OBJ],
+            classes: ['answer-button', `${key.toLocaleLowerCase()}-button`],
+            text: key,
             attributes: [['data', key]],
         });
     });

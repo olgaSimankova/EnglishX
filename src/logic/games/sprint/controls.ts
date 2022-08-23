@@ -11,6 +11,10 @@ export default function sprintStartPageControls(): void {
     listerStartButton();
 }
 
+export function sprintResultsControls(): void {
+    listenResultTabs();
+}
+
 function startTimer(): void {
     let timeLeft = Number(getHTMLElementContent('clock-counter'));
     const id = setInterval(() => {
@@ -25,7 +29,7 @@ function startTimer(): void {
                 state.sprintGame.currentLearned,
                 state.sprintGame.currentMistakes
             );
-            listenResultTabs();
+            sprintResultsControls();
         }
     }, 1000);
 }
@@ -83,8 +87,4 @@ export function setPoints(action: boolean): void {
 export function sprintGameControls(data: Word[]): void {
     startTimer();
     listenChoiceButtons(data);
-}
-
-export function sprintResultsControls(): void {
-    listenResultTabs();
 }
