@@ -39,7 +39,7 @@ export default function createFooter(parent: HTMLElement): void {
         classes: ['footer__text'],
     });
 
-    text.innerHTML = `EnglishX is a special project, developed for RSSchool. Our team of 3 developers and one great mentor has created a product that we hope you enjoy using. <br> For any questions, write us, we will be glad to receive feedback!`;
+    text.innerHTML = `EnglishX is a unique project, developed for RSSchool. Our team of 3 developers and one great mentor has created a product we hope you'll enjoy. <br>If you have any further questions please don't hesitate to contact us.`;
 
     const siteMap = createElement({
         type: 'div',
