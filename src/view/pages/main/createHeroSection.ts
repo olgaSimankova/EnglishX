@@ -61,7 +61,7 @@ export default function createHeroSection(parent: HTMLElement): void {
         parentElement: buttons,
         classes: ['main__button'],
         text: 'About us',
-        attributes: [['href', '#']],
+        attributes: [['href', '#team']],
     });
 
     createElement({
@@ -69,7 +69,7 @@ export default function createHeroSection(parent: HTMLElement): void {
         parentElement: buttons,
         classes: ['main__button', 'main__button-filled'],
         text: 'Explore games',
-        attributes: [['href', '#']],
+        attributes: [['href', '#games']],
     });
 
     createElement({
