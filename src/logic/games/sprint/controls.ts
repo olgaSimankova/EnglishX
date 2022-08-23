@@ -1,4 +1,4 @@
-import { START_POINTS } from '../../../constants/constants';
+import { SPRINT_GAME_ANSWER_BUTTONS, START_POINTS } from '../../../constants/constants';
 import { Choice, Word } from '../../../constants/types';
 import state from '../../../state/state';
 import { deleteHTMLElement } from '../../../utils/createElement';
@@ -46,7 +46,7 @@ function startTimer(): void {
 }
 
 export function checkAnswerSprintGame(option: string): boolean {
-    const isTrue = option === 'YES';
+    const isTrue = option === SPRINT_GAME_ANSWER_BUTTONS[0];
     const word1 = state.sprintGame.currentEngWord?.wordTranslate;
     const word2 = state.sprintGame.currentRuWord?.wordTranslate;
     return (word1 === word2) === isTrue;
