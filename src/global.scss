@@ -8,3 +8,11 @@ $dark: #1E212C;
 $darkGray: #424551;
 $gray: #787A80;
 $red: #FF3F3A;
+
+@mixin font-face($family, $size, $font-weight, $line-height, $text-align) {
+    font-family: $family;
+    font-size: $size;
+    font-weight: $font-weight;
+    line-height: $line-height;
+    text-align: $text-align;
+}

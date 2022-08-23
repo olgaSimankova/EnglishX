@@ -1,5 +1,5 @@
-import { Word } from '../../constants/types';
-import createElement from '../../utils/createElement';
+import { Word } from '../../../constants/types';
+import createElement from '../../../utils/createElement';
 import './gameResult.scss';
 
 function renderResultTabs(parentElement: HTMLElement): void {

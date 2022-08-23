@@ -3,7 +3,7 @@ import { Word } from '../../../constants/types';
 import state from '../../../state/state';
 import { deleteHTMLElement } from '../../../utils/createElement';
 import { getHTMLElementContent, setHTMLElementContent } from '../../../utils/handleHTMLTextContent';
-import renderResultSprintPage from '../../../view/common/renderGameResults';
+import renderResultSprintPage from '../../../view/common/gameResult/renderGameResults';
 import listenLevelButtons, { listenChoiceButtons, listenResultTabs, listerStartButton } from './events';
 
 export default function sprintStartPageControls(): void {

@@ -1,9 +1,9 @@
 import sprintStartPageControls from '../../../../logic/games/sprint/controls';
-import renderSprint from './renderSprint';
+import renderGameStartPage from '../../../common/gameStartPage/renderGameStartPage';
 import './sprint.scss';
 
 function startSprintPage() {
-    renderSprint();
+    renderGameStartPage('sprint');
     sprintStartPageControls();
 }
 

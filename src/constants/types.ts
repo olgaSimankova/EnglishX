@@ -50,3 +50,9 @@ export interface SprintState {
 export interface StateInterface {
     sprintGame: SprintState;
 }
+
+export interface User {
+    email: string;
+    password: string;
+    name?: string;
+}

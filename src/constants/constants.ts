@@ -1,8 +1,10 @@
 export const WRONG_DATA = `Wrong data! I can't create element with this input params!`;
-export const deleteMeLater = 'Please';
-export const SPRINT = 'Sprint';
-export const SPRINT_GAME_DESCRIPTION =
-    'Sprint is a speed training. Try to guess as much words as you can in 30 seconds.';
+export const START_GAME_LABELS = {
+    sprint: {
+        header: 'Sprint',
+        description: 'Sprint is a speed training. Try to guess as much words as you can in 30 seconds.',
+    },
+};
 export const CHOOSE_LEVEL = 'Chooce level:';
 export const START = 'Start';
 export const SPRINT_START_TIME = 5;
@@ -17,6 +19,11 @@ export const TRUE_FALSE_OBJ = {
 };
 export const WORDS = 'https://eng-guru.herokuapp.com/words';
 export const BUTTON_NAMES = ['About Us', 'TextBook', 'Games', 'Statistic'];
+
+export const API_BASE_LINK = 'https://eng-guru.herokuapp.com';
+
+export const VALID_COLOR_GREEN = 'rgb(211, 255, 233)';
+export const INVALID_COLOR_RED = 'rgb(249, 211, 211)';
 export const TEAM_INFO = [
     {
         name: 'Olga Simankova',
