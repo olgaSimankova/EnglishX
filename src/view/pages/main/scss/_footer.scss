@@ -1,0 +1,187 @@
+@import "../../../../global";
+
+.footer {
+  padding-top: 50px;
+  min-height: 310px;
+  background: $dark;
+  // .footer__wrapper
+  &__wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 0 auto 30px;
+    padding: 0 20px;
+
+    & > div {
+      &:not(:last-child) {
+        margin-right: 4.16%;
+      }
+    }
+
+    @media (max-width: $mobile) {
+      justify-content: space-between;
+      max-width: 450px;
+      row-gap: 20px;
+
+    }
+
+  }
+
+  // .footer__info
+  &__info {
+    max-width: 270px;
+  }
+
+  // .footer__logo
+  &__logo {
+    display: block;
+    width: 145px;
+    height: 37px;
+    margin-bottom: 29px;
+    background: no-repeat url("../../../../assets/img/logo-white.svg");
+  }
+
+  // .footer__text
+  &__text {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 140%;
+    color: #FFF;
+    opacity: 0.6;
+  }
+
+  // .footer__socials
+  &__socials {
+  }
+
+  // .footer__sitemap
+  &__sitemap {
+    display: flex;
+    flex-direction: column;
+
+    &:not(:last-child) {
+      margin-bottom: 8px;
+    }
+  }
+
+  // .footer__title
+  &__title {
+    margin-bottom: 12px;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 150%;
+    color: #FFF;
+
+    @media (max-width: $mobile) {
+      margin-bottom: 5px;
+    }
+  }
+
+  // .footer__link
+  &__link {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 160%;
+    color: #FFF;
+    opacity: 0.6;
+    transition: all .4s ease 0s;
+
+    &_github {
+      position: relative;
+      padding-left: 24px;
+      &:after {
+        position: absolute;
+        content: url("../../../../assets/icons/github.svg");
+        left: 0;
+        top: 2px;
+        width: 16px;
+        height: 16px;
+      }
+    }
+
+    &:hover {
+      opacity: 1;
+    }
+
+    @media (max-width: $mobile) {
+      font-size: 14px;
+    }
+  }
+
+  // .footer__games
+  &__games {
+    display: flex;
+    flex-direction: column;
+
+    &:not(:last-child) {
+      margin-bottom: 8px;
+    }
+  }
+
+  // .footer__contacts
+  &__contacts {
+    display: flex;
+    flex-direction: column;
+
+    &:not(:last-child) {
+      margin-bottom: 8px;
+    }
+  }
+
+  // .footer__bottom
+  &__bottom {
+
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1231px;
+    min-height: 58px;
+    padding: 15px 20px;
+    margin: 0 auto;
+
+    @media (max-width: $mobileSmall) {
+      flex-direction: column;
+      gap: 15px;
+    }
+  }
+
+  // .footer__message
+  &__message {
+    text-align: center;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 150%;
+    color: #FFF;
+    opacity: 0.6;
+
+    span {
+      position: relative;
+      padding-left: 22px;
+      &:after {
+        position: absolute;
+        content: url("../../../../assets/icons/heart.svg");
+        top: 1px;
+        left: 2px;
+      }
+    }
+  }
+
+  // .footer__got-top
+  &__got-top {
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 150%;
+    color: #FFF;
+    opacity: 0.6;
+    transition: all .4s ease 0s;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
