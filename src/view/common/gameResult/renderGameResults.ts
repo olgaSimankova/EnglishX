@@ -73,7 +73,10 @@ function renderSliderLeftSide(parentElement: HTMLElement, goodAnswers: Word[], b
     const goodLength = goodAnswers.length;
     const badLength = badAnswers.length;
     const totalLength = goodLength + badLength;
-    const percents = Math.floor((goodLength / totalLength) * 100);
+    let percents = Math.floor((goodLength / totalLength) * 100);
+    if (Object.is(percents, NaN)) {
+        percents = 0;
+    }
     createElement({
         type: 'p',
         parentElement: leftSide,
@@ -95,9 +98,14 @@ function renderListHeader(parentElement: HTMLElement, label: string, num: number
         classes: ['list-header'],
         text: label,
     });
+    const wrapper = createElement({
+        type: 'div',
+        parentElement: listHeaderContainer,
+        classes: [`counter-wrapper`, `${label.toLocaleLowerCase()}-container`],
+    });
     createElement({
         type: 'p',
-        parentElement: listHeaderContainer,
+        parentElement: wrapper,
         classes: ['list-header', label.toLocaleLowerCase()],
         text: num.toString(),
     });
@@ -119,6 +127,7 @@ function renderWords(parentElement: HTMLElement, list: Word[]): void {
             type: 'div',
             parentElement: li,
             classes: ['sound-image'],
+            attributes: [['data', el.audio]],
         });
         createElement({
             type: 'p',
