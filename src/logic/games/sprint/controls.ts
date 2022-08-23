@@ -1,11 +1,14 @@
-import { SOUNDS_ANSWER, START_POINTS } from '../../../constants/constants';
-import { Word } from '../../../constants/types';
+import { START_POINTS } from '../../../constants/constants';
+import { Choice, Word } from '../../../constants/types';
 import state from '../../../state/state';
 import { deleteHTMLElement } from '../../../utils/createElement';
 import { getHTMLElementContent, setHTMLElementContent } from '../../../utils/handleHTMLTextContent';
+import { playChoiceSound } from '../../../utils/playAudio';
 import renderResultSprintPage from '../../../view/common/gameResult/renderGameResults';
+import { setAnswerBlock } from '../../../view/pages/games/sprint/renderSprintGame';
 import listenLevelButtons, {
     listenChoiceButtons,
+    listenKeyboard,
     listenResultBottomButtons,
     listenResultTabs,
     listenSoundResultList,
@@ -85,11 +88,11 @@ export function resetSprintPoints(): void {
 export function setPoints(action: boolean): void {
     if (action) {
         increaseScore();
-        new Audio(SOUNDS_ANSWER.right).play();
+        playChoiceSound(Choice.right);
     } else {
         state.sprintGame.currentTick = 1;
         state.sprintGame.currentMultiply = 1;
-        new Audio(SOUNDS_ANSWER.wrong).play();
+        playChoiceSound(Choice.wrong);
     }
     updateViewPoints();
     unpdateWordsResult(action);
@@ -98,6 +101,7 @@ export function setPoints(action: boolean): void {
 export function sprintGameControls(data: Word[]): void {
     startTimer();
     listenChoiceButtons(data);
+    listenKeyboard(data);
 }
 
 export function processResultGameButtons(data: string): void {
@@ -110,5 +114,18 @@ export function processResultGameButtons(data: string): void {
             break;
         default:
             break;
+    }
+}
+
+export function choiceAction(e: Event, data: Word[]): void {
+    const target = e.target as HTMLElement;
+    const value = target.getAttribute('data');
+    if (value && state.sprintGame.wordsLearnt < data.length) {
+        const action = checkAnswerSprintGame(value);
+        setPoints(action);
+        setAnswerBlock(data);
+        state.sprintGame.wordsLearnt += 1;
+    } else {
+        state.sprintGame.isGame = false;
     }
 }
