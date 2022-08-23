@@ -1,4 +1,5 @@
 import createElement from '../../../utils/createElement';
+import renderModal from './loginRegisterModal/renderModal';
 import createHeader from '../../common/createHeader';
 import './scss/style.scss';
 import createHeroSection from './createHeroSection';
@@ -16,6 +17,7 @@ export default function renderMain(): void {
     });
 
     createHeader(heroSection);
+    renderModal();
     createHeroSection(heroSection);
     createOurTeamSection(document.body);
     createProcessSection(document.body);
