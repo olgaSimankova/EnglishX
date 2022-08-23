@@ -1,4 +1,4 @@
-import { START_POINTS } from '../../../constants/constants';
+import { SOUNDS_ANSWER, START_POINTS } from '../../../constants/constants';
 import { Word } from '../../../constants/types';
 import state from '../../../state/state';
 import { deleteHTMLElement } from '../../../utils/createElement';
@@ -6,6 +6,7 @@ import { getHTMLElementContent, setHTMLElementContent } from '../../../utils/han
 import renderResultSprintPage from '../../../view/common/gameResult/renderGameResults';
 import listenLevelButtons, {
     listenChoiceButtons,
+    listenResultBottomButtons,
     listenResultTabs,
     listenSoundResultList,
     listerStartButton,
@@ -19,6 +20,7 @@ export default function sprintStartPageControls(): void {
 export function gameResultControls(): void {
     listenResultTabs();
     listenSoundResultList();
+    listenResultBottomButtons();
 }
 
 function startTimer(): void {
@@ -83,9 +85,11 @@ export function resetSprintPoints(): void {
 export function setPoints(action: boolean): void {
     if (action) {
         increaseScore();
+        new Audio(SOUNDS_ANSWER.right).play();
     } else {
         state.sprintGame.currentTick = 1;
         state.sprintGame.currentMultiply = 1;
+        new Audio(SOUNDS_ANSWER.wrong).play();
     }
     updateViewPoints();
     unpdateWordsResult(action);
@@ -98,7 +102,11 @@ export function sprintGameControls(data: Word[]): void {
 
 export function processResultGameButtons(data: string): void {
     switch (data.toLocaleLowerCase()) {
+        case 'go':
+            window.location.href = './textbook.html';
+            break;
         case 'play':
+            window.location.href = './sprint.html';
             break;
         default:
             break;

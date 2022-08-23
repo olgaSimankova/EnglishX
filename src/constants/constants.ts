@@ -1,9 +1,16 @@
+import rightSound from '../assets/sounds/right-answer-sound.mp3';
+import wrongSound from '../assets/sounds/wrong-answer-sound.mp3';
+
 export const WRONG_DATA = `Wrong data! I can't create element with this input params!`;
 export const START_GAME_LABELS = {
     sprint: {
         header: 'Sprint',
         description: 'Sprint is a speed training. Try to guess as much words as you can in 30 seconds.',
     },
+};
+export const SOUNDS_ANSWER = {
+    right: rightSound,
+    wrong: wrongSound,
 };
 export const RESULT_TAB_LABELS = ['RESULT', 'WATCH WORDS'];
 export const CHOOSE_LEVEL = 'Chooce level:';

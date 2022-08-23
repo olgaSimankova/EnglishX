@@ -86,6 +86,7 @@ export function listenSoundResultList() {
 
 export function listenResultBottomButtons() {
     const container = document.querySelector('.bottom-buttons-container');
+    console.log('connect');
     container?.addEventListener('click', (e) => {
         const target = e.target as HTMLElement;
         const data = target.getAttribute('data');
