@@ -4,15 +4,21 @@ import state from '../../../state/state';
 import { deleteHTMLElement } from '../../../utils/createElement';
 import { getHTMLElementContent, setHTMLElementContent } from '../../../utils/handleHTMLTextContent';
 import renderResultSprintPage from '../../../view/common/gameResult/renderGameResults';
-import listenLevelButtons, { listenChoiceButtons, listenResultTabs, listerStartButton } from './events';
+import listenLevelButtons, {
+    listenChoiceButtons,
+    listenResultTabs,
+    listenSoundResultList,
+    listerStartButton,
+} from './events';
 
 export default function sprintStartPageControls(): void {
     listenLevelButtons();
     listerStartButton();
 }
 
-export function sprintResultsControls(): void {
+export function gameResultControls(): void {
     listenResultTabs();
+    listenSoundResultList();
 }
 
 function startTimer(): void {
@@ -29,15 +35,16 @@ function startTimer(): void {
                 state.sprintGame.currentLearned,
                 state.sprintGame.currentMistakes
             );
-            sprintResultsControls();
+            gameResultControls();
         }
     }, 1000);
 }
 
 export function checkAnswerSprintGame(option: string): boolean {
+    const isTrue = option === 'YES';
     const word1 = state.sprintGame.currentEngWord?.wordTranslate;
     const word2 = state.sprintGame.currentRuWord?.wordTranslate;
-    return (word1 === word2).toString() === option;
+    return (word1 === word2) === isTrue;
 }
 
 function increaseScore(): void {
@@ -87,4 +94,13 @@ export function setPoints(action: boolean): void {
 export function sprintGameControls(data: Word[]): void {
     startTimer();
     listenChoiceButtons(data);
+}
+
+export function processResultGameButtons(data: string): void {
+    switch (data.toLocaleLowerCase()) {
+        case 'play':
+            break;
+        default:
+            break;
+    }
 }

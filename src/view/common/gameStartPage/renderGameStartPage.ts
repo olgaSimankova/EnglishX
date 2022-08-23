@@ -2,6 +2,7 @@ import { CHOOSE_LEVEL, START, START_GAME_LABELS } from '../../../constants/const
 import { Levels } from '../../../constants/types';
 import createElement from '../../../utils/createElement';
 import renderGameButtons from '../renderGameControlButtons';
+import './startGame.scss';
 
 function renderUpperBlock(parentElement: HTMLElement, tag: string): void {
     const upperContainer = createElement({

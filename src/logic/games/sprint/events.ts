@@ -3,10 +3,11 @@ import { MAX_PAGES } from '../../../constants/constants';
 import { Levels, Word } from '../../../constants/types';
 import { state } from '../../../state/state';
 import { deleteHTMLElement } from '../../../utils/createElement';
+import playAudio, { getFullPath } from '../../../utils/playAudio';
 import getRandomNumber from '../../../utils/randomize';
 import removeClassElement from '../../../utils/removeClassElement';
 import renderSprintGame, { setAnswerBlock } from '../../../view/pages/games/sprint/renderSprintGame';
-import { checkAnswerSprintGame, setPoints, sprintGameControls } from './controls';
+import { checkAnswerSprintGame, processResultGameButtons, setPoints, sprintGameControls } from './controls';
 
 export default function listenLevelButtons(): void {
     const levelsContainer = document.querySelector('.level-container');
@@ -68,5 +69,28 @@ export function listenResultTabs(): void {
                 slider?.classList.toggle('move-left');
             }
         });
+    });
+}
+
+export function listenSoundResultList() {
+    const list = document.querySelector('.right-side-container');
+    list?.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement;
+        const data = target.getAttribute('data');
+        if (data) {
+            const path = getFullPath(data);
+            playAudio(path);
+        }
+    });
+}
+
+export function listenResultBottomButtons() {
+    const container = document.querySelector('.bottom-buttons-container');
+    container?.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement;
+        const data = target.getAttribute('data');
+        if (data) {
+            processResultGameButtons(data);
+        }
     });
 }
