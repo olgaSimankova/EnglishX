@@ -27,9 +27,10 @@ export default function createHeader(parent: HTMLElement): void {
     });
 
     createElement({
-        type: 'div',
+        type: 'a',
         parentElement: wrapper,
         classes: ['header__logo'],
+        attributes: [['href', './index.html#hero']],
     });
 
     const nav = createElement({

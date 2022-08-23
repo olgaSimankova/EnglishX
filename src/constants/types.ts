@@ -6,6 +6,51 @@ export interface CreateElementInterface {
     attributes?: [string, string][];
 }
 
+export enum Levels {
+    'A1',
+    'A2',
+    'B1',
+    'B2',
+    'C1',
+    'C2',
+}
+
+export interface Word {
+    id: string;
+    group: number;
+    page: number;
+    word: string;
+    image: string;
+    audio: string;
+    audioMeaning: string;
+    audioExample: string;
+    textMeaning: string;
+    textExample: string;
+    transcription: string;
+    wordTranslate: string;
+    textMeaningTranslate: string;
+    textExampleTranslate: string;
+}
+
+export interface SprintState {
+    currentLevel: string;
+    currentEngWord?: Word;
+    currentRuWord?: Word;
+    currentBet: number;
+    currentPoints: number;
+    currentTick: number;
+    currentMultiply: number;
+    currentLearned: Word[];
+    currentMistakes: Word[];
+    usedNumbers: number[];
+    wordsLearnt: number;
+    isGame: boolean;
+}
+
+export interface StateInterface {
+    sprintGame: SprintState;
+}
+
 export interface User {
     email: string;
     password: string;
