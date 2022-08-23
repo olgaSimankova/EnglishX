@@ -79,4 +79,4 @@ export const GAMES = [
 export const FOOTER_LINKS_TEXT = ['About Us', 'TextBook', 'Games', 'Statistic', 'Contacts'];
 export const SITEMAP_LINKS = ['#team', '#', '#', '#', '#footer'];
 export const GAMES_LINKS = ['#', '#', '#', '#'];
-export const HEADER_LINKS = ['#team', '#', '#', '#'];
+export const HEADER_LINKS = ['#team', './textbook.html', '#', '#'];
