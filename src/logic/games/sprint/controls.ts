@@ -3,7 +3,7 @@ import { Word } from '../../../constants/types';
 import state from '../../../state/state';
 import { deleteHTMLElement } from '../../../utils/createElement';
 import { getHTMLElementContent, setHTMLElementContent } from '../../../utils/handleHTMLTextContent';
-import { renderResultSprintPage } from '../../../view/pages/games/sprint/renderSprintGame';
+import renderResultSprintPage from '../../../view/common/renderGameResults';
 import listenLevelButtons, { listenChoiceButtons, listenResultTabs, listerStartButton } from './events';
 
 export default function sprintStartPageControls(): void {
@@ -20,7 +20,11 @@ function startTimer(): void {
         } else {
             clearInterval(id);
             deleteHTMLElement('game-container');
-            renderResultSprintPage();
+            renderResultSprintPage(
+                'sprint-container',
+                state.sprintGame.currentLearned,
+                state.sprintGame.currentMistakes
+            );
             listenResultTabs();
         }
     }, 1000);

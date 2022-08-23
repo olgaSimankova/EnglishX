@@ -13,87 +13,6 @@ import createElement from '../../../../utils/createElement';
 import { setHTMLElementContent } from '../../../../utils/handleHTMLTextContent';
 import getRandomNumber from '../../../../utils/randomize';
 
-function renderResultTabs(parentElement: HTMLElement): void {
-    const tabsContainer = createElement({
-        type: 'div',
-        parentElement,
-        classes: ['tabs-container'],
-    });
-    ['RESULT', 'WATCH WORDS'].forEach((tag) => {
-        createElement({
-            type: 'button',
-            parentElement: tabsContainer,
-            classes: ['tab', `${tag.split(' ')[0]}`.toLocaleLowerCase()],
-            text: tag,
-        });
-    });
-    const firstTab = document.querySelector('.tab');
-    firstTab?.classList.add('active');
-}
-
-function renderPercents(parentElement: HTMLElement, percents: number): void {
-    const percentsContainer = createElement({
-        type: 'div',
-        parentElement,
-        classes: ['percents-result-container'],
-    });
-    createElement({
-        type: 'p',
-        parentElement: percentsContainer,
-        classes: ['big-percents'],
-        text: `${percents.toString()}%`,
-    });
-    createElement({
-        type: 'p',
-        parentElement: percentsContainer,
-        classes: ['percents-description'],
-        text: 'Learnt words',
-    });
-}
-
-function renderResultBottomButtons(parentElement: HTMLElement): void {
-    const buttonsContainer = createElement({
-        type: 'div',
-        parentElement,
-        classes: ['bottom-buttons-container'],
-    });
-    ['Play one more time', 'Go to textbook'].forEach((label) => {
-        createElement({
-            type: 'button',
-            parentElement: buttonsContainer,
-            classes: ['bottom-button'],
-            text: label,
-            attributes: [['data', `${label.split(' ')[0]}`]],
-        });
-    });
-}
-
-export function renderResultSprintPage(): void {
-    const sprintContainer = document.querySelector('.sprint-container') as HTMLElement;
-    const resultContainer = createElement({
-        type: 'div',
-        parentElement: sprintContainer,
-        classes: ['results-container'],
-    });
-    renderResultTabs(resultContainer);
-    createElement({
-        type: 'h2',
-        parentElement: resultContainer,
-        classes: ['title-result', 'text-center'],
-        text: 'Nice one, you are awesome!',
-    });
-    const { currentLearned, currentMistakes, wordsLearnt } = state.sprintGame;
-    const percents = Math.floor((currentLearned.length / wordsLearnt) * 100);
-    createElement({
-        type: 'p',
-        parentElement: resultContainer,
-        classes: ['result-description', 'text-center'],
-        text: `${wordsLearnt} words trained, ${currentMistakes.length} words need to learn`,
-    });
-    renderPercents(resultContainer, percents);
-    renderResultBottomButtons(resultContainer);
-}
-
 function renderClockBlock(parentElement: HTMLElement): void {
     createElement({
         type: 'div',
@@ -225,8 +144,7 @@ function renderButtonsBlock(parentElement: HTMLElement): void {
 
 export function setAnswerBlock(data: Word[]): void {
     const { length } = data;
-    if (state.sprintGame.wordsLearnt <= length) {
-        state.sprintGame.wordsLearnt += 1;
+    if (state.sprintGame.usedNumbers.length !== length) {
         let randomNumber = getRandomNumber(0, length);
         while (state.sprintGame.usedNumbers.includes(randomNumber)) {
             randomNumber = getRandomNumber(0, length);

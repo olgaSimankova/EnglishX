@@ -5,7 +5,7 @@ export const SPRINT_GAME_DESCRIPTION =
     'Sprint is a speed training. Try to guess as much words as you can in 30 seconds.';
 export const CHOOSE_LEVEL = 'Chooce level:';
 export const START = 'Start';
-export const SPRINT_START_TIME = 10;
+export const SPRINT_START_TIME = 5;
 export const MAX_PAGES = 30;
 export const MULTIPLY = 'multiply';
 export const START_POINTS = '10';

@@ -45,14 +45,13 @@ export function listenChoiceButtons(data: Word[]): void {
     buttonsContainer?.addEventListener('click', (e) => {
         const target = e.target as HTMLElement;
         const value = target.getAttribute('data');
-        if (value) {
+        if (value && state.sprintGame.wordsLearnt < data.length) {
             const action = checkAnswerSprintGame(value);
             setPoints(action);
-            if (state.sprintGame.wordsLearnt < data.length) {
-                setAnswerBlock(data);
-            } else {
-                state.sprintGame.isGame = false;
-            }
+            setAnswerBlock(data);
+            state.sprintGame.wordsLearnt += 1;
+        } else {
+            state.sprintGame.isGame = false;
         }
     });
 }
