@@ -1,5 +1,5 @@
 import getWords from '../../../api/words';
-import { KEY_ARROWS, MAX_PAGES, SPRINT_GAME_ANSWER_BUTTONS } from '../../../constants/constants';
+import { KEY_ARROWS, MAX_PAGES, GAME_BUTTONS } from '../../../constants/constants';
 import { Levels, Word } from '../../../constants/types';
 import { state } from '../../../state/state';
 import { deleteHTMLElement } from '../../../utils/createElement';
@@ -39,6 +39,7 @@ export function listerStartButton(): void {
             if (sprintContainer) {
                 const level = Levels[state.sprintGame.currentLevel as keyof typeof Levels];
                 const page = getRandomNumber(0, MAX_PAGES);
+                // insert here loading image
                 const data = await getWords(level, page);
                 renderSprintGame(sprintContainer, data);
                 sprintGameControls(data);
@@ -95,10 +96,10 @@ export function listenResultBottomButtons(): void {
 export function listenKeyboard(data: Word[]): void {
     document.addEventListener('keydown', (e) => {
         const keyName = e.key;
-        const value = keyName === KEY_ARROWS[1] ? SPRINT_GAME_ANSWER_BUTTONS[0] : SPRINT_GAME_ANSWER_BUTTONS[1];
-        if (KEY_ARROWS.includes(keyName)) {
+        const choice = keyName === KEY_ARROWS.left ? GAME_BUTTONS.YES : GAME_BUTTONS.NO;
+        if (Object.values(KEY_ARROWS).includes(keyName)) {
             if (state.sprintGame.wordsLearnt < data.length) {
-                const action = checkAnswerSprintGame(value);
+                const action = checkAnswerSprintGame(choice);
                 setPoints(action);
                 setAnswerBlock(data);
                 state.sprintGame.wordsLearnt += 1;

@@ -12,7 +12,10 @@ export const SOUNDS_ANSWER = {
     right: rightSound,
     wrong: wrongSound,
 };
-export const KEY_ARROWS = ['ArrowRight', 'ArrowLeft'];
+export const KEY_ARROWS = {
+    right: 'ArrowRight',
+    left: 'ArrowLeft',
+};
 export const RESULT_TAB_LABELS = ['RESULT', 'WATCH WORDS'];
 export const CHOOSE_LEVEL = 'Chooce level:';
 export const START = 'Start';
@@ -22,8 +25,10 @@ export const MULTIPLY = 'multiply';
 export const START_POINTS = '10';
 export const POINTS = 'Total: ';
 export const DELIMITOR = 'is';
-export const SPRINT_GAME_ANSWER_BUTTONS = ['YES', 'NO'];
-
+export const GAME_BUTTONS = {
+    YES: true,
+    NO: false,
+};
 export const WORDS = 'https://eng-guru.herokuapp.com/words';
 export const BUTTON_NAMES = ['About Us', 'TextBook', 'Games', 'Statistic'];
 

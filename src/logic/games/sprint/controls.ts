@@ -1,4 +1,4 @@
-import { SPRINT_GAME_ANSWER_BUTTONS, START_POINTS } from '../../../constants/constants';
+import { GAME_BUTTONS, START_POINTS } from '../../../constants/constants';
 import { Choice, Word } from '../../../constants/types';
 import state from '../../../state/state';
 import { deleteHTMLElement } from '../../../utils/createElement';
@@ -45,11 +45,10 @@ function startTimer(): void {
     }, 1000);
 }
 
-export function checkAnswerSprintGame(option: string): boolean {
-    const isTrue = option === SPRINT_GAME_ANSWER_BUTTONS[0];
+export function checkAnswerSprintGame(option: boolean): boolean {
     const word1 = state.sprintGame.currentEngWord?.wordTranslate;
     const word2 = state.sprintGame.currentRuWord?.wordTranslate;
-    return (word1 === word2) === isTrue;
+    return (word1 === word2) === option;
 }
 
 function increaseScore(): void {
@@ -121,7 +120,7 @@ export function choiceAction(e: Event, data: Word[]): void {
     const target = e.target as HTMLElement;
     const value = target.getAttribute('data');
     if (value && state.sprintGame.wordsLearnt < data.length) {
-        const action = checkAnswerSprintGame(value);
+        const action = checkAnswerSprintGame(GAME_BUTTONS[value as keyof typeof GAME_BUTTONS]);
         setPoints(action);
         setAnswerBlock(data);
         state.sprintGame.wordsLearnt += 1;
