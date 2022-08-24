@@ -81,7 +81,15 @@ function unpdateWordsResult(action: boolean) {
 }
 
 export function resetSprintPoints(): void {
-    console.log('later');
+    state.sprintGame.currentBet = 10;
+    state.sprintGame.currentPoints = 0;
+    state.sprintGame.currentTick = 0;
+    state.sprintGame.currentMultiply = 1;
+    state.sprintGame.currentLearned = [];
+    state.sprintGame.currentMistakes = [];
+    state.sprintGame.currentLevel = '';
+    state.sprintGame.usedNumbers = [];
+    state.sprintGame.wordsLearnt = 0;
 }
 
 export function setPoints(action: boolean): void {

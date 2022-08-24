@@ -6,6 +6,7 @@ import { deleteHTMLElement } from '../../../utils/createElement';
 import playAudio, { getFullPath } from '../../../utils/playAudio';
 import getRandomNumber from '../../../utils/randomize';
 import removeClassElement from '../../../utils/removeClassElement';
+import renderLoading from '../../../view/common/loading/renderLoading';
 import renderSprintGame, { setAnswerBlock } from '../../../view/pages/games/sprint/renderSprintGame';
 import {
     checkAnswerSprintGame,
@@ -39,8 +40,9 @@ export function listerStartButton(): void {
             if (sprintContainer) {
                 const level = Levels[state.sprintGame.currentLevel as keyof typeof Levels];
                 const page = getRandomNumber(0, MAX_PAGES);
-                // insert here loading image
+                renderLoading(sprintContainer);
                 const data = await getWords(level, page);
+                deleteHTMLElement('loading-container');
                 renderSprintGame(sprintContainer, data);
                 sprintGameControls(data);
             }

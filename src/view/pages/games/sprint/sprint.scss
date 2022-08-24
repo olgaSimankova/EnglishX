@@ -68,8 +68,9 @@
 }
 
 .answer-button {
-    font-size: 16px;
-    padding: 10px;
+    font-size: 20px;
+    padding: 20px;
+    width: 100px;
     background: transparent;
     &:hover {
         transition: 0.5s;
@@ -84,6 +85,10 @@
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
     border-right: 0;
+    background-image: url('../../../../assets/icons/arrow-left.svg');
+    background-size: 20px;
+    background-position: 40px 40px;
+    background-repeat: no-repeat;
 }
 
 .no-button {
@@ -91,4 +96,8 @@
     border: 2px red solid;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
+    background-image: url('../../../../assets/icons/arrow-right.svg');
+    background-size: 20px;
+    background-position: 40px 40px;
+    background-repeat: no-repeat;
 }
