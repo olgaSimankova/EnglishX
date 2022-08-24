@@ -2,6 +2,7 @@ import { CHOOSE_LEVEL, START, START_GAME_LABELS } from '../../../constants/const
 import { Levels } from '../../../constants/types';
 import createElement from '../../../utils/createElement';
 import renderGameButtons from '../renderGameControlButtons';
+import './startGame.scss';
 
 function renderUpperBlock(parentElement: HTMLElement, tag: string): void {
     const upperContainer = createElement({
@@ -12,18 +13,18 @@ function renderUpperBlock(parentElement: HTMLElement, tag: string): void {
     createElement({
         type: 'h2',
         parentElement: upperContainer,
-        classes: [`${tag}-title`, 'text-center'],
-        text: START_GAME_LABELS.sprint.header,
+        classes: ['game-title', 'text-center'],
+        text: START_GAME_LABELS[tag as keyof typeof START_GAME_LABELS].header,
     });
     createElement({
         type: 'p',
         parentElement: upperContainer,
-        classes: [`${tag}-description`, 'text-center'],
-        text: START_GAME_LABELS.sprint.description,
+        classes: ['game-description', 'text-center'],
+        text: START_GAME_LABELS[tag as keyof typeof START_GAME_LABELS].description,
     });
 }
 
-function renderLowerBlock(parentElement: HTMLElement, tag: string): void {
+function renderLowerBlock(parentElement: HTMLElement): void {
     const lowerContainer = createElement({
         type: 'div',
         parentElement,
@@ -32,7 +33,7 @@ function renderLowerBlock(parentElement: HTMLElement, tag: string): void {
     createElement({
         type: 'p',
         parentElement: lowerContainer,
-        classes: [`${tag}-description`, 'text-center'],
+        classes: ['game-description', 'text-center'],
         text: CHOOSE_LEVEL,
     });
     const levelsContainer = createElement({
@@ -41,11 +42,11 @@ function renderLowerBlock(parentElement: HTMLElement, tag: string): void {
         classes: ['level-container'],
     });
     const levels = Object.keys(Levels).filter((v) => Number.isNaN(Number(v)));
-    levels.forEach((level) => {
+    levels.forEach((level, index) => {
         createElement({
             type: 'button',
             parentElement: levelsContainer,
-            classes: ['level-button'],
+            classes: ['level-button', `level-button_${index}`],
             text: level,
             attributes: [['data', `${level}`]],
         });
@@ -65,10 +66,36 @@ function renderStartScreen(parentElement: HTMLElement, tag: string): void {
         classes: ['start-screen'],
     });
     renderUpperBlock(startScreenContainer, tag);
-    renderLowerBlock(startScreenContainer, tag);
+    renderLowerBlock(startScreenContainer);
 }
 
+const renderAnimationLayer = (parentElement: HTMLElement) => {
+    const area = createElement({
+        type: 'div',
+        parentElement,
+        classes: ['area'],
+    });
+
+    const circles = createElement({
+        type: 'ul',
+        parentElement: area,
+        classes: ['circles'],
+    });
+
+    for (let i = 0; i < 10; i += 1) {
+        createElement({
+            type: 'li',
+            parentElement: circles,
+        });
+    }
+};
+
 export default function renderGameStartPage(tag: string): void {
+    const { background } = START_GAME_LABELS[tag as keyof typeof START_GAME_LABELS];
+    document.body.classList.add(background);
+
+    renderAnimationLayer(document.body);
+
     const wrapper = createElement({
         type: 'div',
         parentElement: document.body,
@@ -77,7 +104,7 @@ export default function renderGameStartPage(tag: string): void {
     const container = createElement({
         type: 'div',
         parentElement: wrapper,
-        classes: [`${tag}-container`, 'game-background'],
+        classes: ['game-container', 'game-background'],
     });
     renderGameButtons(container);
     renderStartScreen(container, tag);

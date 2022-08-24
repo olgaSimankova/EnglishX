@@ -1,8 +1,8 @@
 .results-container {
     width: 320px;
     height: 500px;
-    border-radius: 10px;
-    background-color: yellow;
+    border-radius: 30px;
+    background-color: rgb(226, 195, 127);
     overflow: hidden;
     box-sizing: border-box;
 
@@ -58,17 +58,79 @@
 .bottom-buttons-container {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 10px;
+    padding-top: 40px;
 
     .bottom-button {
-        padding: 10px;
+        padding: 7px;
         border: 0;
-        font-size: 20px;
-        box-shadow: 10px 5px 5px rgb(157, 238, 43);
+        border-radius: 20px;
+        font-size: 18px;
+        
         background-color: antiquewhite;
 
         &:hover {
             cursor: pointer;
+        }
+    }
+}
+
+.list-header-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .list-header {
+        font-size: 20px;
+    }
+
+    .counter-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 30px;
+        height: 30px;
+        border-radius: 100%;
+    }
+
+    .mistakes-container {
+        background-color: rgb(241, 107, 107);
+    }
+
+    .know-container {
+        background-color: rgb(127, 241, 107);
+    }
+}
+.list-ul {
+    padding: 0;
+    margin: 0;
+
+    .list-element {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    
+        .sound-image {
+            width: 20px;
+            height: 20px;
+            background-image: url('../../../assets/icons/sound-icon.svg');
+            background-size: cover;
+    
+            &:hover {
+                cursor: pointer;
+            }
+        }
+
+        .word {
+            margin: 0;
+        }
+
+        .eng-word-list {
+            font-weight: 700;
         }
     }
 }
