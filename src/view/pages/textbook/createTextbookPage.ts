@@ -148,13 +148,13 @@ async function getWordData(word: Word, parent: HTMLElement) {
     createElement({
         type: 'button',
         parentElement: wordActions,
-        classes: ['word__actions_btn'],
+        classes: ['word__actions_btn', `words__actions_btn_${Levels[state.textBook.levelChosen]}`],
         text: 'difficult word',
     });
     createElement({
         type: 'button',
         parentElement: wordActions,
-        classes: ['word__actions_btn'],
+        classes: ['word__actions_btn', `words__actions_btn_${Levels[state.textBook.levelChosen]}`],
         text: 'delete word',
     });
     if (!state.textBook.authenticated) wordActions.classList.add('hidden');
@@ -196,13 +196,39 @@ async function getWordData(word: Word, parent: HTMLElement) {
         parentElement: wordDescription,
         text: `${word.textExampleTranslate}`,
     });
+
+    const answersInGames = createElement({
+        type: 'div',
+        parentElement: wordDescription,
+        classes: ['answers_in_games'],
+    });
+
     createElement({
         type: 'h3',
-        parentElement: wordDescription,
+        parentElement: answersInGames,
         classes: ['word__subheading'],
         text: 'Answers in games',
     });
+    const answersContainer = createElement({
+        type: 'div',
+        parentElement: answersInGames,
+        classes: ['answers__games_container'],
+    });
+    createElement({
+        type: 'span',
+        parentElement: answersContainer,
+        classes: ['sprint_answers'],
+        text: 'sprint: 0 / 0',
+    });
+    createElement({
+        type: 'span',
+        parentElement: answersContainer,
+        classes: ['audio_call_answers'],
+        text: 'audio-call: 0 / 0',
+    });
+    if (!state.textBook.authenticated) answersInGames.classList.add('hidden');
 }
+
 async function getWordsSection(parent: HTMLElement): Promise<void> {
     createElement({
         type: 'h1',

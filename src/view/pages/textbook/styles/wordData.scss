@@ -12,7 +12,7 @@
     background-position: center;
     background-repeat: no-repeat;
     height: 230px;
-    margin: 0 8px;
+    // margin: 0 8px;
     overflow: hidden;
     border-radius: 0.5rem;
     box-shadow: 0px 9px 8px 0px rgba(34, 60, 80, 0.3);
@@ -69,14 +69,30 @@
     border-radius: 30px;
 }
 
-.word__actions_btn:hover {
-    background-color: $lightGray;
+.words__actions_btn_A1:hover {
+    background-color: $color_A1;
+}
+.words__actions_btn_A2:hover {
+    background-color: $color_A2;
+}
+.words__actions_btn_B1:hover {
+    background-color: $color_B1;
+}
+.words__actions_btn_B2:hover {
+    background-color: $color_B2;
+}
+.words__actions_btn_C1:hover {
+    background-color: $color_C1;
+}
+.words__actions_btn_C2:hover {
+    background-color: $color_C2;
 }
 
 .word__description {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    margin-top: 10px;
 }
 
 .word__subheading {
@@ -86,4 +102,18 @@
 
 @keyframes pulse {
   0% { box-shadow: 0 0 0 0 $darkGray; }
+}
+
+.answers_in_games {
+    display: flex;
+}
+
+.answers_in_games.hidden {
+    display: none;
+}
+
+.answers__games_container {
+    display: flex;
+    gap: 15px;
+    margin: 10px 10px;
 }

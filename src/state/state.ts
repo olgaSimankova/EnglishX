@@ -15,7 +15,7 @@ export const state = {
     },
     textBook: {
         levelChosen: 0,
-        authenticated: true,
+        authenticated: false,
     },
 } as StateInterface;
 
