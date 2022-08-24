@@ -3,6 +3,13 @@ export const START_GAME_LABELS = {
     sprint: {
         header: 'Sprint',
         description: 'Sprint is a speed training. Try to guess as much words as you can in 30 seconds.',
+        background: 'sprint__background',
+    },
+
+    audioCall: {
+        header: 'Audio Call',
+        description: 'The Audio Call training improves listening comprehension.',
+        background: 'audio-call__background',
     },
 };
 export const RESULT_TAB_LABELS = ['RESULT', 'WATCH WORDS'];
@@ -89,13 +96,13 @@ export const GAMES = [
     {
         name: 'Sprint',
         descr: 'Determine the correct translation of the word as soon as possible',
-        link: '#',
+        link: './sprint.html',
     },
 
     {
         name: 'Audio call',
         descr: 'Try to understand what word was spoken',
-        link: '#',
+        link: './audio-call.html',
     },
 ];
 export const FOOTER_LINKS_TEXT = ['About Us', 'TextBook', 'Games', 'Statistic', 'Contacts'];
