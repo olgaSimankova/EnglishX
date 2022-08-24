@@ -11,6 +11,7 @@ const baseConfig = {
     entry: {
         index: path.resolve(__dirname, './src/index.ts'),
         sprint: path.resolve(__dirname, './src/view/pages/games/sprint/sprint.ts'),
+        audio: path.resolve(__dirname, './src/view/pages/games/audio-call/audio-call.ts'),
     },
     mode: 'development',
     stats: { children: true },
@@ -55,6 +56,11 @@ const baseConfig = {
             filename: 'sprint.html',
             template: 'src/view/pages/games/sprint/sprint.html',
             chunks: ['sprint'],
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'audio-call.html',
+            template: 'src/view/pages/games/audio-call/audio-call.html',
+            chunks: ['audio'],
         }),
         new CleanWebpackPlugin(),
         new EslingPlugin({ extensions: 'ts' }),
