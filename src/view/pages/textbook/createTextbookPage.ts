@@ -1,12 +1,13 @@
 import getWords from '../../../api/words';
 import { API_BASE_LINK } from '../../../constants/constants';
 import { Difficulty, Levels, Word } from '../../../constants/types';
+import state from '../../../state/state';
 import createElement from '../../../utils/createElement';
 
-function getLevelsSection(): void {
+function getLevelsSection(parent: HTMLElement): void {
     const textbookHeading = createElement({
         type: 'section',
-        parentElement: document.body,
+        parentElement: parent,
         classes: ['heading_section'],
     });
 
@@ -19,7 +20,7 @@ function getLevelsSection(): void {
     createElement({
         type: 'h2',
         parentElement: textbookHeading,
-        classes: ['textbook_title'],
+        classes: ['textbook_title', 'title'],
         text: 'Textbook',
     });
 
@@ -31,7 +32,7 @@ function getLevelsSection(): void {
     });
     const levelsSection = createElement({
         type: 'div',
-        parentElement: document.body,
+        parentElement: parent,
         classes: ['levels_wrapper'],
     });
 
@@ -43,6 +44,9 @@ function getLevelsSection(): void {
             parentElement: levelsSection,
             classes: ['level__button'],
         });
+        if (index === state.textBook.levelChosen) {
+            btn.classList.add('active');
+        }
         const leftPart = createElement({
             type: 'div',
             parentElement: btn,
@@ -69,6 +73,11 @@ function getLevelsSection(): void {
             parentElement: rightPart,
             text: `${item}`,
         });
+        createElement({
+            type: 'div',
+            parentElement: btn,
+            classes: ['circle'],
+        });
     });
 }
 
@@ -92,7 +101,6 @@ async function getWordsCards(words: Word[], parent: HTMLElement) {
             text: value.wordTranslate,
         });
     });
-    console.log(words);
 }
 
 async function getWordData(word: Word, parent: HTMLElement) {
@@ -193,15 +201,15 @@ async function getWordData(word: Word, parent: HTMLElement) {
     });
 }
 
-async function getWordsSection(): Promise<void> {
+async function getWordsSection(parent: HTMLElement): Promise<void> {
     createElement({
         type: 'h1',
-        parentElement: document.body,
+        parentElement: parent,
         text: `Words`,
     });
     const wordsSection = createElement({
         type: 'section',
-        parentElement: document.body,
+        parentElement: parent,
         classes: ['words__section'],
     });
     const words: Word[] = await getWords(1, 1);
@@ -221,6 +229,11 @@ async function getWordsSection(): Promise<void> {
 }
 
 export default async function getTextbookPage() {
-    getLevelsSection();
-    await getWordsSection();
+    const wrapper = createElement({
+        type: 'div',
+        parentElement: document.body,
+        classes: ['wrapper'],
+    });
+    getLevelsSection(wrapper);
+    // await getWordsSection();
 }

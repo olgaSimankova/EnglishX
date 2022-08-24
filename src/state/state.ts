@@ -13,6 +13,9 @@ export const state = {
         wordsLearnt: 0,
         isGame: false,
     },
+    textBook: {
+        levelChosen: 0,
+    },
 } as StateInterface;
 
 export default state;

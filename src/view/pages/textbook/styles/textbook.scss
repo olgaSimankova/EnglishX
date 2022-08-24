@@ -1,7 +1,16 @@
 @import '../../../../global.scss';
+@import '../../main/scss/style.scss';
+@import 'levels.scss';
+
+.wrapper {
+    width: fit-content;
+    margin: 0 auto;
+}
 
 .header {
-    margin-top: 13px; 
+    padding: 15px 20px;
+    box-sizing: border-box;
+    background: center / cover no-repeat url('../../../../assets/img/background.jpg');
 }
 
 .levels_section {
@@ -9,5 +18,8 @@
 }
 
 .textbook_title {
-    @include font-face('Lato', 26px, 700, 44px, left);
+text-align: left;}
+
+.heading_section {
+    margin: 15px 25px;
 }

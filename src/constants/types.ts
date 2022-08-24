@@ -56,8 +56,13 @@ export interface SprintState {
     isGame: boolean;
 }
 
+export interface Textbook {
+    levelChosen: number;
+}
+
 export interface StateInterface {
     sprintGame: SprintState;
+    textBook: Textbook;
 }
 
 export interface User {
