@@ -1,6 +1,8 @@
 @import '../../../../global.scss';
 @import '../../main/scss/style.scss';
 @import 'levels.scss';
+@import 'wordCards.scss';
+@import 'wordData.scss';
 
 .wrapper {
     width: fit-content;
@@ -8,7 +10,7 @@
 }
 
 .header {
-    padding: 15px 20px;
+    padding: 15px 110px;
     box-sizing: border-box;
     background: center / cover no-repeat url('../../../../assets/img/background.jpg');
 }

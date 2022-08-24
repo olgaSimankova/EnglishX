@@ -82,12 +82,14 @@ function getLevelsSection(parent: HTMLElement): void {
 }
 
 async function getWordsCards(words: Word[], parent: HTMLElement) {
-    words.forEach((value: Word) => {
+    words.forEach((value: Word, index) => {
         const wordCard = createElement({
             type: 'button',
             parentElement: parent,
-            classes: ['words__card'],
+            classes: ['words__card', `words__card_${Levels[state.textBook.levelChosen]}`],
         });
+        if (index === 0) wordCard.classList.add('active');
+
         createElement({
             type: 'h2',
             parentElement: wordCard,
@@ -117,26 +119,26 @@ async function getWordData(word: Word, parent: HTMLElement) {
     createElement({
         type: 'h2',
         parentElement: wordAndTranslation,
-        classes: [],
+        classes: ['word__word'],
         text: `${word.word}`,
     });
     createElement({
         type: 'h3',
         parentElement: wordAndTranslation,
-        classes: [],
+        classes: ['word__translation'],
         text: `${word.wordTranslate}`,
     });
     createElement({
         type: 'span',
         parentElement: wordAndTranslation,
-        classes: [],
+        classes: ['word__transcription'],
         text: `${word.transcription}`,
     });
     createElement({
         type: 'span',
         parentElement: wordAndTranslation,
         classes: ['audio'],
-        text: `AUDIO`,
+        attributes: [['style', `background: center / contain no-repeat url("../../../assets/icons/sound-icon.svg");`]],
     });
     const wordActions = createElement({
         type: 'div',
@@ -155,6 +157,7 @@ async function getWordData(word: Word, parent: HTMLElement) {
         classes: ['word__actions_btn'],
         text: 'delete word',
     });
+    if (!state.textBook.authenticated) wordActions.classList.add('hidden');
 
     const wordDescription = createElement({
         type: 'div',
@@ -167,11 +170,11 @@ async function getWordData(word: Word, parent: HTMLElement) {
         classes: ['word__subheading'],
         text: 'Meaning',
     });
-    createElement({
+    const description = createElement({
         type: 'p',
         parentElement: wordDescription,
-        text: `${word.textMeaning}`,
     });
+    description.innerHTML = word.textMeaning;
     createElement({
         type: 'p',
         parentElement: wordDescription,
@@ -183,11 +186,11 @@ async function getWordData(word: Word, parent: HTMLElement) {
         classes: ['word__subheading'],
         text: 'Example',
     });
-    createElement({
+    const example = createElement({
         type: 'p',
         parentElement: wordDescription,
-        text: `${word.textExample}`,
     });
+    example.innerHTML = word.textExample;
     createElement({
         type: 'p',
         parentElement: wordDescription,
@@ -200,11 +203,11 @@ async function getWordData(word: Word, parent: HTMLElement) {
         text: 'Answers in games',
     });
 }
-
 async function getWordsSection(parent: HTMLElement): Promise<void> {
     createElement({
         type: 'h1',
         parentElement: parent,
+        classes: ['title', 'words_title'],
         text: `Words`,
     });
     const wordsSection = createElement({
@@ -212,7 +215,7 @@ async function getWordsSection(parent: HTMLElement): Promise<void> {
         parentElement: parent,
         classes: ['words__section'],
     });
-    const words: Word[] = await getWords(1, 1);
+    const words = await getWords(state.textBook.levelChosen + 1, 1);
     const wordsContainer = createElement({
         type: 'div',
         parentElement: wordsSection,
@@ -235,5 +238,5 @@ export default async function getTextbookPage() {
         classes: ['wrapper'],
     });
     getLevelsSection(wrapper);
-    // await getWordsSection();
+    await getWordsSection(wrapper);
 }

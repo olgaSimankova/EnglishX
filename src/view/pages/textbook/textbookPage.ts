@@ -3,9 +3,8 @@ import '../main/scss/style.scss';
 import getTextbookPage from './createTextbookPage';
 import './styles/textbook.scss';
 
-function startTextbookPage(): void {
+(async function startTextbookPage() {
     createHeader(document.body);
-    getTextbookPage();
-}
-
-startTextbookPage();
+    (document.querySelector('.header') as HTMLElement).classList.remove('hero__container');
+    await getTextbookPage();
+})();

@@ -62,6 +62,8 @@ const baseConfig = {
             filename: 'textbook.html',
             template: 'src/view/pages/textbook/textbook.html',
             chunks: ['textbook'],
+        }),
+        new HtmlWebpackPlugin({
             filename: 'audio-call.html',
             template: 'src/view/pages/games/audio-call/audio-call.html',
             chunks: ['audio'],
