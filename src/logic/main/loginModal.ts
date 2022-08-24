@@ -5,6 +5,7 @@ import { changeFieldBackgroundColor } from './registerModal';
 function toggleModal(todo: boolean) {
     (document.querySelector('.modal') as HTMLElement).classList.toggle('active', todo);
     (document.querySelector('.modal_BG') as HTMLElement).classList.toggle('active', todo);
+    document.body.classList.toggle('lock', todo);
 }
 
 function toggleFailLoginMessage(todo: boolean): void {

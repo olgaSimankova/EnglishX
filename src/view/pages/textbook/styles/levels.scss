@@ -19,6 +19,7 @@
     overflow: hidden;
     position: relative;
     color: $gray;
+    transition: all 0.5s ease-out;
     
     .button__left_part {
         width: 70%;
