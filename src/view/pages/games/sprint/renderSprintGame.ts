@@ -2,7 +2,7 @@ import {
     DELIMITOR,
     MULTIPLY,
     POINTS,
-    SPRINT_GAME_ANSWER_BUTTONS,
+    GAME_BUTTONS,
     SPRINT_START_TIME,
     START_POINTS,
 } from '../../../../constants/constants';
@@ -131,7 +131,7 @@ function renderButtonsBlock(parentElement: HTMLElement): void {
         parentElement,
         classes: ['buttons-container'],
     });
-    SPRINT_GAME_ANSWER_BUTTONS.forEach((key) => {
+    Object.keys(GAME_BUTTONS).forEach((key) => {
         createElement({
             type: 'button',
             parentElement: buttonsContainer,
@@ -163,7 +163,7 @@ export default function renderSprintGame(parentElement: HTMLElement, data: Word[
     const gameContainer = createElement({
         type: 'div',
         parentElement,
-        classes: ['game-container'],
+        classes: ['sprint-container'],
     });
     state.sprintGame.isGame = true;
     renderClockBlock(gameContainer);

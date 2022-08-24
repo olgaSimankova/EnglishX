@@ -1,13 +1,20 @@
 import getWords from '../../../api/words';
-import { MAX_PAGES } from '../../../constants/constants';
+import { KEY_ARROWS, MAX_PAGES, GAME_BUTTONS } from '../../../constants/constants';
 import { Levels, Word } from '../../../constants/types';
 import { state } from '../../../state/state';
 import { deleteHTMLElement } from '../../../utils/createElement';
 import playAudio, { getFullPath } from '../../../utils/playAudio';
 import getRandomNumber from '../../../utils/randomize';
 import removeClassElement from '../../../utils/removeClassElement';
+import renderLoading from '../../../view/common/loading/renderLoading';
 import renderSprintGame, { setAnswerBlock } from '../../../view/pages/games/sprint/renderSprintGame';
-import { checkAnswerSprintGame, processResultGameButtons, setPoints, sprintGameControls } from './controls';
+import {
+    checkAnswerSprintGame,
+    choiceAction,
+    processResultGameButtons,
+    setPoints,
+    sprintGameControls,
+} from './controls';
 
 export default function listenLevelButtons(): void {
     const levelsContainer = document.querySelector('.level-container');
@@ -24,18 +31,26 @@ export default function listenLevelButtons(): void {
     });
 }
 
-export function listerStartButton(): void {
+export function listerStartButton(tag: string): void {
     const startButton = document.querySelector('.start-button') as HTMLElement;
     startButton?.addEventListener('click', async () => {
         if (startButton.classList.contains('active')) {
             deleteHTMLElement('start-screen');
-            const sprintContainer = document.querySelector('.sprint-container') as HTMLElement;
-            if (sprintContainer) {
-                const level = Levels[state.sprintGame.currentLevel as keyof typeof Levels];
+            const gameContainer = document.querySelector('.game-container') as HTMLElement;
+            if (gameContainer) {
+                const level = Levels[state[`${tag}Game` as keyof typeof state].currentLevel as keyof typeof Levels];
                 const page = getRandomNumber(0, MAX_PAGES);
+                renderLoading(gameContainer);
                 const data = await getWords(level, page);
-                renderSprintGame(sprintContainer, data);
-                sprintGameControls(data);
+                deleteHTMLElement('loading-container');
+                switch (tag) {
+                    case 'sprint':
+                        renderSprintGame(gameContainer, data);
+                        sprintGameControls(data);
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     });
@@ -44,16 +59,7 @@ export function listerStartButton(): void {
 export function listenChoiceButtons(data: Word[]): void {
     const buttonsContainer = document.querySelector('.buttons-container');
     buttonsContainer?.addEventListener('click', (e) => {
-        const target = e.target as HTMLElement;
-        const value = target.getAttribute('data');
-        if (value && state.sprintGame.wordsLearnt < data.length) {
-            const action = checkAnswerSprintGame(value);
-            setPoints(action);
-            setAnswerBlock(data);
-            state.sprintGame.wordsLearnt += 1;
-        } else {
-            state.sprintGame.isGame = false;
-        }
+        choiceAction(e, data);
     });
 }
 
@@ -72,7 +78,7 @@ export function listenResultTabs(): void {
     });
 }
 
-export function listenSoundResultList() {
+export function listenSoundResultList(): void {
     const list = document.querySelector('.right-side-container');
     list?.addEventListener('click', (e) => {
         const target = e.target as HTMLElement;
@@ -84,13 +90,30 @@ export function listenSoundResultList() {
     });
 }
 
-export function listenResultBottomButtons() {
+export function listenResultBottomButtons(): void {
     const container = document.querySelector('.bottom-buttons-container');
     container?.addEventListener('click', (e) => {
         const target = e.target as HTMLElement;
         const data = target.getAttribute('data');
         if (data) {
             processResultGameButtons(data);
+        }
+    });
+}
+
+export function listenKeyboard(data: Word[]): void {
+    document.addEventListener('keydown', (e) => {
+        const keyName = e.key;
+        const choice = keyName === KEY_ARROWS.left ? GAME_BUTTONS.YES : GAME_BUTTONS.NO;
+        if (Object.values(KEY_ARROWS).includes(keyName)) {
+            if (state.sprintGame.wordsLearnt < data.length) {
+                const action = checkAnswerSprintGame(choice);
+                setPoints(action);
+                setAnswerBlock(data);
+                state.sprintGame.wordsLearnt += 1;
+            } else {
+                state.sprintGame.isGame = false;
+            }
         }
     });
 }

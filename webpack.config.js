@@ -36,6 +36,10 @@ const baseConfig = {
                     name: 'assets/img/[name].[ext]',
                 },
             },
+            {
+                test: /\.mp3$/,
+                loader: 'file-loader'
+            }
         ],
     },
     resolve: {
