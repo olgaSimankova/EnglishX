@@ -71,3 +71,8 @@ export interface User {
     password: string;
     name?: string;
 }
+
+export enum Choice {
+    right = 'right',
+    wrong = 'wrong',
+}

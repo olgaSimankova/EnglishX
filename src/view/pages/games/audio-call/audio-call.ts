@@ -4,5 +4,5 @@ import './style.scss';
 
 (function startSprintPage() {
     renderGameStartPage('audioCall');
-    sprintStartPageControls();
+    sprintStartPageControls('audioCall');
 })();
