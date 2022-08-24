@@ -163,7 +163,7 @@ export default function renderSprintGame(parentElement: HTMLElement, data: Word[
     const gameContainer = createElement({
         type: 'div',
         parentElement,
-        classes: ['game-container'],
+        classes: ['sprint-container'],
     });
     state.sprintGame.isGame = true;
     renderClockBlock(gameContainer);

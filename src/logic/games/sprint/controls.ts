@@ -4,7 +4,7 @@ import state from '../../../state/state';
 import { deleteHTMLElement } from '../../../utils/createElement';
 import { getHTMLElementContent, setHTMLElementContent } from '../../../utils/handleHTMLTextContent';
 import { playChoiceSound } from '../../../utils/playAudio';
-import renderResultSprintPage from '../../../view/common/gameResult/renderGameResults';
+import renderResultPage from '../../../view/common/gameResult/renderGameResults';
 import { setAnswerBlock } from '../../../view/pages/games/sprint/renderSprintGame';
 import listenLevelButtons, {
     listenChoiceButtons,
@@ -15,9 +15,9 @@ import listenLevelButtons, {
     listerStartButton,
 } from './events';
 
-export default function sprintStartPageControls(): void {
+export default function startPageControls(tag: string): void {
     listenLevelButtons();
-    listerStartButton();
+    listerStartButton(tag);
 }
 
 export function gameResultControls(): void {
@@ -34,12 +34,8 @@ function startTimer(): void {
             setHTMLElementContent('clock-counter', timeLeft.toString());
         } else {
             clearInterval(id);
-            deleteHTMLElement('game-container');
-            renderResultSprintPage(
-                'sprint-container',
-                state.sprintGame.currentLearned,
-                state.sprintGame.currentMistakes
-            );
+            deleteHTMLElement('sprint-container');
+            renderResultPage('game-container', state.sprintGame.currentLearned, state.sprintGame.currentMistakes);
             gameResultControls();
         }
     }, 1000);

@@ -31,20 +31,26 @@ export default function listenLevelButtons(): void {
     });
 }
 
-export function listerStartButton(): void {
+export function listerStartButton(tag: string): void {
     const startButton = document.querySelector('.start-button') as HTMLElement;
     startButton?.addEventListener('click', async () => {
         if (startButton.classList.contains('active')) {
             deleteHTMLElement('start-screen');
-            const sprintContainer = document.querySelector('.sprint-container') as HTMLElement;
-            if (sprintContainer) {
-                const level = Levels[state.sprintGame.currentLevel as keyof typeof Levels];
+            const gameContainer = document.querySelector('.game-container') as HTMLElement;
+            if (gameContainer) {
+                const level = Levels[state[`${tag}Game` as keyof typeof state].currentLevel as keyof typeof Levels];
                 const page = getRandomNumber(0, MAX_PAGES);
-                renderLoading(sprintContainer);
+                renderLoading(gameContainer);
                 const data = await getWords(level, page);
                 deleteHTMLElement('loading-container');
-                renderSprintGame(sprintContainer, data);
-                sprintGameControls(data);
+                switch (tag) {
+                    case 'sprint':
+                        renderSprintGame(gameContainer, data);
+                        sprintGameControls(data);
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     });

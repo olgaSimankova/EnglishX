@@ -182,7 +182,7 @@ function renderSLiderRightSide(parentElement: HTMLElement, goodAnswers: Word[], 
     renderListOfWords(knowContainer, goodAnswers, 'Know');
 }
 
-export default function renderResultSprintPage(parentClass: string, goodAnswers: Word[], badAnswers: Word[]): void {
+export default function renderResultPage(parentClass: string, goodAnswers: Word[], badAnswers: Word[]): void {
     const sprintContainer = document.querySelector(`.${parentClass}`) as HTMLElement;
     const resultContainer = createElement({
         type: 'div',
