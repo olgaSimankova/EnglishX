@@ -42,6 +42,7 @@ export interface SprintState {
     currentMultiply: number;
     currentLearned: Word[];
     currentMistakes: Word[];
+    usedPages: number[];
     usedNumbers: number[];
     wordsLearnt: number;
     isGame: boolean;

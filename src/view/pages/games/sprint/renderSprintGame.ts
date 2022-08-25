@@ -7,11 +7,9 @@ import {
     START_POINTS,
 } from '../../../../constants/constants';
 import { Word } from '../../../../constants/types';
-import { resetSprintPoints } from '../../../../logic/games/sprint/controls';
+import { resetSprintPoints, setAnswerBlock } from '../../../../logic/games/sprint/controls';
 import state from '../../../../state/state';
 import createElement from '../../../../utils/createElement';
-import { setHTMLElementContent } from '../../../../utils/handleHTMLTextContent';
-import getRandomNumber from '../../../../utils/randomize';
 
 function renderClockBlock(parentElement: HTMLElement): void {
     createElement({
@@ -140,23 +138,6 @@ function renderButtonsBlock(parentElement: HTMLElement): void {
             attributes: [['data', key]],
         });
     });
-}
-
-export function setAnswerBlock(data: Word[]): void {
-    const { length } = data;
-    if (state.sprintGame.usedNumbers.length !== length) {
-        let randomNumber = getRandomNumber(0, length);
-        while (state.sprintGame.usedNumbers.includes(randomNumber)) {
-            randomNumber = getRandomNumber(0, length);
-        }
-        state.sprintGame.usedNumbers.push(randomNumber);
-        const randomEng = data[randomNumber];
-        state.sprintGame.currentEngWord = randomEng;
-        const randomRu = Math.random() < 0.5 ? randomEng : data[getRandomNumber(0, length)];
-        state.sprintGame.currentRuWord = randomRu;
-        setHTMLElementContent('eng-word', randomEng.word);
-        setHTMLElementContent('ru-word', randomRu.wordTranslate);
-    }
 }
 
 export default function renderSprintGame(parentElement: HTMLElement, data: Word[]): void {

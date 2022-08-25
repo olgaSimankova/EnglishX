@@ -7,11 +7,13 @@ import playAudio, { getFullPath } from '../../../utils/playAudio';
 import getRandomNumber from '../../../utils/randomize';
 import removeClassElement from '../../../utils/removeClassElement';
 import renderLoading from '../../../view/common/loading/renderLoading';
-import renderSprintGame, { setAnswerBlock } from '../../../view/pages/games/sprint/renderSprintGame';
+import renderSprintGame from '../../../view/pages/games/sprint/renderSprintGame';
 import {
     checkAnswerSprintGame,
     choiceAction,
+    getNewData,
     processResultGameButtons,
+    setAnswerBlock,
     setPoints,
     sprintGameControls,
 } from './controls';
@@ -31,12 +33,13 @@ export default function listenLevelButtons(): void {
     });
 }
 
-export function listerStartButton(tag: GameTags): void {
+export function listerStartButton(tag: GameTags, reload = false): void {
     const startButton = document.querySelector('.start-button') as HTMLElement;
     startButton?.addEventListener('click', async () => {
         if (startButton.classList.contains('active')) {
             deleteHTMLElement('start-screen');
             const gameContainer = document.querySelector('.game-container') as HTMLElement;
+            console.log(state);
             if (gameContainer && tag) {
                 const level =
                     Levels[(state[tag as keyof typeof state] as SprintState).currentLevel as keyof typeof Levels];
@@ -46,6 +49,7 @@ export function listerStartButton(tag: GameTags): void {
                 deleteHTMLElement('loading-container');
                 switch (tag) {
                     case GameTags.sprintGame:
+                        state.sprintGame.usedPages.push(page);
                         renderSprintGame(gameContainer, data);
                         sprintGameControls(data);
                         break;
@@ -57,10 +61,10 @@ export function listerStartButton(tag: GameTags): void {
     });
 }
 
-export function listenChoiceButtons(data: Word[]): void {
+export function listenChoiceButtons(data: Word[], reload = false): void {
     const buttonsContainer = document.querySelector('.buttons-container');
     buttonsContainer?.addEventListener('click', (e) => {
-        choiceAction(e, data);
+        choiceAction(e, data, reload);
     });
 }
 
@@ -103,7 +107,7 @@ export function listenResultBottomButtons(): void {
 }
 
 export function listenKeyboard(data: Word[]): void {
-    document.addEventListener('keydown', (e) => {
+    document.addEventListener('keyup', async (e) => {
         const keyName = e.key;
         const choice = keyName === KEY_ARROWS.left ? GAME_BUTTONS.YES : GAME_BUTTONS.NO;
         if (Object.values(KEY_ARROWS).includes(keyName)) {

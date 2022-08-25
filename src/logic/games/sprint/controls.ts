@@ -1,11 +1,12 @@
-import { GAME_BUTTONS, START_POINTS } from '../../../constants/constants';
-import { Choice, GameTags, Word } from '../../../constants/types';
+import getWords from '../../../api/words';
+import { GAME_BUTTONS, MAX_PAGES, START_POINTS } from '../../../constants/constants';
+import { Choice, GameTags, Levels, Word } from '../../../constants/types';
 import state from '../../../state/state';
 import { deleteHTMLElement } from '../../../utils/createElement';
 import { getHTMLElementContent, setHTMLElementContent } from '../../../utils/handleHTMLTextContent';
 import { playChoiceSound } from '../../../utils/playAudio';
+import getRandomNumber from '../../../utils/randomize';
 import renderResultPage from '../../../view/common/gameResult/renderGameResults';
-import { setAnswerBlock } from '../../../view/pages/games/sprint/renderSprintGame';
 import listenLevelButtons, {
     listenChoiceButtons,
     listenKeyboard,
@@ -15,9 +16,48 @@ import listenLevelButtons, {
     listerStartButton,
 } from './events';
 
-export default function startPageControls(tag: GameTags): void {
+function getNewPage(): number {
+    const { usedPages } = state.sprintGame;
+    if (usedPages.length === MAX_PAGES) {
+        return -1;
+    }
+    let page = getRandomNumber(0, MAX_PAGES);
+    while (usedPages.includes(page)) {
+        page = getRandomNumber(0, MAX_PAGES);
+    }
+    return page;
+}
+
+export async function getNewData(): Promise<Word[]> {
+    const newPage = getNewPage();
+    if (newPage === -1) {
+        return [];
+    }
+    console.log(state.sprintGame.currentLevel);
+    const level = Levels[state.sprintGame.currentLevel as keyof typeof Levels];
+    return getWords(level, newPage);
+}
+
+export async function setAnswerBlock(data: Word[]): Promise<void> {
+    const { length } = data;
+    if (state.sprintGame.usedNumbers.length !== length) {
+        let randomNumber = getRandomNumber(0, length);
+        while (state.sprintGame.usedNumbers.includes(randomNumber)) {
+            randomNumber = getRandomNumber(0, length);
+        }
+        state.sprintGame.usedNumbers.push(randomNumber);
+        const randomEng = data[randomNumber];
+        state.sprintGame.currentEngWord = randomEng;
+        const randomRu = Math.random() < 0.5 ? randomEng : data[getRandomNumber(0, length)];
+        state.sprintGame.currentRuWord = randomRu;
+        setHTMLElementContent('eng-word', randomEng.word);
+        setHTMLElementContent('ru-word', randomRu.wordTranslate);
+    }
+}
+
+export default function startPageControls(tag: GameTags, reload = false): void {
     listenLevelButtons();
-    listerStartButton(tag);
+    listerStartButton(tag, reload);
 }
 
 export function gameResultControls(): void {
@@ -83,7 +123,6 @@ export function resetSprintPoints(): void {
     state.sprintGame.currentMultiply = 1;
     state.sprintGame.currentLearned = [];
     state.sprintGame.currentMistakes = [];
-    state.sprintGame.currentLevel = '';
     state.sprintGame.usedNumbers = [];
     state.sprintGame.wordsLearnt = 0;
 }
@@ -120,7 +159,7 @@ export function processResultGameButtons(data: string): void {
     }
 }
 
-export function choiceAction(e: Event, data: Word[]): void {
+export function choiceAction(e: Event, data: Word[], reload = false): void {
     const target = e.target as HTMLElement;
     const value = target.getAttribute('data');
     if (value && state.sprintGame.wordsLearnt < data.length) {

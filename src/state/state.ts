@@ -10,6 +10,7 @@ export const state = {
         currentLearned: [],
         currentMistakes: [],
         usedNumbers: [],
+        usedPages: [],
         wordsLearnt: 0,
         isGame: false,
         isSound: true,
