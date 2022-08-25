@@ -15,6 +15,7 @@ export const state = {
     } as SprintState,
     textBook: {
         currentLevel: 0,
+        currentPage: 1,
         authenticated: false,
     },
     controls: {

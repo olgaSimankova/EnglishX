@@ -124,3 +124,5 @@ export const FOOTER_LINKS_TEXT = ['About Us', 'TextBook', 'Games', 'Statistic', 
 export const SITEMAP_LINKS = ['#team', '#', '#', '#', '#footer'];
 export const GAMES_LINKS = ['#', '#', '#', '#'];
 export const HEADER_LINKS = ['#team', './textbook.html', '#', '#'];
+
+export const PAGINATION_BTNS = 9;

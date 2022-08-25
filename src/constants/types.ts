@@ -58,6 +58,7 @@ export interface SprintState {
 
 export interface Textbook {
     currentLevel: number;
+    currentPage: number;
     authenticated: boolean;
 }
 

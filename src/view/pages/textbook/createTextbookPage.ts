@@ -1,6 +1,7 @@
 import getWords from '../../../api/words';
 import { API_BASE_LINK } from '../../../constants/constants';
 import { Difficulty, Levels, Word } from '../../../constants/types';
+import { getPaginationBtns } from '../../../logic/textbook/pagination';
 import state from '../../../state/state';
 import createElement from '../../../utils/createElement';
 
@@ -245,7 +246,7 @@ async function getWordsSection(parent: HTMLElement): Promise<void> {
         parentElement: parent,
         classes: ['words__section'],
     });
-    const words = await getWords(state.textBook.currentLevel + 1, 1);
+    const words = await getWords(state.textBook.currentLevel, state.textBook.currentPage - 1);
     const wordsContainer = createElement({
         type: 'div',
         parentElement: wordsSection,
@@ -261,6 +262,20 @@ async function getWordsSection(parent: HTMLElement): Promise<void> {
     await getWordData(words[0], wordInfo);
 }
 
+function getPaginationSection(parent: HTMLElement) {
+    const paginationWrapper = createElement({
+        type: 'div',
+        parentElement: parent,
+        classes: ['pagination_wrapper'],
+    });
+    const ul = createElement({
+        type: 'ul',
+        parentElement: paginationWrapper,
+        classes: ['pagination'],
+    });
+    getPaginationBtns(ul);
+}
+
 export default async function getTextbookPage() {
     const wrapper = createElement({
         type: 'div',
@@ -269,4 +284,5 @@ export default async function getTextbookPage() {
     });
     getLevelsSection(wrapper);
     await getWordsSection(wrapper);
+    getPaginationSection(wrapper);
 }
