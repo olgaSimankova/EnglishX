@@ -36,10 +36,12 @@ export const GAME_BUTTONS = {
     YES: true,
     NO: false,
 };
-export const WORDS = 'https://eng-guru.herokuapp.com/words';
-export const BUTTON_NAMES = ['About Us', 'TextBook', 'Games', 'Statistic'];
+export const WORDS = 'http://localhost:8000/words';
+export const API_BASE_LINK = 'http://localhost:8000';
+// export const WORDS = 'https://eng-guru.herokuapp.com/words';
+// export const API_BASE_LINK = 'https://eng-guru.herokuapp.com';
 
-export const API_BASE_LINK = 'https://eng-guru.herokuapp.com';
+export const BUTTON_NAMES = ['About Us', 'TextBook', 'Games', 'Statistic'];
 
 export const VALID_COLOR_GREEN = 'rgb(211, 255, 233)';
 export const INVALID_COLOR_RED = 'rgb(249, 211, 211)';

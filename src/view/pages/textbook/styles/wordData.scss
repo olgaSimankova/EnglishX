@@ -12,7 +12,6 @@
     background-position: center;
     background-repeat: no-repeat;
     height: 230px;
-    // margin: 0 8px;
     overflow: hidden;
     border-radius: 0.5rem;
     box-shadow: 0px 9px 8px 0px rgba(34, 60, 80, 0.3);
@@ -35,19 +34,27 @@
     letter-spacing: 0.1em;
     margin: 5px 0;
 }
-
-.audio {
+.audio__wrapper {
     display: inline-block;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.audio__wrapper:hover {
+    background-color: $lightGray;
+}
+.audio {
+    display: block;
+    margin: 0 auto;
+    align-self: center;
     width: 20px;
     height: 20px;
-    border-radius: 50px;
-    border: 1px solid #000;
-    cursor: pointer;
-    color: #000;
+    border-radius: 50%;
+    background: center / contain no-repeat url("../../../../assets/icons/sound-icon.svg");
 }
-
-.audio:hover, 
-.audio:focus {
+ 
+.audio:active {
   animation: pulse 0.5s;
   box-shadow: 0 0 0 1em rgba(#fff, 0);
 }

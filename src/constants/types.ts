@@ -57,7 +57,7 @@ export interface SprintState {
 }
 
 export interface Textbook {
-    levelChosen: number;
+    currentLevel: number;
     authenticated: boolean;
 }
 

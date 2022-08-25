@@ -44,7 +44,7 @@ function getLevelsSection(parent: HTMLElement): void {
             parentElement: levelsSection,
             classes: ['level__button'],
         });
-        if (index === state.textBook.levelChosen) {
+        if (index === +state.textBook.currentLevel) {
             btn.classList.add('active');
         }
         const leftPart = createElement({
@@ -86,7 +86,7 @@ async function getWordsCards(words: Word[], parent: HTMLElement) {
         const wordCard = createElement({
             type: 'button',
             parentElement: parent,
-            classes: ['words__card', `words__card_${Levels[state.textBook.levelChosen]}`],
+            classes: ['words__card', `words__card_${Levels[state.textBook.currentLevel]}`],
         });
         if (index === 0) wordCard.classList.add('active');
 
@@ -134,11 +134,15 @@ async function getWordData(word: Word, parent: HTMLElement) {
         classes: ['word__transcription'],
         text: `${word.transcription}`,
     });
+    const audioBtn = createElement({
+        type: 'button',
+        parentElement: wordAndTranslation,
+        classes: ['audio__wrapper'],
+    });
     createElement({
         type: 'span',
-        parentElement: wordAndTranslation,
+        parentElement: audioBtn,
         classes: ['audio'],
-        attributes: [['style', `background: center / contain no-repeat url("../../../assets/icons/sound-icon.svg");`]],
     });
     const wordActions = createElement({
         type: 'div',
@@ -148,13 +152,13 @@ async function getWordData(word: Word, parent: HTMLElement) {
     createElement({
         type: 'button',
         parentElement: wordActions,
-        classes: ['word__actions_btn', `words__actions_btn_${Levels[state.textBook.levelChosen]}`],
+        classes: ['word__actions_btn', `words__actions_btn_${Levels[state.textBook.currentLevel]}`],
         text: 'difficult word',
     });
     createElement({
         type: 'button',
         parentElement: wordActions,
-        classes: ['word__actions_btn', `words__actions_btn_${Levels[state.textBook.levelChosen]}`],
+        classes: ['word__actions_btn', `words__actions_btn_${Levels[state.textBook.currentLevel]}`],
         text: 'delete word',
     });
     if (!state.textBook.authenticated) wordActions.classList.add('hidden');
@@ -241,7 +245,7 @@ async function getWordsSection(parent: HTMLElement): Promise<void> {
         parentElement: parent,
         classes: ['words__section'],
     });
-    const words = await getWords(state.textBook.levelChosen + 1, 1);
+    const words = await getWords(state.textBook.currentLevel + 1, 1);
     const wordsContainer = createElement({
         type: 'div',
         parentElement: wordsSection,

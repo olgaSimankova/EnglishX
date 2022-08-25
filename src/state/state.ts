@@ -14,7 +14,7 @@ export const state = {
         isGame: false,
     },
     textBook: {
-        levelChosen: 0,
+        currentLevel: 0,
         authenticated: false,
     },
 } as StateInterface;
