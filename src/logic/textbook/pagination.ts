@@ -20,20 +20,20 @@ export function getPaginationBtns(parent: HTMLElement) {
         switch (i) {
             case 0:
                 btn.innerText = `《`;
+                btn.classList.add('left');
                 if (state.textBook.currentPage === 1) btn.classList.add('disabled');
                 break;
             case 1:
                 btn.innerText = '1';
-                btn.id = '1';
                 if (state.textBook.currentPage === 1) btn.classList.add('active');
                 break;
             case 7:
                 btn.innerText = '30';
-                btn.id = '30';
                 if (state.textBook.currentPage === 30) btn.classList.add('active');
                 break;
             case 8:
                 btn.innerText = '》';
+                btn.classList.add('right');
                 if (state.textBook.currentPage === 30) btn.classList.add('disabled');
                 break;
 
@@ -41,6 +41,7 @@ export function getPaginationBtns(parent: HTMLElement) {
                 if (state.textBook.currentPage < 5) {
                     btn.innerText = i === 6 ? '...' : `${i}`;
                     if (i === 6) btn.classList.add('disabled');
+                    if (i === state.textBook.currentPage) btn.classList.add('active');
                     btn.id = `${i}`;
                 } else if (state.textBook.currentPage >= 5 && state.textBook.currentPage <= 26) {
                     if (i === 2 || i === 6) {
@@ -55,14 +56,27 @@ export function getPaginationBtns(parent: HTMLElement) {
                         btn.innerText = `${state.textBook.currentPage + 1}`;
                     }
                 } else {
-                    btn.innerText = i === 2 ? '...' : `${24 + i}`;
+                    btn.innerText = i === 2 ? '...' : `${23 + i}`;
                     if (i === 2) btn.classList.add('disabled');
-                    if (btn.innerText === `${state.textBook.currentPage + 1}`) btn.classList.add('active');
+                    if (btn.innerText === `${state.textBook.currentPage}`) btn.classList.add('active');
                 }
         }
     }
 }
 
-export function Func() {
-    console.log('func');
+export function listenPagination() {
+    const pagination = document.querySelector('.pagination') as HTMLElement;
+    pagination.addEventListener('click', (event: Event) => {
+        const target = event.target as HTMLElement;
+        if (target.classList.contains('disabled') || !target.classList.contains('pagination_btn')) return;
+        if (target.classList.contains('left')) {
+            state.textBook.currentPage -= 1;
+        } else if (target.classList.contains('right')) {
+            state.textBook.currentPage += 1;
+        } else {
+            state.textBook.currentPage = Number(target.innerText);
+        }
+        pagination.innerHTML = '';
+        getPaginationBtns(pagination);
+    });
 }
