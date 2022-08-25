@@ -47,8 +47,14 @@ export interface SprintState {
     isGame: boolean;
 }
 
+export interface ControlsState {
+    isSound: boolean;
+    isFullscreen: boolean;
+}
+
 export interface StateInterface {
     sprintGame: SprintState;
+    controls: ControlsState;
 }
 
 export interface User {
@@ -60,4 +66,9 @@ export interface User {
 export enum Choice {
     right = 'right',
     wrong = 'wrong',
+}
+
+export enum GameTags {
+    sprintGame = 'sprintGame',
+    audioCallGame = 'audioCall',
 }

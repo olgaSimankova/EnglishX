@@ -1,5 +1,6 @@
 import { CHOOSE_LEVEL, START, START_GAME_LABELS } from '../../../constants/constants';
 import { Levels } from '../../../constants/types';
+import gameButtonsControls from '../../../logic/games/gameButtonsControls';
 import createElement from '../../../utils/createElement';
 import renderGameButtons from '../renderGameControlButtons';
 import './startGame.scss';
@@ -108,4 +109,5 @@ export default function renderGameStartPage(tag: string): void {
     });
     renderGameButtons(container);
     renderStartScreen(container, tag);
+    gameButtonsControls();
 }
