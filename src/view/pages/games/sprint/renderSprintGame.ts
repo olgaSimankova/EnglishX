@@ -42,7 +42,7 @@ function renderPointsBlock(parentElement: HTMLElement): void {
         type: 'p',
         parentElement: multiplyContainer,
         classes: ['multiply-label', 'label'],
-        text: `${MULTIPLY}: X`,
+        text: `${MULTIPLY.toUpperCase()}: X`,
     });
     createElement({
         type: 'p',
@@ -65,7 +65,7 @@ function renderPointsBlock(parentElement: HTMLElement): void {
         type: 'p',
         parentElement: resultContainer,
         classes: ['result-label', 'label'],
-        text: POINTS,
+        text: POINTS.toUpperCase(),
     });
     createElement({
         type: 'p',

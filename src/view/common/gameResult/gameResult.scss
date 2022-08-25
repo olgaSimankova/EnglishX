@@ -2,7 +2,7 @@
     width: 320px;
     height: 500px;
     border-radius: 30px;
-    background-color: rgb(226, 195, 127);
+    background-color: rgb(243, 241, 238);
     overflow: hidden;
     box-sizing: border-box;
 
@@ -20,7 +20,29 @@
         .right-side-container {
             overflow-y: auto;
         }
+
+        .left-side-container {
+
+            .title-result {
+                padding: 20px 5;
+                font-size: 30px;
+                font-weight: 700;
+            }
+
+            .result-description {
+                padding: 30px 0;
+                font-size: 20px;
+                text-decoration: underline dotted;
+                line-height: 20px;
+            }
+
+            .big-percents {
+                padding-top: 30px;
+                font-size: 78px;
+                font-weight: 500;
+            }
     }
+}
 
     .move-left {
         transform: translateX(-320px);
@@ -31,6 +53,7 @@
     display: flex;
     justify-content: center;
     gap: 10px;
+    margin-bottom: 30px;
 
     .tab {
         width: 200px;
@@ -44,7 +67,8 @@
     }
 
     .active {
-        border-bottom: #424551 3px solid;
+        color: #0a37ea;
+        border-bottom: #0a37ea 3px solid;
     }
 }
 
@@ -59,7 +83,7 @@
     display: flex;
     justify-content: center;
     gap: 10px;
-    padding-top: 40px;
+    margin-top: 10px;
 
     .bottom-button {
         padding: 7px;
@@ -67,7 +91,7 @@
         border-radius: 20px;
         font-size: 18px;
         
-        background-color: antiquewhite;
+        background-color: rgb(242, 186, 65);
 
         &:hover {
             cursor: pointer;
