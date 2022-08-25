@@ -1,4 +1,4 @@
-import { StateInterface } from '../constants/types';
+import { ControlsState, SprintState, StateInterface } from '../constants/types';
 
 export const state = {
     sprintGame: {
@@ -12,11 +12,15 @@ export const state = {
         usedNumbers: [],
         wordsLearnt: 0,
         isGame: false,
-    },
+    } as SprintState,
     textBook: {
         currentLevel: 0,
         authenticated: false,
     },
+    controls: {
+        isSound: true,
+        isFullscreen: false,
+    } as ControlsState,
 } as StateInterface;
 
 export default state;

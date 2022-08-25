@@ -1,5 +1,5 @@
 import { GAME_BUTTONS, START_POINTS } from '../../../constants/constants';
-import { Choice, Word } from '../../../constants/types';
+import { Choice, GameTags, Word } from '../../../constants/types';
 import state from '../../../state/state';
 import { deleteHTMLElement } from '../../../utils/createElement';
 import { getHTMLElementContent, setHTMLElementContent } from '../../../utils/handleHTMLTextContent';
@@ -15,7 +15,7 @@ import listenLevelButtons, {
     listerStartButton,
 } from './events';
 
-export default function startPageControls(tag: string): void {
+export default function startPageControls(tag: GameTags): void {
     listenLevelButtons();
     listerStartButton(tag);
 }

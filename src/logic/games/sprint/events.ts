@@ -1,6 +1,6 @@
 import getWords from '../../../api/words';
 import { KEY_ARROWS, MAX_PAGES, GAME_BUTTONS } from '../../../constants/constants';
-import { Levels, Word } from '../../../constants/types';
+import { GameTags, Levels, SprintState, Word } from '../../../constants/types';
 import { state } from '../../../state/state';
 import { deleteHTMLElement } from '../../../utils/createElement';
 import playAudio, { getFullPath } from '../../../utils/playAudio';
@@ -31,20 +31,21 @@ export default function listenLevelButtons(): void {
     });
 }
 
-export function listerStartButton(tag: string): void {
+export function listerStartButton(tag: GameTags): void {
     const startButton = document.querySelector('.start-button') as HTMLElement;
     startButton?.addEventListener('click', async () => {
         if (startButton.classList.contains('active')) {
             deleteHTMLElement('start-screen');
             const gameContainer = document.querySelector('.game-container') as HTMLElement;
-            if (gameContainer) {
-                const level = Levels[state[`${tag}Game` as keyof typeof state].currentLevel as keyof typeof Levels];
+            if (gameContainer && tag) {
+                const level =
+                    Levels[(state[tag as keyof typeof state] as SprintState).currentLevel as keyof typeof Levels];
                 const page = getRandomNumber(0, MAX_PAGES);
                 renderLoading(gameContainer);
                 const data = await getWords(level, page);
                 deleteHTMLElement('loading-container');
                 switch (tag) {
-                    case 'sprint':
+                    case GameTags.sprintGame:
                         renderSprintGame(gameContainer, data);
                         sprintGameControls(data);
                         break;
