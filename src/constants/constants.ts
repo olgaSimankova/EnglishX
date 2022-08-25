@@ -122,3 +122,4 @@ export const FOOTER_LINKS_TEXT = ['About Us', 'TextBook', 'Games', 'Statistic', 
 export const SITEMAP_LINKS = ['#team', '#', '#', '#', '#footer'];
 export const GAMES_LINKS = ['#', '#', '#', '#'];
 export const HEADER_LINKS = ['#team', '#', '#', '#'];
+export const ANSWER_OPTIONS_COUNT = 5;

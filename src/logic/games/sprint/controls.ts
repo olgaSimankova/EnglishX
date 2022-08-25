@@ -16,7 +16,7 @@ import listenLevelButtons, {
 } from './events';
 
 export default function startPageControls(tag: string): void {
-    listenLevelButtons();
+    listenLevelButtons(tag);
     listerStartButton(tag);
 }
 

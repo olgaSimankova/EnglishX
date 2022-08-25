@@ -1,8 +1,8 @@
 import renderGameStartPage from '../../../common/gameStartPage/renderGameStartPage';
-import sprintStartPageControls from '../../../../logic/games/sprint/controls';
 import './style.scss';
+import startPageControls from '../../../../logic/games/sprint/controls';
 
-(function startSprintPage() {
+(function startAudioCallPage() {
     renderGameStartPage('audioCall');
-    sprintStartPageControls('audioCall');
+    startPageControls('audioCall');
 })();

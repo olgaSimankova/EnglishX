@@ -47,8 +47,13 @@ export interface SprintState {
     isGame: boolean;
 }
 
+export interface AudioCall {
+    currentLevel: string;
+}
+
 export interface StateInterface {
     sprintGame: SprintState;
+    audioCallGame: AudioCall;
 }
 
 export interface User {

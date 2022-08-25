@@ -13,6 +13,10 @@ export const state = {
         wordsLearnt: 0,
         isGame: false,
     },
+
+    audioCallGame: {
+        currentLevel: '',
+    },
 } as StateInterface;
 
 export default state;

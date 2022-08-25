@@ -15,14 +15,15 @@ import {
     setPoints,
     sprintGameControls,
 } from './controls';
+import renderAudioCallGame from '../../../view/pages/games/audio-call/renderAudioCallGame';
 
-export default function listenLevelButtons(): void {
+export default function listenLevelButtons(tag: string): void {
     const levelsContainer = document.querySelector('.level-container');
     levelsContainer?.addEventListener('click', (e) => {
         const target = e.target as HTMLElement;
         const data = target.getAttribute('data');
         if (data) {
-            state.sprintGame.currentLevel = data;
+            state[`${tag}Game` as keyof typeof state].currentLevel = data;
             removeClassElement('level-button', 'active-level-button');
             target.classList.add('active-level-button');
             const startButton = document.querySelector('.start-button');
@@ -47,6 +48,11 @@ export function listerStartButton(tag: string): void {
                     case 'sprint':
                         renderSprintGame(gameContainer, data);
                         sprintGameControls(data);
+                        break;
+
+                    case 'audioCall':
+                        renderAudioCallGame(gameContainer, data);
+                        // sprintGameControls(data);
                         break;
                     default:
                         break;
