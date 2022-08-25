@@ -1,3 +1,4 @@
+import { FullScreenDocument } from '../../constants/types';
 import state from '../../state/state';
 
 function listenGameSound(): void {
@@ -9,6 +10,30 @@ function listenGameSound(): void {
     });
 }
 
+function leaveFullScreen(doc: FullScreenDocument) {
+    if (doc.exitFullscreen) doc.exitFullscreen();
+    else if (doc.msExitFullscreen) doc.msExitFullscreen();
+    else if (doc.mozCancelFullScreen) doc.mozCancelFullScreen();
+    else if (doc.webkitExitFullscreen) doc.webkitExitFullscreen();
+}
+
+function goToFullscreen(): void {
+    if (state.controls.isFullscreen) {
+        document.documentElement.requestFullscreen();
+    } else {
+        leaveFullScreen(document);
+    }
+}
+
+function listenGameFullscreen(): void {
+    const container = document.querySelector('.fullscreen-container');
+    container?.addEventListener('click', () => {
+        state.controls.isFullscreen = !state.controls.isFullscreen;
+        goToFullscreen();
+    });
+}
+
 export default function gameButtonsControls(): void {
     listenGameSound();
+    listenGameFullscreen();
 }
