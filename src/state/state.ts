@@ -16,6 +16,12 @@ export const state = {
 
     audioCallGame: {
         currentLevel: '',
+        currentWord: {},
+        givenWords: [],
+        needLearnWords: [],
+        currentLearned: [],
+        currentMistakes: [],
+        wordsLearnt: 0,
     },
 } as StateInterface;
 

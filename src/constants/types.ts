@@ -49,6 +49,12 @@ export interface SprintState {
 
 export interface AudioCall {
     currentLevel: string;
+    learningWord?: Word;
+    givenWords: Word[];
+    needLearnWords: Word[];
+    currentLearned: Word[];
+    currentMistakes: Word[];
+    wordsLearnt: number;
 }
 
 export interface StateInterface {

@@ -1,6 +1,10 @@
 import createElement from '../../../../utils/createElement';
 import { Word } from '../../../../constants/types';
 import { ANSWER_OPTIONS_COUNT } from '../../../../constants/constants';
+import { setSoundEvent, setAnswerEvent } from '../../../../logic/games/audio-call/events';
+import { setAnswerOptions, setLearningWord, setWords } from '../../../../logic/games/audio-call/utils';
+import state from '../../../../state/state';
+import { getFullPath } from '../../../../utils/playAudio';
 
 const renderQuestion = (parentElement: HTMLElement) => {
     const card = createElement({
@@ -25,17 +29,17 @@ const renderQuestion = (parentElement: HTMLElement) => {
         type: 'img',
         parentElement: card,
         classes: ['image'],
-        attributes: [['src', 'https://rslang-team69.herokuapp.com/files/21_0405.jpg']],
+        attributes: [['src', `${getFullPath(state.audioCallGame.learningWord?.image)}`]],
     });
 
     const currentWord = createElement({
         type: 'div',
         parentElement,
         classes: ['audioCall__current-word', 'hidden'],
-        text: 'clerk',
+        text: state.audioCallGame.learningWord?.word,
     });
 
-    createElement({
+    const soundSmall = createElement({
         type: 'div',
         parentElement: currentWord,
         classes: ['audioCall__sound', 'audioCall__sound_small'],
@@ -43,22 +47,40 @@ const renderQuestion = (parentElement: HTMLElement) => {
 
     createElement({
         type: 'div',
+        parentElement: soundSmall,
+        classes: ['audioCall__icon'],
+    });
+    setSoundEvent(soundSmall);
+
+    const soundBig = createElement({
+        type: 'div',
         parentElement,
         classes: ['audioCall__sound'],
+        attributes: [['id', 'sound-big']],
     });
+
+    createElement({
+        type: 'div',
+        parentElement: soundBig,
+        classes: ['audioCall__icon'],
+    });
+    setSoundEvent(soundBig);
 
     const words = createElement({
         type: 'div',
         parentElement,
         classes: ['audioCall__words'],
     });
+    setAnswerEvent(words);
 
+    const answerOptions = setAnswerOptions();
     for (let i = 0; i < ANSWER_OPTIONS_COUNT; i += 1) {
         createElement({
             type: 'div',
             parentElement: words,
             classes: ['audioCall__word'],
-            text: `${i + 1}. Наслаждаться`,
+            text: `${i + 1}. ${answerOptions[i]}`,
+            attributes: [['data-word', `${answerOptions[i]}`]],
         });
     }
 
@@ -70,12 +92,14 @@ const renderQuestion = (parentElement: HTMLElement) => {
     });
 };
 
-export default function renderAudioCallGame(parentElement: HTMLElement, data: Word[]) {
+export default function renderAudioCallGame(parentElement: HTMLElement, data: Word[]): void {
     const gameContainer = createElement({
         type: 'div',
         parentElement,
         classes: ['audioCall-container'],
     });
 
+    setWords(data);
+    setLearningWord();
     renderQuestion(gameContainer);
 }

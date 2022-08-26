@@ -6,7 +6,7 @@ export default function playAudio(fullURLToServer: string): void {
     audio.play();
 }
 
-export function getFullPath(pathFromObj: string): string {
+export function getFullPath(pathFromObj?: string): string {
     return `${API_BASE_LINK}/${pathFromObj}`;
 }
 
