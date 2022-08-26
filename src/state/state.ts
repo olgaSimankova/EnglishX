@@ -10,7 +10,10 @@ export const state = {
         currentLearned: [],
         currentMistakes: [],
         usedNumbers: [],
+        currentPage: 0,
         wordsLearnt: 0,
+        currentMaxLength: 0,
+        isFreeze: false,
         isGame: false,
     } as SprintState,
     textBook: {

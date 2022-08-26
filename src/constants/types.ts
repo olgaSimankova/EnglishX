@@ -51,7 +51,10 @@ export interface SprintState {
     currentMultiply: number;
     currentLearned: Word[];
     currentMistakes: Word[];
+    currentPage: number;
     usedNumbers: number[];
+    currentMaxLength: number;
+    isFreeze: boolean;
     wordsLearnt: number;
     isGame: boolean;
 }
@@ -88,4 +91,20 @@ export enum Choice {
 export enum GameTags {
     sprintGame = 'sprintGame',
     audioCallGame = 'audioCall',
+}
+
+export interface FullScreenDocumentElement extends HTMLElement {
+    msRequestFullscreen?: () => void;
+    mozRequestFullScreen?: () => void;
+    webkitRequestFullscreen?: () => void;
+}
+
+export interface FullScreenDocument extends Document {
+    documentElement: FullScreenDocumentElement;
+    mozFullScreenElement?: Element;
+    msFullscreenElement?: Element;
+    webkitFullscreenElement?: Element;
+    msExitFullscreen?: () => void;
+    mozCancelFullScreen?: () => void;
+    webkitExitFullscreen?: () => void;
 }
