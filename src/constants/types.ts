@@ -42,7 +42,10 @@ export interface SprintState {
     currentMultiply: number;
     currentLearned: Word[];
     currentMistakes: Word[];
+    currentPage: number;
     usedNumbers: number[];
+    currentMaxLength: number;
+    isFreeze: boolean;
     wordsLearnt: number;
     isGame: boolean;
 }
@@ -57,9 +60,15 @@ export interface AudioCall {
     wordsLearnt: number;
 }
 
+export interface ControlsState {
+    isSound: boolean;
+    isFullscreen: boolean;
+}
+
 export interface StateInterface {
     sprintGame: SprintState;
     audioCallGame: AudioCall;
+    controls: ControlsState;
 }
 
 export interface User {
@@ -71,4 +80,25 @@ export interface User {
 export enum Choice {
     right = 'right',
     wrong = 'wrong',
+}
+
+export enum GameTags {
+    sprintGame = 'sprintGame',
+    audioCallGame = 'audioCall',
+}
+
+export interface FullScreenDocumentElement extends HTMLElement {
+    msRequestFullscreen?: () => void;
+    mozRequestFullScreen?: () => void;
+    webkitRequestFullscreen?: () => void;
+}
+
+export interface FullScreenDocument extends Document {
+    documentElement: FullScreenDocumentElement;
+    mozFullScreenElement?: Element;
+    msFullscreenElement?: Element;
+    webkitFullscreenElement?: Element;
+    msExitFullscreen?: () => void;
+    mozCancelFullScreen?: () => void;
+    webkitExitFullscreen?: () => void;
 }

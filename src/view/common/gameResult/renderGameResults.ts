@@ -13,7 +13,7 @@ function renderResultTabs(parentElement: HTMLElement): void {
         createElement({
             type: 'button',
             parentElement: tabsContainer,
-            classes: ['tab', `${tag.split(' ')[0]}`.toLocaleLowerCase()],
+            classes: ['tab', `${tag.split(' ')[0]}-tab`.toLocaleLowerCase()],
             text: tag,
         });
     });

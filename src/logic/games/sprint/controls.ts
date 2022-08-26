@@ -1,11 +1,12 @@
-import { GAME_BUTTONS, START_POINTS } from '../../../constants/constants';
-import { Choice, Word } from '../../../constants/types';
+import getWords from '../../../api/words';
+import { GAME_BUTTONS, RANDOM_MIDDLE, START_POINTS } from '../../../constants/constants';
+import { Choice, GameTags, Levels, Word } from '../../../constants/types';
 import state from '../../../state/state';
 import { deleteHTMLElement } from '../../../utils/createElement';
 import { getHTMLElementContent, setHTMLElementContent } from '../../../utils/handleHTMLTextContent';
 import { playChoiceSound } from '../../../utils/playAudio';
+import getRandomNumber from '../../../utils/randomize';
 import renderResultPage from '../../../view/common/gameResult/renderGameResults';
-import { setAnswerBlock } from '../../../view/pages/games/sprint/renderSprintGame';
 import listenLevelButtons, {
     listenChoiceButtons,
     listenKeyboard,
@@ -15,9 +16,26 @@ import listenLevelButtons, {
     listerStartButton,
 } from './events';
 
-export default function startPageControls(tag: string): void {
+export async function setAnswerBlock(data: Word[]): Promise<void> {
+    const { length } = data;
+    if (state.sprintGame.usedNumbers.length !== length) {
+        let randomNumber = getRandomNumber(0, length);
+        while (state.sprintGame.usedNumbers.includes(randomNumber)) {
+            randomNumber = getRandomNumber(0, length);
+        }
+        state.sprintGame.usedNumbers.push(randomNumber);
+        const randomEng = data[randomNumber];
+        state.sprintGame.currentEngWord = randomEng;
+        const randomRu = Math.random() < RANDOM_MIDDLE ? randomEng : data[getRandomNumber(0, length)];
+        state.sprintGame.currentRuWord = randomRu;
+        setHTMLElementContent('eng-word', randomEng.word);
+        setHTMLElementContent('ru-word', randomRu.wordTranslate);
+    }
+}
+
+export default function startPageControls(tag: GameTags, reload = false): void {
     listenLevelButtons(tag);
-    listerStartButton(tag);
+    listerStartButton(tag, reload);
 }
 
 export function gameResultControls(): void {
@@ -77,13 +95,12 @@ function unpdateWordsResult(action: boolean) {
 }
 
 export function resetSprintPoints(): void {
-    state.sprintGame.currentBet = 10;
+    state.sprintGame.currentBet = Number(START_POINTS);
     state.sprintGame.currentPoints = 0;
     state.sprintGame.currentTick = 0;
     state.sprintGame.currentMultiply = 1;
     state.sprintGame.currentLearned = [];
     state.sprintGame.currentMistakes = [];
-    state.sprintGame.currentLevel = '';
     state.sprintGame.usedNumbers = [];
     state.sprintGame.wordsLearnt = 0;
 }
@@ -101,10 +118,24 @@ export function setPoints(action: boolean): void {
     unpdateWordsResult(action);
 }
 
-export function sprintGameControls(data: Word[]): void {
+export async function reloadNewWord(choice: boolean): Promise<Word[]> {
+    state.sprintGame.isFreeze = true;
+    state.sprintGame.usedNumbers = [];
+    state.sprintGame.currentPage -= 1;
+    const level = Levels[state.sprintGame.currentLevel as keyof typeof Levels];
+    const newData = await getWords(level, state.sprintGame.currentPage);
+    const action = checkAnswerSprintGame(choice);
+    setPoints(action);
+    setAnswerBlock(newData);
+    state.sprintGame.wordsLearnt += 1;
+    state.sprintGame.isFreeze = false;
+    return newData;
+}
+
+export function sprintGameControls(data: Word[], reload = false): void {
     startTimer();
-    listenChoiceButtons(data);
-    listenKeyboard(data);
+    listenChoiceButtons(data, reload);
+    listenKeyboard(data, reload);
 }
 
 export function processResultGameButtons(data: string): void {
@@ -120,15 +151,21 @@ export function processResultGameButtons(data: string): void {
     }
 }
 
-export function choiceAction(e: Event, data: Word[]): void {
+export async function choiceAction(e: Event, data: Word[], length: number, reload = false): Promise<Word[]> {
+    let newData = data;
     const target = e.target as HTMLElement;
     const value = target.getAttribute('data');
-    if (value && state.sprintGame.wordsLearnt < data.length) {
-        const action = checkAnswerSprintGame(GAME_BUTTONS[value as keyof typeof GAME_BUTTONS]);
+    let action = false;
+    if (value && state.sprintGame.wordsLearnt < length) {
+        action = checkAnswerSprintGame(GAME_BUTTONS[value as keyof typeof GAME_BUTTONS]);
         setPoints(action);
-        setAnswerBlock(data);
+        setAnswerBlock(newData);
         state.sprintGame.wordsLearnt += 1;
+    } else if (reload && state.sprintGame.currentPage) {
+        newData = await reloadNewWord(action);
+        state.sprintGame.currentMaxLength += newData.length;
     } else {
         state.sprintGame.isGame = false;
     }
+    return newData;
 }

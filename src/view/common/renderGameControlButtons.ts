@@ -10,7 +10,10 @@ export default function renderGameButtons(parentElement: HTMLElement): void {
         type: 'a',
         parentElement: gameButtonsContainer,
         classes: ['link-close'],
-        attributes: [['href', '']],
+        attributes: [
+            ['href', './textbook.html'],
+            ['title', 'Go to textbook'],
+        ],
     });
     const spanCloseContainer = createElement({
         type: 'div',
@@ -28,6 +31,7 @@ export default function renderGameButtons(parentElement: HTMLElement): void {
         type: 'div',
         parentElement: gameButtonsContainer,
         classes: ['fullscreen-container'],
+        attributes: [['title', 'fullscreen']],
     });
     createElement({
         type: 'img',
@@ -38,6 +42,7 @@ export default function renderGameButtons(parentElement: HTMLElement): void {
         type: 'div',
         parentElement: gameButtonsContainer,
         classes: ['sound-container'],
+        attributes: [['title', 'toggle sound']],
     });
     createElement({
         type: 'img',

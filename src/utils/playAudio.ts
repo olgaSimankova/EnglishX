@@ -1,5 +1,6 @@
 import { API_BASE_LINK, SOUNDS_ANSWER } from '../constants/constants';
 import { Choice } from '../constants/types';
+import state from '../state/state';
 
 export default function playAudio(fullURLToServer: string): void {
     const audio = new Audio(fullURLToServer);
@@ -11,5 +12,7 @@ export function getFullPath(pathFromObj?: string): string {
 }
 
 export function playChoiceSound(answer: Choice): void {
-    new Audio(SOUNDS_ANSWER[answer]).play();
+    if (state.controls.isSound) {
+        new Audio(SOUNDS_ANSWER[answer]).play();
+    }
 }
