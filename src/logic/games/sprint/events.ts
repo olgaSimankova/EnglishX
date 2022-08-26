@@ -11,8 +11,8 @@ import renderSprintGame from '../../../view/pages/games/sprint/renderSprintGame'
 import {
     checkAnswerSprintGame,
     choiceAction,
-    getNewData,
     processResultGameButtons,
+    reloadNewWord,
     setAnswerBlock,
     setPoints,
     sprintGameControls,
@@ -39,19 +39,19 @@ export function listerStartButton(tag: GameTags, reload = false): void {
         if (startButton.classList.contains('active')) {
             deleteHTMLElement('start-screen');
             const gameContainer = document.querySelector('.game-container') as HTMLElement;
-            console.log(state);
             if (gameContainer && tag) {
+                const MIN_PAGE = reload ? 15 : 0;
                 const level =
                     Levels[(state[tag as keyof typeof state] as SprintState).currentLevel as keyof typeof Levels];
-                const page = getRandomNumber(0, MAX_PAGES);
+                const page = getRandomNumber(MIN_PAGE, MAX_PAGES);
+                state.sprintGame.currentPage = page;
                 renderLoading(gameContainer);
                 const data = await getWords(level, page);
                 deleteHTMLElement('loading-container');
                 switch (tag) {
                     case GameTags.sprintGame:
-                        state.sprintGame.usedPages.push(page);
                         renderSprintGame(gameContainer, data);
-                        sprintGameControls(data);
+                        sprintGameControls(data, reload);
                         break;
                     default:
                         break;
@@ -62,9 +62,14 @@ export function listerStartButton(tag: GameTags, reload = false): void {
 }
 
 export function listenChoiceButtons(data: Word[], reload = false): void {
+    let { length } = data;
+    let newData = data;
     const buttonsContainer = document.querySelector('.buttons-container');
-    buttonsContainer?.addEventListener('click', (e) => {
-        choiceAction(e, data, reload);
+    buttonsContainer?.addEventListener('click', async (e) => {
+        if (!state.sprintGame.isFreeze) {
+            newData = await choiceAction(e, newData, length, reload);
+            length = state.sprintGame.currentMaxLength;
+        }
     });
 }
 
@@ -106,16 +111,21 @@ export function listenResultBottomButtons(): void {
     });
 }
 
-export function listenKeyboard(data: Word[]): void {
+export function listenKeyboard(data: Word[], reload = false): void {
+    let newData = data;
+    let { length } = data;
     document.addEventListener('keyup', async (e) => {
         const keyName = e.key;
         const choice = keyName === KEY_ARROWS.left ? GAME_BUTTONS.YES : GAME_BUTTONS.NO;
-        if (Object.values(KEY_ARROWS).includes(keyName)) {
-            if (state.sprintGame.wordsLearnt < data.length) {
+        if (Object.values(KEY_ARROWS).includes(keyName) && !state.sprintGame.isFreeze) {
+            if (state.sprintGame.wordsLearnt < length) {
                 const action = checkAnswerSprintGame(choice);
                 setPoints(action);
-                setAnswerBlock(data);
+                setAnswerBlock(newData);
                 state.sprintGame.wordsLearnt += 1;
+            } else if (reload && state.sprintGame.currentPage) {
+                newData = await reloadNewWord(choice);
+                length += newData.length;
             } else {
                 state.sprintGame.isGame = false;
             }

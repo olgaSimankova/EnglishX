@@ -1,5 +1,5 @@
 import getWords from '../../../api/words';
-import { GAME_BUTTONS, MAX_PAGES, START_POINTS } from '../../../constants/constants';
+import { GAME_BUTTONS, START_POINTS } from '../../../constants/constants';
 import { Choice, GameTags, Levels, Word } from '../../../constants/types';
 import state from '../../../state/state';
 import { deleteHTMLElement } from '../../../utils/createElement';
@@ -15,28 +15,6 @@ import listenLevelButtons, {
     listenSoundResultList,
     listerStartButton,
 } from './events';
-
-function getNewPage(): number {
-    const { usedPages } = state.sprintGame;
-    if (usedPages.length === MAX_PAGES) {
-        return -1;
-    }
-    let page = getRandomNumber(0, MAX_PAGES);
-    while (usedPages.includes(page)) {
-        page = getRandomNumber(0, MAX_PAGES);
-    }
-    return page;
-}
-
-export async function getNewData(): Promise<Word[]> {
-    const newPage = getNewPage();
-    if (newPage === -1) {
-        return [];
-    }
-    console.log(state.sprintGame.currentLevel);
-    const level = Levels[state.sprintGame.currentLevel as keyof typeof Levels];
-    return getWords(level, newPage);
-}
 
 export async function setAnswerBlock(data: Word[]): Promise<void> {
     const { length } = data;
@@ -140,10 +118,24 @@ export function setPoints(action: boolean): void {
     unpdateWordsResult(action);
 }
 
-export function sprintGameControls(data: Word[]): void {
+export async function reloadNewWord(choice: boolean): Promise<Word[]> {
+    state.sprintGame.isFreeze = true;
+    state.sprintGame.usedNumbers = [];
+    state.sprintGame.currentPage -= 1;
+    const level = Levels[state.sprintGame.currentLevel as keyof typeof Levels];
+    const newData = await getWords(level, state.sprintGame.currentPage);
+    const action = checkAnswerSprintGame(choice);
+    setPoints(action);
+    setAnswerBlock(newData);
+    state.sprintGame.wordsLearnt += 1;
+    state.sprintGame.isFreeze = false;
+    return newData;
+}
+
+export function sprintGameControls(data: Word[], reload = false): void {
     startTimer();
-    listenChoiceButtons(data);
-    listenKeyboard(data);
+    listenChoiceButtons(data, reload);
+    listenKeyboard(data, reload);
 }
 
 export function processResultGameButtons(data: string): void {
@@ -159,15 +151,21 @@ export function processResultGameButtons(data: string): void {
     }
 }
 
-export function choiceAction(e: Event, data: Word[], reload = false): void {
+export async function choiceAction(e: Event, data: Word[], length: number, reload = false): Promise<Word[]> {
+    let newData = data;
     const target = e.target as HTMLElement;
     const value = target.getAttribute('data');
-    if (value && state.sprintGame.wordsLearnt < data.length) {
-        const action = checkAnswerSprintGame(GAME_BUTTONS[value as keyof typeof GAME_BUTTONS]);
+    let action = false;
+    if (value && state.sprintGame.wordsLearnt < length) {
+        action = checkAnswerSprintGame(GAME_BUTTONS[value as keyof typeof GAME_BUTTONS]);
         setPoints(action);
-        setAnswerBlock(data);
+        setAnswerBlock(newData);
         state.sprintGame.wordsLearnt += 1;
+    } else if (reload && state.sprintGame.currentPage) {
+        newData = await reloadNewWord(action);
+        state.sprintGame.currentMaxLength += newData.length;
     } else {
         state.sprintGame.isGame = false;
     }
+    return newData;
 }
