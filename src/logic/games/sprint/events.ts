@@ -24,7 +24,7 @@ export default function listenLevelButtons(tag: GameTags): void {
         const target = e.target as HTMLElement;
         const data = target.getAttribute('data');
         if (data) {
-            (state[tag as keyof typeof state] as (SprintState)).currentLevel = data;
+            (state[tag as keyof typeof state] as SprintState).currentLevel = data;
             removeClassElement('level-button', 'active-level-button');
             target.classList.add('active-level-button');
             const startButton = document.querySelector('.start-button');
