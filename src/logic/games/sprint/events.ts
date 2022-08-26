@@ -40,7 +40,7 @@ export function listerStartButton(tag: GameTags, reload = false): void {
             deleteHTMLElement('start-screen');
             const gameContainer = document.querySelector('.game-container') as HTMLElement;
             if (gameContainer && tag) {
-                const MIN_PAGE = reload ? 15 : 0;
+                const MIN_PAGE = reload ? Math.floor(MAX_PAGES / 2) : 0;
                 const level =
                     Levels[(state[tag as keyof typeof state] as SprintState).currentLevel as keyof typeof Levels];
                 const page = getRandomNumber(MIN_PAGE, MAX_PAGES);

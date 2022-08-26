@@ -29,7 +29,7 @@ export function goToFullscreen(): void {
 
 export function applyLocalStorageToGameButtons(): void {
     const isSound = getFromLocalStorage('games_isSound');
-    if (isSound && isSound === 'false') {
+    if (isSound === 'false') {
         const sound = document.querySelector('.sound-container');
         sound?.classList.toggle('crossed');
         state.controls.isSound = false;

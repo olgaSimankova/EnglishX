@@ -1,5 +1,5 @@
 import getWords from '../../../api/words';
-import { GAME_BUTTONS, START_POINTS } from '../../../constants/constants';
+import { GAME_BUTTONS, RANDOM_MIDDLE, START_POINTS } from '../../../constants/constants';
 import { Choice, GameTags, Levels, Word } from '../../../constants/types';
 import state from '../../../state/state';
 import { deleteHTMLElement } from '../../../utils/createElement';
@@ -26,7 +26,7 @@ export async function setAnswerBlock(data: Word[]): Promise<void> {
         state.sprintGame.usedNumbers.push(randomNumber);
         const randomEng = data[randomNumber];
         state.sprintGame.currentEngWord = randomEng;
-        const randomRu = Math.random() < 0.5 ? randomEng : data[getRandomNumber(0, length)];
+        const randomRu = Math.random() < RANDOM_MIDDLE ? randomEng : data[getRandomNumber(0, length)];
         state.sprintGame.currentRuWord = randomRu;
         setHTMLElementContent('eng-word', randomEng.word);
         setHTMLElementContent('ru-word', randomRu.wordTranslate);
@@ -95,7 +95,7 @@ function unpdateWordsResult(action: boolean) {
 }
 
 export function resetSprintPoints(): void {
-    state.sprintGame.currentBet = 10;
+    state.sprintGame.currentBet = Number(START_POINTS);
     state.sprintGame.currentPoints = 0;
     state.sprintGame.currentTick = 0;
     state.sprintGame.currentMultiply = 1;
