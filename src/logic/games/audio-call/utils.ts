@@ -1,7 +1,9 @@
-import { Word } from '../../../constants/types';
+import { Choice, Word } from '../../../constants/types';
 import state from '../../../state/state';
 import getRandomNumber from '../../../utils/randomize';
 import { ANSWER_OPTIONS_COUNT } from '../../../constants/constants';
+import { playChoiceSound } from '../../../utils/playAudio';
+import { answerOptionHandler } from './controller';
 
 const setWords = (data: Word[]): void => {
     state.audioCallGame.givenWords = data;
@@ -43,7 +45,7 @@ const setLearningWord = (): void => {
     state.audioCallGame.learningWord = state.audioCallGame.needLearnWords.splice(learningWordIndex, 1).pop();
 };
 
-const showAnswer = (): void => {
+const showWordInfo = (): void => {
     const soundIcon = document.getElementById('sound-big') as HTMLElement;
     const image = document.querySelector('.card') as HTMLElement;
     const currentWord = document.querySelector('.audioCall__current-word') as HTMLElement;
@@ -55,4 +57,21 @@ const showAnswer = (): void => {
     nextButton.innerText = 'NEXT';
 };
 
-export { setLearningWord, setWords, setAnswerOptions, showAnswer, getRightAnswerElement };
+const showRightAnswer = (userChoice: HTMLElement): void => {
+    const answerBlock = document.querySelector('.audioCall__words') as HTMLElement;
+    answerBlock.removeEventListener('click', answerOptionHandler);
+
+    const rightAnswer = getRightAnswerElement();
+    const userChoiceText = userChoice.getAttribute('data-word');
+    const rightAnswerText = rightAnswer.getAttribute('data-word');
+    rightAnswer.classList.add('right-answer');
+
+    if (rightAnswerText === userChoiceText) {
+        playChoiceSound(Choice.right);
+    } else {
+        userChoice.classList.add('wrong-answer');
+        playChoiceSound(Choice.wrong);
+    }
+};
+
+export { setLearningWord, setWords, setAnswerOptions, showWordInfo, getRightAnswerElement, showRightAnswer };
