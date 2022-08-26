@@ -1,4 +1,4 @@
-import { PAGINATION_BTNS } from '../../constants/constants';
+import { LAST_PAGE, PAGINATION_BTNS } from '../../constants/constants';
 import { Levels } from '../../constants/types';
 import state from '../../state/state';
 import createElement from '../../utils/createElement';
@@ -14,9 +14,8 @@ export function getPaginationBtns(parent: HTMLElement) {
         const btn = createElement({
             type: 'button',
             parentElement: li,
-            classes: ['pagination_btn'],
+            classes: ['pagination_btn', `pagination_btn_${Levels[state.textBook.currentLevel]}`],
         });
-        btn.classList.add(`pagination_btn_${Levels[state.textBook.currentLevel]}`);
 
         switch (i) {
             case 0:
@@ -29,13 +28,13 @@ export function getPaginationBtns(parent: HTMLElement) {
                 if (state.textBook.currentPage === 1) btn.classList.add('active');
                 break;
             case 7:
-                btn.innerText = '30';
-                if (state.textBook.currentPage === 30) btn.classList.add('active');
+                btn.innerText = `${LAST_PAGE}`;
+                if (state.textBook.currentPage === LAST_PAGE) btn.classList.add('active');
                 break;
             case 8:
                 btn.innerText = '》';
                 btn.classList.add('right');
-                if (state.textBook.currentPage === 30) btn.classList.add('disabled');
+                if (state.textBook.currentPage === LAST_PAGE) btn.classList.add('disabled');
                 break;
 
             default:
@@ -57,7 +56,7 @@ export function getPaginationBtns(parent: HTMLElement) {
                         btn.innerText = `${state.textBook.currentPage + 1}`;
                     }
                 } else {
-                    btn.innerText = i === 2 ? '...' : `${23 + i}`;
+                    btn.innerText = i === 2 ? '...' : `${LAST_PAGE - PAGINATION_BTNS + 2 + i}`;
                     if (i === 2) btn.classList.add('disabled');
                     if (btn.innerText === `${state.textBook.currentPage}`) btn.classList.add('active');
                 }

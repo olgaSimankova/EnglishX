@@ -1,4 +1,4 @@
-import getWords from '../../../api/words';
+import { getWords } from '../../../api/words';
 import { GAME_BUTTONS, RANDOM_MIDDLE, START_POINTS } from '../../../constants/constants';
 import { Choice, GameTags, Levels, Word } from '../../../constants/types';
 import state from '../../../state/state';

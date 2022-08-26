@@ -127,3 +127,4 @@ export const GAMES_LINKS = ['#', '#', '#', '#'];
 export const HEADER_LINKS = ['#team', './textbook.html', '#', '#'];
 
 export const PAGINATION_BTNS = 9;
+export const LAST_PAGE = 30;
