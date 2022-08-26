@@ -17,6 +17,7 @@ export const state = {
         currentLevel: 0,
         currentPage: 1,
         authenticated: false,
+        currentWordId: '5e9f5ee35eb9e72bc21af4a5',
     },
     controls: {
         isSound: true,

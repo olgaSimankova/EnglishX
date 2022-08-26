@@ -1,9 +1,8 @@
-import getWords from '../../api/words';
 import { PAGINATION_BTNS } from '../../constants/constants';
 import { Levels } from '../../constants/types';
 import state from '../../state/state';
 import createElement from '../../utils/createElement';
-import { getWordData, getWordsCards } from '../../view/pages/textbook/createTextbookPage';
+import { updateWordsContainer } from './textbookEvents';
 
 export function getPaginationBtns(parent: HTMLElement) {
     for (let i = 0; i < PAGINATION_BTNS; i += 1) {
@@ -80,12 +79,6 @@ export function listenPagination(): void {
         }
         pagination.innerHTML = '';
         getPaginationBtns(pagination);
-        const words = await getWords(state.textBook.currentLevel, state.textBook.currentPage - 1);
-        const wordsContainer = document.querySelector('.words__contaiter') as HTMLElement;
-        wordsContainer.innerHTML = '';
-        getWordsCards(words, wordsContainer);
-        const wordData = document.querySelector('.word__detail') as HTMLElement;
-        wordData.innerHTML = '';
-        getWordData(words[0], wordData);
+        await updateWordsContainer();
     });
 }

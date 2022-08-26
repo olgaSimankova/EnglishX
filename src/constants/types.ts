@@ -60,6 +60,7 @@ export interface Textbook {
     currentLevel: number;
     currentPage: number;
     authenticated: boolean;
+    currentWordId: string;
 }
 
 export interface ControlsState {

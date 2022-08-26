@@ -1,7 +1,8 @@
-import getWords from '../../../api/words';
+import { getWords } from '../../../api/words';
 import { API_BASE_LINK } from '../../../constants/constants';
 import { Difficulty, Levels, Word } from '../../../constants/types';
 import { getPaginationBtns, listenPagination } from '../../../logic/textbook/pagination';
+import { listenLevelCards, listenWordCards } from '../../../logic/textbook/textbookEvents';
 import state from '../../../state/state';
 import createElement from '../../../utils/createElement';
 
@@ -45,6 +46,7 @@ function getLevelsSection(parent: HTMLElement): void {
             parentElement: levelsSection,
             classes: ['level__button'],
         });
+        btn.id = `${index}`;
         if (index === +state.textBook.currentLevel) {
             btn.classList.add('active');
         }
@@ -80,6 +82,7 @@ function getLevelsSection(parent: HTMLElement): void {
             classes: ['circle'],
         });
     });
+    listenLevelCards();
 }
 
 export function getWordsCards(words: Word[], parent: HTMLElement) {
@@ -89,6 +92,7 @@ export function getWordsCards(words: Word[], parent: HTMLElement) {
             parentElement: parent,
             classes: ['words__card', `words__card_${Levels[state.textBook.currentLevel]}`],
         });
+        wordCard.id = `${value.id}`;
         if (index === 0) wordCard.classList.add('active');
 
         createElement({
@@ -107,6 +111,7 @@ export function getWordsCards(words: Word[], parent: HTMLElement) {
 }
 
 export function getWordData(word: Word, parent: HTMLElement) {
+    state.textBook.currentWordId = word.id;
     createElement({
         type: 'div',
         parentElement: parent,
@@ -260,6 +265,7 @@ async function getWordsSection(parent: HTMLElement): Promise<void> {
         classes: ['word__detail'],
     });
     getWordData(words[0], wordInfo);
+    listenWordCards();
 }
 
 function getPaginationSection(parent: HTMLElement) {
