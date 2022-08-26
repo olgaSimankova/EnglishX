@@ -2,7 +2,7 @@ import getWords from '../../api/words';
 import { Word } from '../../constants/types';
 import state from '../../state/state';
 import { getWordData, getWordsCards } from '../../view/pages/textbook/createTextbookPage';
-import { getPaginationBtns } from './pagination';
+import getPaginationBtns from './utils/createPagination';
 
 function updateWordData(word: Word) {
     const wordData = document.querySelector('.word__detail') as HTMLElement;

@@ -1,8 +1,9 @@
 import getWords from '../../../api/words';
 import { API_BASE_LINK } from '../../../constants/constants';
 import { Difficulty, Levels, Word } from '../../../constants/types';
-import { getPaginationBtns, listenPagination } from '../../../logic/textbook/pagination';
+import listenPagination from '../../../logic/textbook/pagination';
 import { listenLevelCards, listenWordCards } from '../../../logic/textbook/textbookEvents';
+import getPaginationBtns from '../../../logic/textbook/utils/createPagination';
 import state from '../../../state/state';
 import createElement from '../../../utils/createElement';
 
