@@ -1,7 +1,9 @@
+import getWords from '../../api/words';
 import { PAGINATION_BTNS } from '../../constants/constants';
 import { Levels } from '../../constants/types';
 import state from '../../state/state';
 import createElement from '../../utils/createElement';
+import { getWordData, getWordsCards } from '../../view/pages/textbook/createTextbookPage';
 
 export function getPaginationBtns(parent: HTMLElement) {
     for (let i = 0; i < PAGINATION_BTNS; i += 1) {
@@ -64,9 +66,9 @@ export function getPaginationBtns(parent: HTMLElement) {
     }
 }
 
-export function listenPagination() {
+export function listenPagination(): void {
     const pagination = document.querySelector('.pagination') as HTMLElement;
-    pagination.addEventListener('click', (event: Event) => {
+    pagination.addEventListener('click', async (event: Event) => {
         const target = event.target as HTMLElement;
         if (target.classList.contains('disabled') || !target.classList.contains('pagination_btn')) return;
         if (target.classList.contains('left')) {
@@ -78,5 +80,12 @@ export function listenPagination() {
         }
         pagination.innerHTML = '';
         getPaginationBtns(pagination);
+        const words = await getWords(state.textBook.currentLevel, state.textBook.currentPage - 1);
+        const wordsContainer = document.querySelector('.words__contaiter') as HTMLElement;
+        wordsContainer.innerHTML = '';
+        getWordsCards(words, wordsContainer);
+        const wordData = document.querySelector('.word__detail') as HTMLElement;
+        wordData.innerHTML = '';
+        getWordData(words[0], wordData);
     });
 }

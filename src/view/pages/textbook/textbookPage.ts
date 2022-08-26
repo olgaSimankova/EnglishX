@@ -1,6 +1,6 @@
 import createHeader from '../../common/createHeader';
 import '../main/scss/style.scss';
-import getTextbookPage from './createTextbookPage';
+import { getTextbookPage } from './createTextbookPage';
 import './styles/textbook.scss';
 
 (async function startTextbookPage() {

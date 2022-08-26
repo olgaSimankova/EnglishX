@@ -82,7 +82,7 @@ function getLevelsSection(parent: HTMLElement): void {
     });
 }
 
-async function getWordsCards(words: Word[], parent: HTMLElement) {
+export function getWordsCards(words: Word[], parent: HTMLElement) {
     words.forEach((value: Word, index) => {
         const wordCard = createElement({
             type: 'button',
@@ -106,7 +106,7 @@ async function getWordsCards(words: Word[], parent: HTMLElement) {
     });
 }
 
-async function getWordData(word: Word, parent: HTMLElement) {
+export function getWordData(word: Word, parent: HTMLElement) {
     createElement({
         type: 'div',
         parentElement: parent,
@@ -223,13 +223,13 @@ async function getWordData(word: Word, parent: HTMLElement) {
         type: 'span',
         parentElement: answersContainer,
         classes: ['sprint_answers'],
-        text: 'sprint: 0 / 0',
+        text: 'sprint: 0 / 0', // !!!!!!!!!!!!!!!!!!!! Implement later
     });
     createElement({
         type: 'span',
         parentElement: answersContainer,
         classes: ['audio_call_answers'],
-        text: 'audio-call: 0 / 0',
+        text: 'audio-call: 0 / 0', // !!!!!!!!!!!!!!!!!!!! Implement later
     });
     if (!state.textBook.authenticated) answersInGames.classList.add('hidden');
 }
@@ -252,14 +252,14 @@ async function getWordsSection(parent: HTMLElement): Promise<void> {
         parentElement: wordsSection,
         classes: ['words__contaiter'],
     });
-    await getWordsCards(words, wordsContainer);
+    getWordsCards(words, wordsContainer);
 
     const wordInfo = createElement({
         type: 'div',
         parentElement: wordsSection,
         classes: ['word__detail'],
     });
-    await getWordData(words[0], wordInfo);
+    getWordData(words[0], wordInfo);
 }
 
 function getPaginationSection(parent: HTMLElement) {
@@ -277,7 +277,7 @@ function getPaginationSection(parent: HTMLElement) {
     listenPagination();
 }
 
-export default async function getTextbookPage() {
+export async function getTextbookPage() {
     const wrapper = createElement({
         type: 'div',
         parentElement: document.body,
