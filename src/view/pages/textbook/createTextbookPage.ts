@@ -1,4 +1,4 @@
-import { getWords } from '../../../api/words';
+import getWords from '../../../api/words';
 import { API_BASE_LINK } from '../../../constants/constants';
 import { Difficulty, Levels, Word } from '../../../constants/types';
 import { getPaginationBtns, listenPagination } from '../../../logic/textbook/pagination';
@@ -91,8 +91,8 @@ export function getWordsCards(words: Word[], parent: HTMLElement) {
             type: 'button',
             parentElement: parent,
             classes: ['words__card', `words__card_${Levels[state.textBook.currentLevel]}`],
+            attributes: [['id', `${index}`]],
         });
-        wordCard.id = `${value.id}`;
         if (index === 0) wordCard.classList.add('active');
 
         createElement({
@@ -111,7 +111,6 @@ export function getWordsCards(words: Word[], parent: HTMLElement) {
 }
 
 export function getWordData(word: Word, parent: HTMLElement) {
-    state.textBook.currentWordId = word.id;
     createElement({
         type: 'div',
         parentElement: parent,
@@ -167,7 +166,7 @@ export function getWordData(word: Word, parent: HTMLElement) {
         classes: ['word__actions_btn', `words__actions_btn_${Levels[state.textBook.currentLevel]}`],
         text: 'delete word',
     });
-    if (!state.textBook.authenticated) wordActions.classList.add('hidden');
+    if (!state.user.isAuthenticated) wordActions.classList.add('hidden');
 
     const wordDescription = createElement({
         type: 'div',
@@ -236,7 +235,7 @@ export function getWordData(word: Word, parent: HTMLElement) {
         classes: ['audio_call_answers'],
         text: 'audio-call: 0 / 0', // !!!!!!!!!!!!!!!!!!!! Implement later
     });
-    if (!state.textBook.authenticated) answersInGames.classList.add('hidden');
+    if (!state.user.isAuthenticated) answersInGames.classList.add('hidden');
 }
 
 async function getWordsSection(parent: HTMLElement): Promise<void> {
@@ -251,20 +250,20 @@ async function getWordsSection(parent: HTMLElement): Promise<void> {
         parentElement: parent,
         classes: ['words__section'],
     });
-    const words = await getWords(state.textBook.currentLevel, state.textBook.currentPage - 1);
+    state.textBook.wordsOnPage = await getWords(state.textBook.currentLevel, state.textBook.currentPage - 1);
     const wordsContainer = createElement({
         type: 'div',
         parentElement: wordsSection,
         classes: ['words__contaiter'],
     });
-    getWordsCards(words, wordsContainer);
+    getWordsCards(state.textBook.wordsOnPage, wordsContainer);
 
     const wordInfo = createElement({
         type: 'div',
         parentElement: wordsSection,
         classes: ['word__detail'],
     });
-    getWordData(words[0], wordInfo);
+    getWordData(state.textBook.wordsOnPage[0], wordInfo);
     listenWordCards();
 }
 

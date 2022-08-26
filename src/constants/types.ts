@@ -62,8 +62,8 @@ export interface SprintState {
 export interface Textbook {
     currentLevel: number;
     currentPage: number;
-    authenticated: boolean;
     currentWordId: string;
+    wordsOnPage: Word[];
 }
 
 export interface ControlsState {
@@ -71,16 +71,18 @@ export interface ControlsState {
     isFullscreen: boolean;
 }
 
+export interface User {
+    email: string;
+    password: string;
+    isAuthenticated?: boolean; // I've checked it - this field must stay optional due to createUser API request
+    name?: string;
+}
+
 export interface StateInterface {
     sprintGame: SprintState;
     textBook: Textbook;
     controls: ControlsState;
-}
-
-export interface User {
-    email: string;
-    password: string;
-    name?: string;
+    user: User;
 }
 
 export enum Choice {

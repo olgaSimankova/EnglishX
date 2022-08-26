@@ -27,6 +27,11 @@ export function getPaginationBtns(parent: HTMLElement) {
                 btn.innerText = '1';
                 if (state.textBook.currentPage === 1) btn.classList.add('active');
                 break;
+            // case 2:
+            // case 6:
+            //     btn.innerText = '1';
+            //     if (state.textBook.currentPage === 1) btn.classList.add('active');
+            //     break;
             case 7:
                 btn.innerText = `${LAST_PAGE}`;
                 if (state.textBook.currentPage === LAST_PAGE) btn.classList.add('active');
@@ -43,7 +48,7 @@ export function getPaginationBtns(parent: HTMLElement) {
                     if (i === 6) btn.classList.add('disabled');
                     if (i === state.textBook.currentPage) btn.classList.add('active');
                     btn.id = `${i}`;
-                } else if (state.textBook.currentPage >= 5 && state.textBook.currentPage <= 26) {
+                } else if (state.textBook.currentPage >= 5 && state.textBook.currentPage < LAST_PAGE - 5) {
                     if (i === 2 || i === 6) {
                         btn.innerText = '...';
                         btn.classList.add('disabled');
