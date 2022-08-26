@@ -30,7 +30,7 @@
 }
 
 .result-container {
-    border: 3px rgb(240, 237, 226) solid;
+    border: 3px #f0ede2 solid;
     border-radius: 30px;
     padding: 20px;
 }
@@ -60,8 +60,8 @@
     padding-bottom: 50px;
 
     .word {
-        color: rgb(27, 27, 224);
-        font-size: 46px;
+        color: #424551;
+        font-size: 52px;
     }
 
     .delimiter {
@@ -76,7 +76,7 @@
     background: transparent;
     &:hover {
         transition: 0.5s;
-        background-color: yellow;
+        background-color: rgba(226, 240, 228, 0.6);
         cursor: pointer;
     }
 }

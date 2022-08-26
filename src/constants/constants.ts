@@ -28,6 +28,7 @@ export const CHOOSE_LEVEL = 'Chooce level:';
 export const START = 'Start';
 export const SPRINT_START_TIME = 30;
 export const MAX_PAGES = 30;
+export const RANDOM_MIDDLE = 0.5;
 export const MULTIPLY = 'multiply';
 export const START_POINTS = '10';
 export const POINTS = 'Total: ';

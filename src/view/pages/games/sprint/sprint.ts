@@ -5,7 +5,7 @@ import './sprint.scss';
 
 function startSprintPage() {
     renderGameStartPage('sprint');
-    startPageControls(GameTags.sprintGame);
+    startPageControls(GameTags.sprintGame, true);
 }
 
 startSprintPage();
