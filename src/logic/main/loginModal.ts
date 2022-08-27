@@ -1,4 +1,5 @@
 import { loginUser } from '../../api/login-register';
+import state from '../../state/state';
 import renderRegistrationModal from '../../view/pages/main/loginRegisterModal/renderRegistrationModal';
 import { changeFieldBackgroundColor } from './registerModal';
 
@@ -40,11 +41,13 @@ function listenLoginModal(): void {
             event.preventDefault();
             const loginForm = document.querySelector('form') as HTMLFormElement;
             try {
-                await loginUser({
+                const loginResponse = await loginUser({
                     email: loginForm.email.value,
                     password: loginForm.password.value,
                 });
                 toggleModal(false);
+                if (loginResponse.message === 'Authenticated') state.user.isAuthenticated = true;
+                console.log(state.user.isAuthenticated);
             } catch {
                 toggleFailLoginMessage(true);
             }

@@ -110,3 +110,11 @@ export interface FullScreenDocument extends Document {
     mozCancelFullScreen?: () => void;
     webkitExitFullscreen?: () => void;
 }
+
+export interface Auth {
+    message: string;
+    token: string;
+    refreshToken: string;
+    userId: string;
+    name: string;
+}

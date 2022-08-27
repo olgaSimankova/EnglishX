@@ -37,10 +37,10 @@ export const GAME_BUTTONS = {
     YES: true,
     NO: false,
 };
-// export const WORDS = 'http://localhost:8000/words';
-// export const API_BASE_LINK = 'http://localhost:8000';
-export const WORDS = 'https://eng-guru.herokuapp.com/words';
-export const API_BASE_LINK = 'https://eng-guru.herokuapp.com';
+export const WORDS = 'http://localhost:8000/words';
+export const API_BASE_LINK = 'http://localhost:8000';
+// export const WORDS = 'https://eng-guru.herokuapp.com/words';
+// export const API_BASE_LINK = 'https://eng-guru.herokuapp.com';
 
 export const BUTTON_NAMES = ['About Us', 'TextBook', 'Games', 'Statistic'];
 
