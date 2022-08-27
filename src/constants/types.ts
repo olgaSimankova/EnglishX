@@ -92,7 +92,7 @@ export enum Choice {
 
 export enum GameTags {
     sprintGame = 'sprintGame',
-    audioCallGame = 'audioCall',
+    audioCallGame = 'audioCallGame',
 }
 
 export interface FullScreenDocumentElement extends HTMLElement {

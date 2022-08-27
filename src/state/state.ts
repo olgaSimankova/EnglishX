@@ -1,6 +1,6 @@
 import { ControlsState, SprintState, StateInterface, Textbook, User } from '../constants/types';
 
-export const state = {
+export const state: StateInterface = {
     sprintGame: {
         currentLevel: '',
         currentBet: 10,
