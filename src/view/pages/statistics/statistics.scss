@@ -4,7 +4,7 @@
     padding: 23px 0 20px;
     background: center / cover no-repeat url('../../../assets/img/background.jpg');
     color: $darkGray;
-    height: 100vh;
+    
 
     .todays-statistics-container {
         margin: 0 auto;
@@ -27,6 +27,57 @@
                 font-weight: 900;
                 text-align: center;
                 padding-bottom: 10px;
+            }
+        }
+    }
+}
+
+.games-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+
+    .game-container {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 20px;
+        background-color: aliceblue;
+        border-radius: 30px;
+        background-image: url('../../../assets/img/game-div-bg.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        font-size: 20px;
+    
+
+        .game-title {
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .game-stats {
+            display: flex;
+            gap: 10px;
+            max-width: 250px;
+
+            .game-icon {
+                width: 15px;
+                height: 15px;
+                background-repeat: no-repeat;
+                background-size: contain;
+                flex-shrink: 0;
+            }
+            .game-icon-1 {
+                background-image: url('../../../assets/icons/complete-icon.svg');
+            }
+
+            .game-icon-2 {
+                background-image: url('../../../assets/icons/check-mark-line-icon.svg');
+            }
+
+            .game-icon-3 {
+                background-image: url('../../../assets/icons/double-tick-icon.svg');
             }
         }
     }

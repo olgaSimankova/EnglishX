@@ -1,4 +1,4 @@
-import { TODAYS_STATISTIC_LABEL } from '../../../constants/constants';
+import { STATISTIC_ICON, TODAYS_STATISTIC_LABEL } from '../../../constants/constants';
 import createElement from '../../../utils/createElement';
 import createFooter from '../../common/createFooter';
 import createHeader from '../../common/createHeader';
@@ -44,16 +44,10 @@ function renderTodaysStatistics(parentElement: HTMLElement): void {
     renderStatisticBlock(statsContainer, '0', 'words learnt'); // implement later
     renderStatisticBlock(statsContainer, '0%', 'right answers'); // implement later
 }
-function renderGameBlock(
-    parentElement: HTMLElement,
-    gameName: string,
-    wordsLearnt: string,
-    rightAnswer: string,
-    streak: string
-): void {
+function renderGameBlock(parentElement: HTMLElement, gameName: string, stats: string[]): void {
     const container = createElement({
         type: 'div',
-        parentElement: document.body,
+        parentElement,
         classes: ['game-container'],
     });
     createElement({
@@ -62,14 +56,34 @@ function renderGameBlock(
         classes: ['game-title'],
         text: gameName,
     });
+    Object.entries(STATISTIC_ICON).forEach((values, i) => {
+        const div = createElement({
+            type: 'div',
+            parentElement: container,
+            classes: ['game-stats'],
+        });
+        createElement({
+            type: 'div',
+            parentElement: div,
+            classes: [`game-icon-${i + 1}`, 'game-icon'],
+        });
+        createElement({
+            type: 'p',
+            parentElement: div,
+            classes: ['game-option-description'],
+            text: `${values[1]} ${stats[i]}`,
+        });
+    });
 }
 
 function renderGameStatistic(parentElement: HTMLElement): void {
     const container = createElement({
         type: 'div',
-        parentElement: document.body,
+        parentElement,
         classes: ['games-container'],
     });
+    renderGameBlock(container, 'Sprint', ['0', '0%', '0']);
+    renderGameBlock(container, 'AudioCall', ['0', '0%', '0']);
 }
 
 export default function renderStatisticsPage(): void {

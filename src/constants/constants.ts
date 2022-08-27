@@ -124,3 +124,8 @@ export const SITEMAP_LINKS = ['#team', '#', '#', '#', '#footer'];
 export const GAMES_LINKS = ['#', '#', '#', '#'];
 export const HEADER_LINKS = ['#team', '#', '#', '#'];
 export const TODAYS_STATISTIC_LABEL = 'Statistic of the Day';
+export const STATISTIC_ICON = {
+    'complete-icon.svg': 'Words learnt:',
+    'check-mark-line-icon.svg': 'Right answers:',
+    'double-tick-icon.svg': 'The longest streak of right answers:',
+};
