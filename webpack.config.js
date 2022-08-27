@@ -11,6 +11,7 @@ const baseConfig = {
     entry: {
         index: path.resolve(__dirname, './src/index.ts'),
         sprint: path.resolve(__dirname, './src/view/pages/games/sprint/sprint.ts'),
+        textbook: path.resolve(__dirname, './src/view/pages/textbook/textbookPage.ts'),
         audio: path.resolve(__dirname, './src/view/pages/games/audio-call/audio-call.ts'),
     },
     mode: 'development',
@@ -60,6 +61,11 @@ const baseConfig = {
             filename: 'sprint.html',
             template: 'src/view/pages/games/sprint/sprint.html',
             chunks: ['sprint'],
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'textbook.html',
+            template: 'src/view/pages/textbook/textbook.html',
+            chunks: ['textbook'],
         }),
         new HtmlWebpackPlugin({
             filename: 'audio-call.html',

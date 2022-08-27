@@ -1,0 +1,106 @@
+@import '../../../../global.scss';
+
+.body {
+    margin: 0 auto;
+}
+.levels_wrapper {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin: 15px 25px;
+}
+
+.level__button {
+    height: 70px;
+    width: 160px;
+    background-color: $almostWhite;
+    display: flex;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    position: relative;
+    color: $gray;
+    transition: all 0.5s ease-out;
+    
+    .button__left_part {
+        width: 70%;
+        text-align: left;
+        vertical-align: middle;
+        padding: 10px;
+        
+        h2 {
+            font-size: 1.3rem;
+            line-height: 35px;
+        }
+        p {
+            font-size: 0.8rem;
+            font-style: italic;
+        }
+    }
+
+    .button__right_part {
+        height: 100%;
+        width: 30%;
+        text-align: center;
+        vertical-align: middle;
+        line-height: 70px;
+        z-index: 2;
+
+        h2 {
+            font-size: 1.8rem;
+            font-style: bold;
+            z-index: 2;
+        }
+    }
+
+    .circle {
+        border-radius: 53px;
+        height: 110px;
+        width: 110px;
+        position: absolute;
+        top: -1rem;
+        right: -3rem;
+        overflow: hidden;
+        background-color: $lightGray;
+    }
+}
+
+.level__button.active,
+.level__button:hover {
+    color: $darkGray;
+
+    &:nth-of-type(1) {
+        .circle {
+            background-color: $color_A1;
+        }
+    }
+    &:nth-of-type(2) {
+        .circle {
+            background-color: $color_A2;
+        }
+    }
+    &:nth-of-type(2) {
+        .circle {
+            background-color: $color_A2;
+        }
+    }
+    &:nth-of-type(3) {
+        .circle {
+            background-color: $color_B1;
+        }
+    }
+    &:nth-of-type(4) {
+        .circle {
+            background-color: $color_B2;
+        }
+    }
+    &:nth-of-type(5) {
+        .circle {
+            background-color: $color_C1;
+        }
+    }
+    &:nth-of-type(6) {
+        .circle {
+            background-color: $color_C2;
+        }
+    }
+}
