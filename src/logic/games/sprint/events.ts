@@ -18,13 +18,13 @@ import {
     sprintGameControls,
 } from './controls';
 
-export default function listenLevelButtons(): void {
+export default function listenLevelButtons(tag: GameTags): void {
     const levelsContainer = document.querySelector('.level-container');
     levelsContainer?.addEventListener('click', (e) => {
         const target = e.target as HTMLElement;
         const data = target.getAttribute('data');
         if (data) {
-            state.sprintGame.currentLevel = data;
+            (state[tag as keyof typeof state] as SprintState).currentLevel = data;
             removeClassElement('level-button', 'active-level-button');
             target.classList.add('active-level-button');
             const startButton = document.querySelector('.start-button');

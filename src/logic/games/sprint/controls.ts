@@ -34,7 +34,7 @@ export async function setAnswerBlock(data: Word[]): Promise<void> {
 }
 
 export default function startPageControls(tag: GameTags, reload = false): void {
-    listenLevelButtons();
+    listenLevelButtons(tag);
     listerStartButton(tag, reload);
 }
 

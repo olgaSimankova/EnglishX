@@ -124,7 +124,8 @@ export const GAMES = [
 export const FOOTER_LINKS_TEXT = ['About Us', 'TextBook', 'Games', 'Statistic', 'Contacts'];
 export const SITEMAP_LINKS = ['#team', '#', '#', '#', '#footer'];
 export const GAMES_LINKS = ['#', '#', '#', '#'];
+export const TODAYS_STATISTIC_LABEL = 'Statistic of the Day';
 export const HEADER_LINKS = ['#team', './textbook.html', '#', '#'];
-
 export const PAGINATION_BTNS = 9;
 export const LAST_PAGE = 30;
+
