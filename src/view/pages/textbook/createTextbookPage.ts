@@ -5,6 +5,7 @@ import listenPagination from '../../../logic/textbook/pagination';
 import { listenLevelCards, listenWordCards } from '../../../logic/textbook/textbookEvents';
 import getPaginationBtns from '../../../logic/textbook/utils/createPagination';
 import state from '../../../state/state';
+import setStateUserIsAuthentificated from '../../../utils/authentification';
 import createElement from '../../../utils/createElement';
 
 function getLevelsSection(parent: HTMLElement): void {
@@ -289,6 +290,7 @@ export async function getTextbookPage() {
         parentElement: document.body,
         classes: ['wrapper'],
     });
+    setStateUserIsAuthentificated();
     getLevelsSection(wrapper);
     await getWordsSection(wrapper);
     getPaginationSection(wrapper);

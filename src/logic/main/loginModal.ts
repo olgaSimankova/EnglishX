@@ -1,5 +1,6 @@
 import { loginUser } from '../../api/login-register';
 import state from '../../state/state';
+import { setLocalStorage } from '../../utils/localStorage';
 import renderRegistrationModal from '../../view/pages/main/loginRegisterModal/renderRegistrationModal';
 import { changeFieldBackgroundColor } from './registerModal';
 
@@ -47,7 +48,7 @@ function listenLoginModal(): void {
                 });
                 toggleModal(false);
                 if (loginResponse.message === 'Authenticated') state.user.isAuthenticated = true;
-                console.log(state.user.isAuthenticated);
+                setLocalStorage('isAuthenticated', 'true');
             } catch {
                 toggleFailLoginMessage(true);
             }

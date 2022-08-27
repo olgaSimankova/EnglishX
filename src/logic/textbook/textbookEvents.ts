@@ -48,8 +48,7 @@ export function listenWordCards() {
     cardsContainer.addEventListener('click', async (event: Event) => {
         if ((event.target as HTMLElement).classList.contains('words__card')) {
             state.textBook.currentWordId = (event.target as HTMLElement).id;
-            console.log(state.textBook.currentWordId);
-            updateWordData(state.textBook.wordsOnPage[+state.textBook.currentWordId]); // Тимлид, что выглядит хуже: вот это или засунуть новый ID в переменную?
+            updateWordData(state.textBook.wordsOnPage[+state.textBook.currentWordId]);
             updateWordsColor();
         }
     });
