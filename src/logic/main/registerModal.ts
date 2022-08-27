@@ -6,6 +6,7 @@ import { toggleModal } from './loginModal';
 function deleteRegisterModal(): void {
     const registerationModal = document.getElementById('registration') as HTMLElement;
     if (registerationModal) registerationModal.remove();
+    document.body.classList.toggle('lock', false);
 }
 
 function changeFieldBackgroundColor(field: HTMLInputElement): void {

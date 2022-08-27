@@ -1,0 +1,126 @@
+@import '../../../../global.scss';
+
+.word__detail {
+    min-width: 320px;
+    width: 400px;
+    background-color: $almostWhite;
+    border-radius: 0.5rem;
+    padding: 0 10px 5px;
+}
+
+.word__img {
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 230px;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    box-shadow: 0px 9px 8px 0px rgba(34, 60, 80, 0.3);
+    position: relative;
+    top: -15px;
+}
+
+.word__word {
+    font-size: 1.8rem;
+    margin: 5px 0;
+}
+.word__translation {
+    font-size: 1.3rem;
+    margin: 5px 0;
+}
+
+.word__transcription {
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    margin: 5px 0;
+}
+.audio__wrapper {
+    display: inline-block;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.audio__wrapper:hover {
+    background-color: $lightGray;
+}
+.audio {
+    display: block;
+    margin: 0 auto;
+    align-self: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: center / contain no-repeat url("../../../../assets/icons/sound-icon.svg");
+}
+ 
+.audio:active {
+  animation: pulse 0.5s;
+  box-shadow: 0 0 0 1em rgba(#fff, 0);
+}
+
+.word__actions {
+    display: flex;
+    gap: 5px;
+    margin: 5px 0;
+}
+
+.word__actions.hidden {
+    display: none;
+}
+
+.word__actions_btn {
+    height: 30px;
+    width: 160px;
+    background-color: $lightGray;
+    border-radius: 30px;
+}
+
+.words__actions_btn_A1:hover {
+    background-color: $color_A1;
+}
+.words__actions_btn_A2:hover {
+    background-color: $color_A2;
+}
+.words__actions_btn_B1:hover {
+    background-color: $color_B1;
+}
+.words__actions_btn_B2:hover {
+    background-color: $color_B2;
+}
+.words__actions_btn_C1:hover {
+    background-color: $color_C1;
+}
+.words__actions_btn_C2:hover {
+    background-color: $color_C2;
+}
+
+.word__description {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.word__subheading {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 $darkGray; }
+}
+
+.answers_in_games {
+    display: flex;
+}
+
+.answers_in_games.hidden {
+    display: none;
+}
+
+.answers__games_container {
+    display: flex;
+    gap: 15px;
+    margin: 10px 10px;
+}
