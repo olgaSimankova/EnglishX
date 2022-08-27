@@ -2,7 +2,7 @@ import getWords from '../../../api/words';
 import { API_BASE_LINK } from '../../../constants/constants';
 import { Difficulty, Levels, Word } from '../../../constants/types';
 import listenPagination from '../../../logic/textbook/pagination';
-import { listenLevelCards, listenWordCards } from '../../../logic/textbook/textbookEvents';
+import { listenLevelCards, listenTextbookAudio, listenWordCards } from '../../../logic/textbook/textbookEvents';
 import getPaginationBtns from '../../../logic/textbook/utils/createPagination';
 import state from '../../../state/state';
 import setStateUserIsAuthentificated from '../../../utils/authentification';
@@ -150,6 +150,7 @@ export function getWordData(word: Word, parent: HTMLElement) {
         type: 'span',
         parentElement: audioBtn,
         classes: ['audio'],
+        // attributes: [['id', `${word.}`]],
     });
     const wordActions = createElement({
         type: 'div',
@@ -238,6 +239,7 @@ export function getWordData(word: Word, parent: HTMLElement) {
         text: 'audio-call: 0 / 0', // !!!!!!!!!!!!!!!!!!!! Implement later
     });
     if (!state.user.isAuthenticated) answersInGames.classList.add('hidden');
+    listenTextbookAudio();
 }
 
 async function getWordsSection(parent: HTMLElement): Promise<void> {

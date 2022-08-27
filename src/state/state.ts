@@ -20,7 +20,7 @@ export const state: StateInterface = {
         currentLevel: 0,
         currentPage: 1,
         wordsOnPage: [],
-        currentWordId: '5e9f5ee35eb9e72bc21af4a5',
+        currentWordId: '0',
     } as Textbook,
     controls: {
         isSound: true,
