@@ -1,0 +1,61 @@
+@import '../../../../global.scss';
+
+.pagination_wrapper {
+    padding: 10px 0;
+}
+
+.pagination {
+    margin: 0;
+    display: flex;
+    padding: 0;
+    list-style: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.pagination_element {
+    display: inline;
+}
+
+.pagination_btn {
+    color: black;
+    float: left;
+    padding: 8px 14px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.pagination_btn:hover {
+    background-color: $lightGray;
+}
+
+.pagination_btn.disabled{
+    opacity: 0.38;
+    cursor: default;
+    pointer-events: none;
+}
+
+.pagination_btn_A1.active {
+    background-color: $color_A1;
+    color: white;
+}
+.pagination_btn_A2.active {
+    background-color: $color_A2;
+    color: white;
+}
+.pagination_btn_B1.active {
+    background-color: $color_B1;
+    color: white;
+}
+.pagination_btn_B2.active {
+    background-color: $color_B2;
+    color: white;
+}
+.pagination_btn_C1.active {
+    background-color: $color_C1;
+    color: white;
+}
+.pagination_btn_C2.active {
+    background-color: $color_C2;
+    color: white;
+}
