@@ -1,6 +1,6 @@
 import { ControlsState, SprintState, StateInterface } from '../constants/types';
 
-export const state = {
+export const state: StateInterface = {
     sprintGame: {
         currentLevel: '',
         currentBet: 10,
@@ -21,6 +21,6 @@ export const state = {
         isSound: true,
         isFullscreen: false,
     } as ControlsState,
-} as StateInterface;
+};
 
 export default state;
