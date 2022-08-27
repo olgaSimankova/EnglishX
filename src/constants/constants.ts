@@ -133,3 +133,7 @@ export const STATISTIC_ICON = {
 export const HEADER_LINKS = ['#team', './textbook.html', '#', '#'];
 export const PAGINATION_BTNS = 9;
 export const LAST_PAGE = 30;
+export const ALL_THE_TIME_LABEL = 'Statistics for all time';
+export const ALL_THE_TIME_DESCRIPTION = 'Only registered users can see statistics';
+export const LEARNT_WORDS_LABEL = 'Learnt words';
+export const PROGRESS_LABEL = 'Progress';

@@ -1,4 +1,11 @@
-import { STATISTIC_ICON, TODAYS_STATISTIC_LABEL } from '../../../constants/constants';
+import {
+    ALL_THE_TIME_DESCRIPTION,
+    ALL_THE_TIME_LABEL,
+    LEARNT_WORDS_LABEL,
+    PROGRESS_LABEL,
+    STATISTIC_ICON,
+    TODAYS_STATISTIC_LABEL,
+} from '../../../constants/constants';
 import createElement from '../../../utils/createElement';
 import createFooter from '../../common/createFooter';
 import createHeader from '../../common/createHeader';
@@ -86,6 +93,68 @@ function renderGameStatistic(parentElement: HTMLElement): void {
     renderGameBlock(container, 'AudioCall', ['0', '0%', '0']);
 }
 
+function renderToggleButton(parentElement: HTMLElement): void {
+    const label = createElement({
+        type: 'div',
+        parentElement,
+        classes: ['container'],
+    });
+    createElement({
+        type: 'label',
+        parentElement: label,
+        classes: ['text'],
+        attributes: [['for', 'toggle-button']],
+        text: LEARNT_WORDS_LABEL,
+    });
+    createElement({
+        type: 'input',
+        parentElement: label,
+        classes: ['toggle-button'],
+        attributes: [
+            ['type', 'checkbox'],
+            ['name', 'toggle'],
+            ['id', 'toggle-button'],
+        ],
+    });
+    createElement({
+        type: 'label',
+        parentElement: label,
+        classes: ['text'],
+        attributes: [['for', 'toggle-button']],
+        text: PROGRESS_LABEL,
+    });
+}
+
+function renderToggleBlock(parentElement: HTMLElement): void {
+    const container = createElement({
+        type: 'div',
+        parentElement,
+        classes: ['toggle-container'],
+    });
+    renderToggleButton(container);
+}
+
+function renderAllTimeStats(parentElement: HTMLElement): void {
+    const container = createElement({
+        type: 'div',
+        parentElement,
+        classes: ['alltime-container'],
+    });
+    createElement({
+        type: 'h2',
+        parentElement: container,
+        classes: ['alltime-label'],
+        text: ALL_THE_TIME_LABEL,
+    });
+    createElement({
+        type: 'h3',
+        parentElement: container,
+        classes: ['alltime-description'],
+        text: ALL_THE_TIME_DESCRIPTION,
+    });
+    renderToggleBlock(container);
+}
+
 export default function renderStatisticsPage(): void {
     const container = createElement({
         type: 'div',
@@ -95,5 +164,6 @@ export default function renderStatisticsPage(): void {
     createHeader(container);
     renderTodaysStatistics(container);
     renderGameStatistic(container);
+    renderAllTimeStats(container);
     createFooter(container);
 }
