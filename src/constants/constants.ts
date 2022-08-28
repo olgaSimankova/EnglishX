@@ -128,3 +128,5 @@ export const TODAYS_STATISTIC_LABEL = 'Statistic of the Day';
 export const HEADER_LINKS = ['#team', './textbook.html', '#', '#'];
 export const PAGINATION_BTNS = 9;
 export const LAST_PAGE = 30;
+
+export const AUDIO_TYPES = ['audio', 'audioMeaning', 'audioExample'];

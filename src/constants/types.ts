@@ -15,6 +15,10 @@ export enum Levels {
     'C2',
 }
 
+// кнопка, при клике по которой слово можно отметить как сложное (в разделе "Сложные слова" на её месте отображается кнопка, снимающая отметку что это сложное слово и удаляющая его из данного раздела)
+// кнопка, при клике по которой слово можно отметить как изученное
+// если слово отмечено как сложное, оно остаётся на странице учебника и выделяется стилем, указывающим, что данное слово относится к сложным словам. Также данное слово добавляется в раздел "Сложные слова"
+
 export enum Difficulty {
     '0-600' = 'Easy',
     '601-1200' = 'Easy',
@@ -40,6 +44,10 @@ export interface Word {
     textMeaningTranslate: string;
     textExampleTranslate: string;
 }
+
+export type WordType = Word;
+
+export type AudioTypes = Pick<Word, 'audio' | 'audioMeaning' | 'audioExample'>;
 
 export interface SprintState {
     currentLevel: string;

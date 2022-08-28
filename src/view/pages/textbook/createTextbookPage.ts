@@ -150,7 +150,6 @@ export function getWordData(word: Word, parent: HTMLElement) {
         type: 'span',
         parentElement: audioBtn,
         classes: ['audio'],
-        // attributes: [['id', `${word.}`]],
     });
     const wordActions = createElement({
         type: 'div',

@@ -1,7 +1,7 @@
 import getWords from '../../api/words';
 import { Word } from '../../constants/types';
 import state from '../../state/state';
-import playAudio, { getFullPath } from '../../utils/playAudio';
+import { getAllAudios, playAllAudio } from '../../utils/playAudio';
 import { getWordData, getWordsCards } from '../../view/pages/textbook/createTextbookPage';
 import getPaginationBtns from './utils/createPagination';
 
@@ -46,14 +46,14 @@ function updateWordsColor(): void {
 
 export function listenWordCards() {
     const cardsContainer = document.querySelector('.words__contaiter') as HTMLElement;
-    cardsContainer.addEventListener('click', async (event: Event) => {
-        if ((event.target as HTMLElement).classList.contains('words__card')) {
-            const wordId = (event.target as HTMLElement).id;
-            state.textBook.currentWordId = wordId;
-            updateWordData(state.textBook.wordsOnPage[+wordId]);
-            updateWordsColor();
-        }
-    });
+    cardsContainer.addEventListener('click', (event: Event) => {
+        const btn = (event.target as HTMLElement).closest('.words__card');
+            if (btn) {
+                state.textBook.currentWordId = btn.id;
+                updateWordData(state.textBook.wordsOnPage[+btn.id]);
+                updateWordsColor();
+            }
+        })
 }
 
 export function listenLevelCards() {
@@ -71,7 +71,7 @@ export function listenLevelCards() {
 export function listenTextbookAudio() {
     const audioBtn = document.querySelector('.audio') as HTMLElement;
     audioBtn.addEventListener('click', () => {
-        const path = getFullPath(state.textBook.wordsOnPage[+state.textBook.currentWordId].audio);
-        playAudio(path);
+        const audios = getAllAudios();
+        playAllAudio(...audios);
     });
 }
