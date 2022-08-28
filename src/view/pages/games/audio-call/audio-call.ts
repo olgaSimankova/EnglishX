@@ -4,6 +4,6 @@ import startPageControls from '../../../../logic/games/sprint/controls';
 import { GameTags } from '../../../../constants/types';
 
 (function startAudioCallPage() {
-    renderGameStartPage('audioCall');
+    renderGameStartPage(GameTags.audioCallGame);
     startPageControls(GameTags.audioCallGame);
 })();

@@ -9,7 +9,7 @@ export const START_GAME_LABELS = {
         background: 'sprint__background',
     },
 
-    audioCall: {
+    audioCallGame: {
         header: 'Audio Call',
         description: 'The Audio Call training improves listening comprehension.',
         background: 'audio-call__background',
@@ -124,3 +124,4 @@ export const SITEMAP_LINKS = ['#team', '#', '#', '#', '#footer'];
 export const GAMES_LINKS = ['#', '#', '#', '#'];
 export const HEADER_LINKS = ['#team', '#', '#', '#'];
 export const ANSWER_OPTIONS_COUNT = 5;
+export const GAME_LIMIT = 10;

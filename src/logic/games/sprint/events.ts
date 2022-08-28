@@ -17,7 +17,7 @@ import {
     setPoints,
     sprintGameControls,
 } from './controls';
-import renderAudioCallGame from '../../../view/pages/games/audio-call/renderAudioCallGame';
+import { renderAudioCallGame } from '../../../view/pages/games/audio-call/renderAudioCallGame';
 
 export default function listenLevelButtons(tag: GameTags): void {
     const levelsContainer = document.querySelector('.level-container');
@@ -58,9 +58,8 @@ export function listerStartButton(tag: GameTags, reload = false): void {
                         sprintGameControls(data, reload);
                         break;
 
-                    case 'audioCall':
+                    case GameTags.audioCallGame:
                         renderAudioCallGame(gameContainer, data);
-                        // sprintGameControls(data);
                         break;
                     default:
                         break;

@@ -23,7 +23,6 @@
       &:hover,
       &:focus {
         transform: scale(1.03);
-        animation: pulse 1s;
         box-shadow: 0 0 0 15px rgba(#fff, 0);
       }
     }
@@ -71,7 +70,7 @@
     text-align: center;
   }
 
-  &__answer {
+  &__next {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -154,6 +153,7 @@
 }
 
 .play-sound {
+  border-radius: 50%;
   animation: pulse 1s;
   box-shadow: 0 0 0 25px rgba(#fff, 0);
 }

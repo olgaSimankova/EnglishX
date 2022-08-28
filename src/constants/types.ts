@@ -50,6 +50,11 @@ export interface SprintState {
     isGame: boolean;
 }
 
+export enum AudioCallStatus {
+    waitingAnswer = `DON'T KNOW`,
+    answerReceived = 'NEXT',
+}
+
 export interface AudioCall {
     currentLevel: string;
     learningWord?: Word;
@@ -58,6 +63,7 @@ export interface AudioCall {
     currentLearned: Word[];
     currentMistakes: Word[];
     wordsLearnt: number;
+    status: AudioCallStatus;
 }
 
 export interface ControlsState {
@@ -84,7 +90,7 @@ export enum Choice {
 
 export enum GameTags {
     sprintGame = 'sprintGame',
-    audioCallGame = 'audioCall',
+    audioCallGame = 'audioCallGame',
 }
 
 export interface FullScreenDocumentElement extends HTMLElement {

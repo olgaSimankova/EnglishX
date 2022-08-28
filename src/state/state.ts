@@ -1,4 +1,4 @@
-import { ControlsState, SprintState, StateInterface } from '../constants/types';
+import { AudioCallStatus, ControlsState, SprintState, StateInterface } from '../constants/types';
 
 export const state = {
     sprintGame: {
@@ -26,6 +26,7 @@ export const state = {
         currentLearned: [],
         currentMistakes: [],
         wordsLearnt: 0,
+        status: AudioCallStatus.waitingAnswer,
     },
 
     controls: {

@@ -1,12 +1,21 @@
 import createElement from '../../../../utils/createElement';
 import { Word } from '../../../../constants/types';
 import { ANSWER_OPTIONS_COUNT } from '../../../../constants/constants';
-import { setSoundEvent, setAnswerEvent } from '../../../../logic/games/audio-call/events';
+import {
+    setSoundEvent,
+    setAnswerEvent,
+    setNextButtonEvent,
+    soundAnimationEvent,
+} from '../../../../logic/games/audio-call/events';
 import { setAnswerOptions, setLearningWord, setWords } from '../../../../logic/games/audio-call/utils';
 import state from '../../../../state/state';
-import { getFullPath } from '../../../../utils/playAudio';
+import playAudio, { getFullPath } from '../../../../utils/playAudio';
 
 const renderQuestion = (parentElement: HTMLElement) => {
+    const wordImagePath = getFullPath(state.audioCallGame.learningWord?.image);
+    const wordSoundPath = getFullPath(state.audioCallGame.learningWord?.audio);
+
+    parentElement.innerHTML = '';
     const card = createElement({
         type: 'div',
         parentElement,
@@ -29,7 +38,7 @@ const renderQuestion = (parentElement: HTMLElement) => {
         type: 'img',
         parentElement: card,
         classes: ['image'],
-        attributes: [['src', `${getFullPath(state.audioCallGame.learningWord?.image)}`]],
+        attributes: [['src', wordImagePath]],
     });
 
     const currentWord = createElement({
@@ -51,6 +60,7 @@ const renderQuestion = (parentElement: HTMLElement) => {
         classes: ['audioCall__icon'],
     });
     setSoundEvent(soundSmall);
+    soundAnimationEvent(soundSmall);
 
     const soundBig = createElement({
         type: 'div',
@@ -65,6 +75,7 @@ const renderQuestion = (parentElement: HTMLElement) => {
         classes: ['audioCall__icon'],
     });
     setSoundEvent(soundBig);
+    soundAnimationEvent(soundBig);
 
     const words = createElement({
         type: 'div',
@@ -84,15 +95,17 @@ const renderQuestion = (parentElement: HTMLElement) => {
         });
     }
 
-    createElement({
+    const nextButton = createElement({
         type: 'div',
         parentElement,
-        classes: ['audioCall__answer'],
+        classes: ['audioCall__next'],
         text: `DON'T KNOW`,
     });
+    setNextButtonEvent(nextButton);
+    playAudio(wordSoundPath);
 };
 
-export default function renderAudioCallGame(parentElement: HTMLElement, data: Word[]): void {
+function renderAudioCallGame(parentElement: HTMLElement, data: Word[]): void {
     const gameContainer = createElement({
         type: 'div',
         parentElement,
@@ -103,3 +116,5 @@ export default function renderAudioCallGame(parentElement: HTMLElement, data: Wo
     setLearningWord();
     renderQuestion(gameContainer);
 }
+
+export { renderAudioCallGame, renderQuestion };
