@@ -15,6 +15,15 @@ export enum Levels {
     'C2',
 }
 
+export enum Difficulty {
+    '0-600' = 'Easy',
+    '601-1200' = 'Easy',
+    '1201-1800' = 'Medium',
+    '1801-2400' = 'Medium',
+    '2401-3000' = 'Hard',
+    '3001-3600' = 'Hard',
+}
+
 export interface Word {
     id: string;
     group: number;
@@ -66,21 +75,31 @@ export interface AudioCall {
     status: AudioCallStatus;
 }
 
+export interface Textbook {
+    currentLevel: number;
+    currentPage: number;
+    currentWordId: string;
+    wordsOnPage: Word[];
+}
+
 export interface ControlsState {
     isSound: boolean;
     isFullscreen: boolean;
 }
 
-export interface StateInterface {
-    sprintGame: SprintState;
-    audioCallGame: AudioCall;
-    controls: ControlsState;
-}
-
 export interface User {
     email: string;
     password: string;
+    isAuthenticated?: boolean; // I've checked it - this field must stay optional due to createUser API request
     name?: string;
+}
+
+export interface StateInterface {
+    sprintGame: SprintState;
+    audioCallGame: AudioCall;
+    textBook: Textbook;
+    controls: ControlsState;
+    user: User;
 }
 
 export enum Choice {

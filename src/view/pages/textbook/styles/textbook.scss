@@ -1,0 +1,28 @@
+@import '../../../../global.scss';
+@import '../../main/scss/style.scss';
+@import 'levels.scss';
+@import 'wordCards.scss';
+@import 'wordData.scss';
+@import 'pagination.scss';
+
+.wrapper {
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.header {
+    padding: 15px 110px;
+    box-sizing: border-box;
+    background: center / cover no-repeat url('../../../../assets/img/background.jpg');
+}
+
+.levels_section {
+    padding: 0 30px;
+}
+
+.textbook_title {
+text-align: left;}
+
+.heading_section {
+    margin: 15px 25px;
+}

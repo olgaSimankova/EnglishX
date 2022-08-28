@@ -1,0 +1,69 @@
+@import '../../../../global.scss';
+
+.words_title {
+    text-align: left;
+    padding: 0 20px 5px;
+    font-size: 2.3rem;
+}
+
+.words__section {
+    display: flex;
+    gap: 25px;
+}
+
+.words__contaiter {
+    max-width: 800px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0 15px;
+}
+
+.words__card {
+    position: relative;
+    width: 180px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 1rem 0 0 1rem;
+    background-color: $almostWhite;
+    border-radius: 5px;
+    border: none;
+    overflow: hidden;
+    transition: all 0.3s;
+}
+
+.words__card_A1.active,
+.words__card_A1:hover {
+    background-color: $color_A1;
+}
+
+.words__card_A2.active,
+.words__card_A2:hover {
+    background-color: $color_A2;
+}
+
+.words__card_B1.active,
+.words__card_B1:hover {
+    background-color: $color_B1;
+}
+
+.words__card_B2.active,
+.words__card_B2:hover {
+    background-color: $color_B2;
+}
+
+.words__card_C1.active,
+.words__card_C1:hover {
+    background-color: $color_C1;
+}
+
+.words__card_C2.active,
+.words__card_C2:hover {
+    background-color: $color_C2;
+}
+
+.word__title {
+    font-size: 1.65rem;
+}
