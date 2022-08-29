@@ -127,7 +127,16 @@ export const GAMES_LINKS = ['#', '#', '#', '#'];
 export const ANSWER_OPTIONS_COUNT = 5;
 export const GAME_LIMIT = 10;
 export const TODAYS_STATISTIC_LABEL = 'Statistic of the Day';
+export const STATISTIC_ICON = {
+    'complete-icon.svg': 'Words learnt:',
+    'check-mark-line-icon.svg': 'Right answers:',
+    'double-tick-icon.svg': 'The longest streak of right answers:',
+};
 export const HEADER_LINKS = ['#team', './textbook.html', '#', '#'];
 export const PAGINATION_BTNS = 9;
 export const LAST_PAGE = 30;
+export const ALL_THE_TIME_LABEL = 'Statistics for all time';
+export const ALL_THE_TIME_DESCRIPTION = 'Only registered users can see statistics';
+export const LEARNT_WORDS_LABEL = 'Learnt words';
+export const PROGRESS_LABEL = 'Progress';
 export const AUDIOCALL_KEYBOARD_KEYS = ['1', '2', '3', '4', '5'];

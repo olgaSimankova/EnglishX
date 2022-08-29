@@ -1,7 +1,7 @@
 import { API_BASE_LINK } from '../constants/constants';
-import { User } from '../constants/types';
+import { User, UserResponse } from '../constants/types';
 
-const createUser = async (user: User): Promise<Response> => {
+const createUser = async (user: User): Promise<UserResponse> => {
     return (
         await fetch(`${API_BASE_LINK}/users`, {
             method: 'POST',
@@ -14,7 +14,7 @@ const createUser = async (user: User): Promise<Response> => {
     ).json();
 };
 
-const loginUser = async (user: User): Promise<Response> => {
+const loginUser = async (user: User): Promise<UserResponse> => {
     return (
         await fetch(`${API_BASE_LINK}/signin`, {
             method: 'POST',

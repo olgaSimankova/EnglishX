@@ -43,6 +43,7 @@ export const state: StateInterface = {
         password: '',
         name: '',
         isAuthenticated: false,
+        userId: '',
     } as User,
 } as StateInterface;
 

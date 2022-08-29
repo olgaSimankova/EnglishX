@@ -92,6 +92,7 @@ export interface User {
     password: string;
     isAuthenticated?: boolean; // I've checked it - this field must stay optional due to createUser API request
     name?: string;
+    userId?: string;
 }
 
 export interface StateInterface {
@@ -126,4 +127,59 @@ export interface FullScreenDocument extends Document {
     msExitFullscreen?: () => void;
     mozCancelFullScreen?: () => void;
     webkitExitFullscreen?: () => void;
+}
+
+export interface UserResponse {
+    message: string;
+    name: string;
+    refreshToken: string;
+    token: string;
+    userId: string;
+}
+
+export interface Stats {
+    data: string;
+    newWords: number;
+    allWords: number;
+}
+
+export interface OptionalUser {
+    stats: Stats[];
+    wordList: string[];
+}
+
+export interface UserStatsResponse {
+    learnedWords: number;
+    optional: OptionalUser;
+}
+
+export enum WordStatus {
+    newWord = 'newWord',
+    underStudy = 'underStudy',
+    learned = 'learned',
+    hard = 'hard',
+    deleted = 'deleted',
+}
+
+export interface GameStat {
+    right: number;
+    wrong: number;
+}
+
+export interface GamesStat {
+    sprint: GameStat;
+    audioCall: GameStat;
+}
+
+export interface OptionalWord {
+    addTime: string;
+    try: number;
+    games: GamesStat;
+    isDeleted: boolean;
+    wordId: string;
+}
+
+export interface WordStatsResponse {
+    wordStatus: WordStatus;
+    optional: object;
 }
