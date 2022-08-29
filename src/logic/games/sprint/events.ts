@@ -1,6 +1,6 @@
 import getWords from '../../../api/words';
 import { KEY_ARROWS, MAX_PAGES, GAME_BUTTONS } from '../../../constants/constants';
-import { GameTags, Levels, SprintState, Word } from '../../../constants/types';
+import { AudioCall, GameTags, Levels, SprintState, Word } from '../../../constants/types';
 import { state } from '../../../state/state';
 import { deleteHTMLElement } from '../../../utils/createElement';
 import playAudio, { getFullPath } from '../../../utils/playAudio';
@@ -17,6 +17,7 @@ import {
     setPoints,
     sprintGameControls,
 } from './controls';
+import { renderAudioCallGame } from '../../../view/pages/games/audio-call/renderAudioCallGame';
 
 export default function listenLevelButtons(tag: GameTags): void {
     const levelsContainer = document.querySelector('.level-container');
@@ -24,7 +25,7 @@ export default function listenLevelButtons(tag: GameTags): void {
         const target = e.target as HTMLElement;
         const data = target.getAttribute('data');
         if (data) {
-            (state[tag as keyof typeof state] as SprintState).currentLevel = data;
+            (state[tag as keyof typeof state] as SprintState | AudioCall).currentLevel = data;
             removeClassElement('level-button', 'active-level-button');
             target.classList.add('active-level-button');
             const startButton = document.querySelector('.start-button');
@@ -42,7 +43,10 @@ export function listerStartButton(tag: GameTags, reload = false): void {
             if (gameContainer && tag) {
                 const MIN_PAGE = reload ? Math.floor(MAX_PAGES / 2) : 0;
                 const level =
-                    Levels[(state[tag as keyof typeof state] as SprintState).currentLevel as keyof typeof Levels];
+                    Levels[
+                        (state[tag as keyof typeof state] as SprintState | AudioCall)
+                            .currentLevel as keyof typeof Levels
+                    ];
                 const page = getRandomNumber(MIN_PAGE, MAX_PAGES);
                 state.sprintGame.currentPage = page;
                 renderLoading(gameContainer);
@@ -52,6 +56,10 @@ export function listerStartButton(tag: GameTags, reload = false): void {
                     case GameTags.sprintGame:
                         renderSprintGame(gameContainer, data);
                         sprintGameControls(data, reload);
+                        break;
+
+                    case GameTags.audioCallGame:
+                        renderAudioCallGame(gameContainer, data);
                         break;
                     default:
                         break;

@@ -1,4 +1,4 @@
-import { ControlsState, SprintState, StateInterface, Textbook, User } from '../constants/types';
+import { AudioCallStatus, ControlsState, SprintState, StateInterface, Textbook, User } from '../constants/types';
 
 export const state: StateInterface = {
     sprintGame: {
@@ -16,6 +16,18 @@ export const state: StateInterface = {
         isFreeze: false,
         isGame: false,
     } as SprintState,
+
+    audioCallGame: {
+        currentLevel: '',
+        currentWord: {},
+        givenWords: [],
+        needLearnWords: [],
+        currentLearned: [],
+        currentMistakes: [],
+        wordsLearnt: 0,
+        status: AudioCallStatus.waitingAnswer,
+    },
+
     textBook: {
         currentLevel: 0,
         currentPage: 1,

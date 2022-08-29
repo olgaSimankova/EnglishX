@@ -9,7 +9,7 @@ export const START_GAME_LABELS = {
         background: 'sprint__background',
     },
 
-    audioCall: {
+    audioCallGame: {
         header: 'Audio Call',
         description: 'The Audio Call training improves listening comprehension.',
         background: 'audio-call__background',
@@ -124,8 +124,10 @@ export const GAMES = [
 export const FOOTER_LINKS_TEXT = ['About Us', 'TextBook', 'Games', 'Statistic', 'Contacts'];
 export const SITEMAP_LINKS = ['#team', '#', '#', '#', '#footer'];
 export const GAMES_LINKS = ['#', '#', '#', '#'];
+export const ANSWER_OPTIONS_COUNT = 5;
+export const GAME_LIMIT = 10;
 export const TODAYS_STATISTIC_LABEL = 'Statistic of the Day';
 export const HEADER_LINKS = ['#team', './textbook.html', '#', '#'];
 export const PAGINATION_BTNS = 9;
 export const LAST_PAGE = 30;
-
+export const AUDIOCALL_KEYBOARD_KEYS = ['1', '2', '3', '4', '5'];
