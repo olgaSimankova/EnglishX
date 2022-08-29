@@ -46,6 +46,7 @@ function listenLoginModal(): void {
                     email: loginForm.email.value,
                     password: loginForm.password.value,
                 });
+                setLocalStorage('userId', loginResponse.userId);
                 toggleModal(false);
                 if (loginResponse.message === 'Authenticated') state.user.isAuthenticated = true;
                 setLocalStorage('isAuthenticated', 'true');
