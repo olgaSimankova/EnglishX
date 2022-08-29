@@ -14,7 +14,6 @@ export async function getUserStatistics(): Promise<UserStatsResponse | void> {
         });
         return response.json();
     }
-    return ;
 }
 
 export async function setUserStatistics(optional: OptionalUser): Promise<UserStatsResponse | void> {
@@ -30,7 +29,6 @@ export async function setUserStatistics(optional: OptionalUser): Promise<UserSta
         });
         return response.json();
     }
-    return;
 }
 
 export async function getWordStatistics(): Promise<WordStatsResponse | void> {
@@ -45,7 +43,6 @@ export async function getWordStatistics(): Promise<WordStatsResponse | void> {
         });
         return response.json();
     }
-    return ;
 }
 
 export async function setWordStatistics(wordId: string, optional: OptionalWord): Promise<WordStatsResponse | void> {
@@ -61,5 +58,4 @@ export async function setWordStatistics(wordId: string, optional: OptionalWord):
         });
         return response.json();
     }
-    return;
 }
