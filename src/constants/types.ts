@@ -59,6 +59,22 @@ export interface SprintState {
     isGame: boolean;
 }
 
+export enum AudioCallStatus {
+    waitingAnswer = `DON'T KNOW`,
+    answerReceived = 'NEXT',
+}
+
+export interface AudioCall {
+    currentLevel: string;
+    learningWord?: Word;
+    givenWords: Word[];
+    needLearnWords: Word[];
+    currentLearned: Word[];
+    currentMistakes: Word[];
+    wordsLearnt: number;
+    status: AudioCallStatus;
+}
+
 export interface Textbook {
     currentLevel: number;
     currentPage: number;
@@ -81,6 +97,7 @@ export interface User {
 
 export interface StateInterface {
     sprintGame: SprintState;
+    audioCallGame: AudioCall;
     textBook: Textbook;
     controls: ControlsState;
     user: User;

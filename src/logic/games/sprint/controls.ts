@@ -7,14 +7,8 @@ import { getHTMLElementContent, setHTMLElementContent } from '../../../utils/han
 import { playChoiceSound } from '../../../utils/playAudio';
 import getRandomNumber from '../../../utils/randomize';
 import renderResultPage from '../../../view/common/gameResult/renderGameResults';
-import listenLevelButtons, {
-    listenChoiceButtons,
-    listenKeyboard,
-    listenResultBottomButtons,
-    listenResultTabs,
-    listenSoundResultList,
-    listerStartButton,
-} from './events';
+import listenLevelButtons, { listenChoiceButtons, listenKeyboard, listerStartButton } from './events';
+import gameResultControls from '../../../view/common/gameResult/gameResultControls';
 
 export async function setAnswerBlock(data: Word[]): Promise<void> {
     const { length } = data;
@@ -36,12 +30,6 @@ export async function setAnswerBlock(data: Word[]): Promise<void> {
 export default function startPageControls(tag: GameTags, reload = false): void {
     listenLevelButtons(tag);
     listerStartButton(tag, reload);
-}
-
-export function gameResultControls(): void {
-    listenResultTabs();
-    listenSoundResultList();
-    listenResultBottomButtons();
 }
 
 function startTimer(): void {

@@ -9,7 +9,7 @@ export const START_GAME_LABELS = {
         background: 'sprint__background',
     },
 
-    audioCall: {
+    audioCallGame: {
         header: 'Audio Call',
         description: 'The Audio Call training improves listening comprehension.',
         background: 'audio-call__background',
@@ -124,6 +124,8 @@ export const GAMES = [
 export const FOOTER_LINKS_TEXT = ['About Us', 'TextBook', 'Games', 'Statistic', 'Contacts'];
 export const SITEMAP_LINKS = ['#team', '#', '#', '#', '#footer'];
 export const GAMES_LINKS = ['#', '#', '#', '#'];
+export const ANSWER_OPTIONS_COUNT = 5;
+export const GAME_LIMIT = 10;
 export const TODAYS_STATISTIC_LABEL = 'Statistic of the Day';
 export const STATISTIC_ICON = {
     'complete-icon.svg': 'Words learnt:',
@@ -137,3 +139,4 @@ export const ALL_THE_TIME_LABEL = 'Statistics for all time';
 export const ALL_THE_TIME_DESCRIPTION = 'Only registered users can see statistics';
 export const LEARNT_WORDS_LABEL = 'Learnt words';
 export const PROGRESS_LABEL = 'Progress';
+export const AUDIOCALL_KEYBOARD_KEYS = ['1', '2', '3', '4', '5'];
