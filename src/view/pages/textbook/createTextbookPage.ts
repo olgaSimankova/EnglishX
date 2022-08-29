@@ -7,6 +7,7 @@ import getPaginationBtns from '../../../logic/textbook/utils/createPagination';
 import state from '../../../state/state';
 import setStateUserIsAuthentificated from '../../../utils/authentification';
 import createElement from '../../../utils/createElement';
+import createGamesSection from '../main/createGamesSection';
 
 function getLevelsSection(parent: HTMLElement): void {
     const textbookHeading = createElement({
@@ -15,22 +16,29 @@ function getLevelsSection(parent: HTMLElement): void {
         classes: ['heading_section'],
     });
 
-    createElement({
-        type: 'div',
-        parentElement: textbookHeading,
-        classes: ['levels_section'],
-    });
-
-    createElement({
-        type: 'h2',
+    const textbookBtn = createElement({
+        type: 'button',
         parentElement: textbookHeading,
         classes: ['textbook_title', 'title'],
         text: 'Textbook',
     });
 
+    const vocabularyBtn = createElement({
+        type: 'button',
+        parentElement: textbookHeading,
+        classes: ['textbook_title', 'title'],
+        text: 'Vocabulary',
+    });
+
+    if (state.textBook.view === 'textbook') {
+        textbookBtn.classList.toggle('active', true);
+    } else {
+        vocabularyBtn.classList.toggle('active', true);
+    }
+
     createElement({
         type: 'p',
-        parentElement: textbookHeading,
+        parentElement: parent,
         classes: ['textbook_text'],
         text: 'Choose the words difficulty level',
     });
@@ -286,6 +294,7 @@ function getPaginationSection(parent: HTMLElement) {
 }
 
 export async function getTextbookPage() {
+    // const { view } = state.textBook;
     const wrapper = createElement({
         type: 'div',
         parentElement: document.body,
@@ -293,6 +302,8 @@ export async function getTextbookPage() {
     });
     setStateUserIsAuthentificated();
     getLevelsSection(wrapper);
+    // getVocabularyWordGroups(wrapper);
     await getWordsSection(wrapper);
     getPaginationSection(wrapper);
+    createGamesSection(wrapper);
 }

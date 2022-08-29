@@ -17,6 +17,7 @@ export const state: StateInterface = {
         isGame: false,
     } as SprintState,
     textBook: {
+        view: 'textbook',
         currentLevel: 0,
         currentPage: 1,
         wordsOnPage: [],

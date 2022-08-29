@@ -48,12 +48,12 @@ export function listenWordCards() {
     const cardsContainer = document.querySelector('.words__contaiter') as HTMLElement;
     cardsContainer.addEventListener('click', (event: Event) => {
         const btn = (event.target as HTMLElement).closest('.words__card');
-            if (btn) {
-                state.textBook.currentWordId = btn.id;
-                updateWordData(state.textBook.wordsOnPage[+btn.id]);
-                updateWordsColor();
-            }
-        })
+        if (btn) {
+            state.textBook.currentWordId = btn.id;
+            updateWordData(state.textBook.wordsOnPage[+btn.id]);
+            updateWordsColor();
+        }
+    });
 }
 
 export function listenLevelCards() {
