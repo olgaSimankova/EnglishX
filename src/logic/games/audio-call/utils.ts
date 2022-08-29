@@ -73,7 +73,7 @@ const showWordInfo = (): void => {
 
 const showResult = (userChoice: HTMLElement): void => {
     const {
-        audioCallGame: { currentLearned, currentMistakes },
+        audioCallGame: { currentLearned, currentMistakes, learningWord },
     } = state;
     const rightAnswer = getRightAnswerElement();
     const userChoiceText = userChoice.getAttribute('data-word');
@@ -84,13 +84,13 @@ const showResult = (userChoice: HTMLElement): void => {
 
     if (rightAnswerText === userChoiceText && isAnswerReceived()) {
         playChoiceSound(Choice.right);
-        currentLearned.push(state.audioCallGame.learningWord as Word);
+        currentLearned.push(learningWord as Word);
     }
 
     if (rightAnswerText !== userChoiceText && isAnswerReceived()) {
         userChoice.classList.add('wrong-answer');
         playChoiceSound(Choice.wrong);
-        currentMistakes.push(state.audioCallGame.learningWord as Word);
+        currentMistakes.push(learningWord as Word);
     }
 };
 
@@ -127,4 +127,5 @@ export {
     checkEndGame,
     isAnswerReceived,
     toggleAnimationClass,
+    showResult,
 };

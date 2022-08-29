@@ -6,6 +6,8 @@ import {
     setAnswerEvent,
     setNextButtonEvent,
     soundAnimationEvent,
+    enterKeyEvent,
+    answerKeysEvent,
 } from '../../../../logic/games/audio-call/events';
 import { setAnswerOptions, setLearningWord, setWords } from '../../../../logic/games/audio-call/utils';
 import state from '../../../../state/state';
@@ -103,6 +105,7 @@ const renderQuestion = (parentElement: HTMLElement) => {
     });
     setNextButtonEvent(nextButton);
     playAudio(wordSoundPath);
+    answerKeysEvent(document);
 };
 
 function renderAudioCallGame(parentElement: HTMLElement, data: Word[]): void {
@@ -115,6 +118,7 @@ function renderAudioCallGame(parentElement: HTMLElement, data: Word[]): void {
     setWords(data);
     setLearningWord();
     renderQuestion(gameContainer);
+    enterKeyEvent(document);
 }
 
 export { renderAudioCallGame, renderQuestion };

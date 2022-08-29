@@ -1,4 +1,4 @@
-import { answerOptionHandler, nextButtonHandler, soundHandler } from './controller';
+import { answerKeysHandler, answerOptionHandler, enterKeyHandler, nextButtonHandler, soundHandler } from './controller';
 import { toggleAnimationClass } from './utils';
 
 const setSoundEvent = (element: HTMLElement): void => {
@@ -17,4 +17,12 @@ const soundAnimationEvent = (element: HTMLElement): void => {
     element.addEventListener('click', toggleAnimationClass);
 };
 
-export { setSoundEvent, setAnswerEvent, setNextButtonEvent, soundAnimationEvent };
+const enterKeyEvent = (element: Document): void => {
+    element.addEventListener('keydown', enterKeyHandler);
+};
+
+const answerKeysEvent = (element: Document): void => {
+    element.addEventListener('keydown', answerKeysHandler);
+};
+
+export { setSoundEvent, setAnswerEvent, setNextButtonEvent, soundAnimationEvent, enterKeyEvent, answerKeysEvent };
