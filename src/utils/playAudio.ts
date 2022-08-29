@@ -19,7 +19,6 @@ export function playChoiceSound(answer: Choice): void {
 
 export function getAllAudios(): HTMLAudioElement[] {
     const currentWord = state.textBook.wordsOnPage[+state.textBook.currentWordId];
-    console.log(currentWord);
     return AUDIO_TYPES.map((value: string) => {
         const pathFromObj = currentWord[value as keyof Word] as string;
         const fullPath = getFullPath(pathFromObj);

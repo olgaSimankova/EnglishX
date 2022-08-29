@@ -157,8 +157,7 @@ export interface UserStatsResponse {
 }
 
 export enum WordStatus {
-    newWord = 'newWord',
-    underStudy = 'underStudy',
+    weak = 'weak',
     learned = 'learned',
     hard = 'hard',
     deleted = 'deleted',

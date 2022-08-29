@@ -1,9 +1,10 @@
 import getWords from '../../../api/words';
-import { API_BASE_LINK } from '../../../constants/constants';
+import { API_BASE_LINK, WORD_CATEGORIES } from '../../../constants/constants';
 import { Difficulty, Levels, Word } from '../../../constants/types';
 import listenPagination from '../../../logic/textbook/pagination';
 import { listenLevelCards, listenTextbookAudio, listenWordCards } from '../../../logic/textbook/textbookEvents';
 import getPaginationBtns from '../../../logic/textbook/utils/createPagination';
+import { listenTextbookTitleContainer } from '../../../logic/textbook/vocabulary';
 import state from '../../../state/state';
 import setStateUserIsAuthentificated from '../../../utils/authentification';
 import createElement from '../../../utils/createElement';
@@ -21,6 +22,7 @@ function getLevelsSection(parent: HTMLElement): void {
         parentElement: textbookHeading,
         classes: ['textbook_title', 'title'],
         text: 'Textbook',
+        attributes: [['id', 'textbook']],
     });
 
     const vocabularyBtn = createElement({
@@ -28,6 +30,7 @@ function getLevelsSection(parent: HTMLElement): void {
         parentElement: textbookHeading,
         classes: ['textbook_title', 'title'],
         text: 'Vocabulary',
+        attributes: [['id', 'vocabulary']],
     });
 
     if (state.textBook.view === 'textbook') {
@@ -93,6 +96,37 @@ function getLevelsSection(parent: HTMLElement): void {
         });
     });
     listenLevelCards();
+    listenTextbookTitleContainer();
+}
+
+function getWordCategories(parent: HTMLElement) {
+    const categoriesWrapper = createElement({
+        type: 'div',
+        parentElement: parent,
+        classes: ['word_categories_container'],
+    });
+    WORD_CATEGORIES.forEach((item) => {
+        const btn = createElement({
+            type: 'button',
+            parentElement: categoriesWrapper,
+            classes: ['word_category_button'],
+        });
+        createElement({
+            type: 'h2',
+            parentElement: btn,
+            text: `${item}`,
+        });
+        createElement({
+            type: 'p',
+            parentElement: btn,
+            text: `Words: 0`,
+        });
+        createElement({
+            type: 'div',
+            parentElement: btn,
+            classes: ['circle_category'],
+        });
+    });
 }
 
 export function getWordsCards(words: Word[], parent: HTMLElement) {
@@ -116,6 +150,11 @@ export function getWordsCards(words: Word[], parent: HTMLElement) {
             parentElement: wordCard,
             classes: ['word__translate'],
             text: value.wordTranslate,
+        });
+        createElement({
+            type: 'span',
+            parentElement: wordCard,
+            classes: ['difficult_word', 'hidden'],
         });
     });
 }
@@ -302,7 +341,7 @@ export async function getTextbookPage() {
     });
     setStateUserIsAuthentificated();
     getLevelsSection(wrapper);
-    // getVocabularyWordGroups(wrapper);
+    getWordCategories(wrapper);
     await getWordsSection(wrapper);
     getPaginationSection(wrapper);
     createGamesSection(wrapper);

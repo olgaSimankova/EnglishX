@@ -142,3 +142,5 @@ export const ALL_THE_TIME_DESCRIPTION = 'Only registered users can see statistic
 export const LEARNT_WORDS_LABEL = 'Learnt words';
 export const PROGRESS_LABEL = 'Progress';
 export const AUDIOCALL_KEYBOARD_KEYS = ['1', '2', '3', '4', '5'];
+
+export const WORD_CATEGORIES = ['In Progress', 'Difficult', 'Deleted'];

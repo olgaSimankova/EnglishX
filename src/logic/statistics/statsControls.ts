@@ -20,5 +20,6 @@ export default function statisticsControls(): void {
             },
             options: {},
         });
+        console.log(chartObj);
     }
 }

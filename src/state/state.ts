@@ -27,7 +27,6 @@ export const state: StateInterface = {
         wordsLearnt: 0,
         status: AudioCallStatus.waitingAnswer,
     },
-
     textBook: {
         view: 'textbook',
         currentLevel: 0,
