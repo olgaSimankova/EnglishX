@@ -1,5 +1,6 @@
 import { createUser } from '../../api/login-register';
 import { INVALID_COLOR_RED, VALID_COLOR_GREEN } from '../../constants/constants';
+import { setLocalStorage } from '../../utils/localStorage';
 import { doPasswordsMatch, isEmailValid, isPasswordValid } from '../../utils/validation';
 import { toggleModal } from './loginModal';
 
@@ -54,7 +55,8 @@ function listenRegisterModal(): void {
                     name: userName,
                     email: registerForm.email.value,
                     password: registerForm.password.value,
-                }).then(() => {
+                }).then((user) => {
+                    setLocalStorage('userId', user.userId);
                     deleteRegisterModal();
                     toggleModal(false);
                 });

@@ -6,6 +6,7 @@ import {
     STATISTIC_ICON,
     TODAYS_STATISTIC_LABEL,
 } from '../../../constants/constants';
+import statisticsControls from '../../../logic/statistics/statsControls';
 import createElement from '../../../utils/createElement';
 import createFooter from '../../common/createFooter';
 import createHeader from '../../common/createHeader';
@@ -134,6 +135,20 @@ function renderToggleBlock(parentElement: HTMLElement): void {
     renderToggleButton(container);
 }
 
+function renderGraph(parentElement: HTMLElement): void {
+    const container = createElement({
+        type: 'div',
+        parentElement,
+        classes: ['graph-container'],
+    });
+    createElement({
+        type: 'canvas',
+        parentElement: container,
+        classes: ['chart'],
+        attributes: [['id', 'chart']],
+    });
+}
+
 function renderAllTimeStats(parentElement: HTMLElement): void {
     const container = createElement({
         type: 'div',
@@ -153,6 +168,7 @@ function renderAllTimeStats(parentElement: HTMLElement): void {
         text: ALL_THE_TIME_DESCRIPTION,
     });
     renderToggleBlock(container);
+    renderGraph(container);
 }
 
 export default function renderStatisticsPage(): void {
@@ -166,4 +182,5 @@ export default function renderStatisticsPage(): void {
     renderGameStatistic(container);
     renderAllTimeStats(container);
     createFooter(container);
+    statisticsControls();
 }

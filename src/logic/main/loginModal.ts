@@ -1,4 +1,5 @@
 import { loginUser } from '../../api/login-register';
+import { setLocalStorage } from '../../utils/localStorage';
 import renderRegistrationModal from '../../view/pages/main/loginRegisterModal/renderRegistrationModal';
 import { changeFieldBackgroundColor } from './registerModal';
 
@@ -40,10 +41,11 @@ function listenLoginModal(): void {
             event.preventDefault();
             const loginForm = document.querySelector('form') as HTMLFormElement;
             try {
-                await loginUser({
+                const user = await loginUser({
                     email: loginForm.email.value,
                     password: loginForm.password.value,
                 });
+                setLocalStorage('userId', user.userId);
                 toggleModal(false);
             } catch {
                 toggleFailLoginMessage(true);
