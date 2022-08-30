@@ -57,6 +57,8 @@ export interface SprintState {
     isFreeze: boolean;
     wordsLearnt: number;
     isGame: boolean;
+    bestStreak: number;
+    currentStreak: number;
 }
 
 export enum AudioCallStatus {
@@ -73,6 +75,8 @@ export interface AudioCall {
     currentMistakes: Word[];
     wordsLearnt: number;
     status: AudioCallStatus;
+    bestStreak: number;
+    currentStreak: number;
 }
 
 export interface Textbook {
@@ -93,6 +97,7 @@ export interface User {
     isAuthenticated?: boolean; // I've checked it - this field must stay optional due to createUser API request
     name?: string;
     userId?: string;
+    token?: string;
 }
 
 export interface StateInterface {
@@ -136,21 +141,40 @@ export interface UserResponse {
     token: string;
     userId: string;
 }
+export interface GamePercentage {
+    right: number;
+    wrong: number;
+}
+export interface GameObject {
+    sprintGame?: GamePercentage;
+    audioCallGame?: GamePercentage;
+}
 
-export interface Stats {
-    data: string;
+export interface StatsProp {
     newWords: number;
     allWords: number;
+    games: GameObject;
+}
+
+export interface Stats {
+    [key: string]: StatsProp;
+}
+
+export interface GameStreak {
+    sprintGame?: number;
+    audioCallGame?: number;
 }
 
 export interface OptionalUser {
-    stats: Stats[];
-    wordList: string[];
+    stats: Stats;
+    wordList: string;
+    games: GameStreak;
 }
 
 export interface UserStatsResponse {
     learnedWords: number;
     optional: OptionalUser;
+    id?: string;
 }
 
 export enum WordStatus {

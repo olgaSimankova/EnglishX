@@ -1,4 +1,4 @@
-import { AudioCallStatus, Choice, Word } from '../../../constants/types';
+import { AudioCallStatus, Choice, GameTags, Word } from '../../../constants/types';
 import state from '../../../state/state';
 import getRandomNumber from '../../../utils/randomize';
 import { ANSWER_OPTIONS_COUNT, GAME_LIMIT } from '../../../constants/constants';
@@ -108,7 +108,7 @@ const checkEndGame = (): void => {
 
     if (wordsLearnt === GAME_LIMIT || needLearnWords.length === 0) {
         deleteHTMLElement('audioCall-container');
-        renderResultPage('game-container', currentLearned, currentMistakes);
+        renderResultPage('game-container', currentLearned, currentMistakes, GameTags.audioCallGame);
         gameResultControls();
     } else {
         const container = document.querySelector('.audioCall-container') as HTMLElement;

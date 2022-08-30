@@ -46,6 +46,7 @@ function listenLoginModal(): void {
                     password: loginForm.password.value,
                 });
                 setLocalStorage('userId', user.userId);
+                setLocalStorage('token', user.token);
                 toggleModal(false);
             } catch {
                 toggleFailLoginMessage(true);

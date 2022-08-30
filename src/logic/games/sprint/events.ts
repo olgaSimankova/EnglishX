@@ -70,8 +70,9 @@ export function listerStartButton(tag: GameTags, reload = false): void {
 }
 
 export function listenChoiceButtons(data: Word[], reload = false): void {
-    let { length } = data;
     let newData = data;
+    let { length } = newData;
+    state.sprintGame.currentMaxLength += length;
     const buttonsContainer = document.querySelector('.buttons-container');
     buttonsContainer?.addEventListener('click', async (e) => {
         if (!state.sprintGame.isFreeze) {
@@ -125,10 +126,10 @@ export function listenKeyboard(data: Word[], reload = false): void {
     document.addEventListener('keyup', async (e) => {
         const keyName = e.key;
         const choice = keyName === KEY_ARROWS.left ? GAME_BUTTONS.YES : GAME_BUTTONS.NO;
+        const action = checkAnswerSprintGame(choice);
+        setPoints(action);
         if (Object.values(KEY_ARROWS).includes(keyName) && !state.sprintGame.isFreeze) {
-            if (state.sprintGame.wordsLearnt < length) {
-                const action = checkAnswerSprintGame(choice);
-                setPoints(action);
+            if (state.sprintGame.wordsLearnt < length - 1) {
                 setAnswerBlock(newData);
                 state.sprintGame.wordsLearnt += 1;
             } else if (reload && state.sprintGame.currentPage) {
