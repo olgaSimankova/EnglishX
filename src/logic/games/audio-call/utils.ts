@@ -112,7 +112,7 @@ const checkEndGame = (): void => {
         audioCallGame: { wordsLearnt, needLearnWords, currentLearned, currentMistakes },
     } = state;
 
-    if (wordsLearnt === GAME_LIMIT || needLearnWords.length === 0) {
+    if (wordsLearnt === GAME_LIMIT || !needLearnWords.length) {
         deleteHTMLElement('audioCall-container');
         renderResultPage('game-container', currentLearned, currentMistakes, GameTags.audioCallGame);
         gameResultControls();

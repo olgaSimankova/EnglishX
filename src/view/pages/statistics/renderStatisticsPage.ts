@@ -8,14 +8,15 @@ import {
     TODAYS_STATISTIC_LABEL,
 } from '../../../constants/constants';
 import { GameTags, UserStatsResponse } from '../../../constants/types';
-import statisticsControls, {
+import statisticsControls, { listenToggle } from '../../../logic/statistics/statsControls';
+import {
     getGamePersentage,
     getGameStreak,
     getNewTodaysWords,
     getTodaysPersentage,
     getTrainedWordsGame,
     getTrainedWordsToday,
-} from '../../../logic/statistics/statsControls';
+} from '../../../logic/statistics/utils';
 import createElement from '../../../utils/createElement';
 import createFooter from '../../common/createFooter';
 import createHeader from '../../common/createHeader';
@@ -203,4 +204,5 @@ export default async function renderStatisticsPage(): Promise<void> {
     renderAllTimeStats(container);
     createFooter(container);
     statisticsControls(data);
+    listenToggle();
 }

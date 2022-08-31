@@ -1,3 +1,5 @@
+import { Chart } from 'chart.js';
+
 export interface CreateElementInterface {
     type: string;
     parentElement: HTMLElement;
@@ -89,6 +91,7 @@ export interface Textbook {
 export interface ControlsState {
     isSound: boolean;
     isFullscreen: boolean;
+    chartID?: Chart<'bar', string[], string>;
 }
 
 export interface User {
