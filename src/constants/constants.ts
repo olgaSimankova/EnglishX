@@ -132,7 +132,7 @@ export const STATISTIC_ICON = {
     'check-mark-line-icon.svg': 'Right answers:',
     'double-tick-icon.svg': 'The longest streak of right answers:',
 };
-export const HEADER_LINKS = ['#team', './textbook.html', '#', '#'];
+export const HEADER_LINKS = ['../#team', './textbook.html', '#', './statistics.html'];
 export const PAGINATION_BTNS = 9;
 export const LAST_PAGE = 30;
 export const ALL_THE_TIME_LABEL = 'Statistics for all time';
