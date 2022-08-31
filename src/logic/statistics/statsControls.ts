@@ -19,6 +19,7 @@ export default function statisticsControls(data: UserStatsResponse | void): void
                     {
                         label: 'New words',
                         data: dataChart,
+                        backgroundColor: 'rgba(66,69,81,1)',
                     },
                 ],
             },

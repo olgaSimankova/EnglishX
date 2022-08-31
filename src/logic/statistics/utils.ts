@@ -85,7 +85,18 @@ export function getDataChart(obj: DateWithWords, keys: string[], flag: boolean):
         output.push(obj[key]);
     });
     if (flag) {
-        return output.map((el, i) => (Number(el) + (Number(output[i - 1]) || 0)).toString());
+        return output.map((_, i) =>
+            output
+                .slice(0, i + 1)
+                .reduce(
+                    (acc, item) => {
+                        acc.result += Number(item);
+                        return acc;
+                    },
+                    { result: 0 }
+                )
+                .result.toString()
+        );
     }
     return output;
 }

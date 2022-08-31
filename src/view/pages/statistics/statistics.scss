@@ -152,12 +152,19 @@
   
   .toggle-button:checked::after {
     transform: translateX(calc(45px));
-    background-color: #424551;
+    background-color: rgb(66, 69, 81);
   }
   
   .toggle-button:checked {
     background-image: url('../../../assets/img/game-div-bg.jpg');
     background-size: cover;
     background-repeat: no-repeat;
+  }
+
+  .graph-container {
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 800px;
+    width: 100%;
   }
   
