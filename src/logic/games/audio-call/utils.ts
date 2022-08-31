@@ -1,4 +1,4 @@
-import { AudioCallStatus, Choice, Word } from '../../../constants/types';
+import { AudioCallStatus, Choice, GameTags, Word } from '../../../constants/types';
 import state from '../../../state/state';
 import getRandomNumber from '../../../utils/randomize';
 import { ANSWER_OPTIONS_COUNT, GAME_LIMIT } from '../../../constants/constants';
@@ -85,12 +85,18 @@ const showResult = (userChoice: HTMLElement): void => {
     if (rightAnswerText === userChoiceText && isAnswerReceived()) {
         playChoiceSound(Choice.right);
         currentLearned.push(learningWord as Word);
+        state.audioCallGame.currentStreak += 1;
     }
 
     if (rightAnswerText !== userChoiceText && isAnswerReceived()) {
         userChoice.classList.add('wrong-answer');
         playChoiceSound(Choice.wrong);
         currentMistakes.push(learningWord as Word);
+        state.audioCallGame.bestStreak =
+            state.audioCallGame.bestStreak < state.audioCallGame.currentStreak
+                ? state.audioCallGame.currentStreak
+                : state.audioCallGame.bestStreak;
+        state.audioCallGame.currentStreak = 0;
     }
 };
 
@@ -106,10 +112,15 @@ const checkEndGame = (): void => {
         audioCallGame: { wordsLearnt, needLearnWords, currentLearned, currentMistakes },
     } = state;
 
-    if (wordsLearnt === GAME_LIMIT || needLearnWords.length === 0) {
+    if (wordsLearnt === GAME_LIMIT || !needLearnWords.length) {
         deleteHTMLElement('audioCall-container');
-        renderResultPage('game-container', currentLearned, currentMistakes);
+        renderResultPage('game-container', currentLearned, currentMistakes, GameTags.audioCallGame);
         gameResultControls();
+        state.audioCallGame.bestStreak =
+            state.audioCallGame.bestStreak < state.audioCallGame.currentStreak
+                ? state.audioCallGame.currentStreak
+                : state.audioCallGame.bestStreak;
+        state.audioCallGame.currentStreak = 0;
     } else {
         const container = document.querySelector('.audioCall-container') as HTMLElement;
         setLearningWord();

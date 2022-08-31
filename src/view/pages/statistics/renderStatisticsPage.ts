@@ -1,3 +1,4 @@
+import { getUserStatistics } from '../../../api/userStatistics';
 import {
     ALL_THE_TIME_DESCRIPTION,
     ALL_THE_TIME_LABEL,
@@ -6,7 +7,16 @@ import {
     STATISTIC_ICON,
     TODAYS_STATISTIC_LABEL,
 } from '../../../constants/constants';
-import statisticsControls from '../../../logic/statistics/statsControls';
+import { GameTags, UserStatsResponse } from '../../../constants/types';
+import statisticsControls, { listenToggle } from '../../../logic/statistics/statsControls';
+import {
+    getGamePersentage,
+    getGameStreak,
+    getNewTodaysWords,
+    getTodaysPersentage,
+    getTrainedWordsGame,
+    getTrainedWordsToday,
+} from '../../../logic/statistics/utils';
 import createElement from '../../../utils/createElement';
 import createFooter from '../../common/createFooter';
 import createHeader from '../../common/createHeader';
@@ -32,7 +42,7 @@ function renderStatisticBlock(parentElement: HTMLElement, numberLabel: string, d
     });
 }
 
-function renderTodaysStatistics(parentElement: HTMLElement): void {
+function renderTodaysStatistics(parentElement: HTMLElement, data: UserStatsResponse | void): void {
     const container = createElement({
         type: 'div',
         parentElement,
@@ -49,8 +59,12 @@ function renderTodaysStatistics(parentElement: HTMLElement): void {
         parentElement: container,
         classes: ['statistic-container'],
     });
-    renderStatisticBlock(statsContainer, '0', 'words learnt'); // implement later
-    renderStatisticBlock(statsContainer, '0%', 'right answers'); // implement later
+    const newWordsToday = getNewTodaysWords(data);
+    const trainedWordsToday = getTrainedWordsToday(data);
+    const todaysPersentage = getTodaysPersentage(data);
+    renderStatisticBlock(statsContainer, newWordsToday, 'new words trained');
+    renderStatisticBlock(statsContainer, trainedWordsToday, 'total words trained');
+    renderStatisticBlock(statsContainer, `${todaysPersentage}%`, 'right answers');
 }
 function renderGameBlock(parentElement: HTMLElement, gameName: string, stats: string[]): void {
     const container = createElement({
@@ -84,14 +98,20 @@ function renderGameBlock(parentElement: HTMLElement, gameName: string, stats: st
     });
 }
 
-function renderGameStatistic(parentElement: HTMLElement): void {
+function renderGameStatistic(parentElement: HTMLElement, data: UserStatsResponse | void): void {
     const container = createElement({
         type: 'div',
         parentElement,
         classes: ['games-container'],
     });
-    renderGameBlock(container, 'Sprint', ['0', '0%', '0']);
-    renderGameBlock(container, 'AudioCall', ['0', '0%', '0']);
+    const wordsTrainedSprint = getTrainedWordsGame(data, GameTags.sprintGame);
+    const wordsTrainedAudioCall = getTrainedWordsGame(data, GameTags.audioCallGame);
+    const sprintPercentage = getGamePersentage(data, GameTags.sprintGame);
+    const audioCallPercentage = getGamePersentage(data, GameTags.audioCallGame);
+    const sprintStream = getGameStreak(data, GameTags.sprintGame);
+    const audioCallStream = getGameStreak(data, GameTags.audioCallGame);
+    renderGameBlock(container, 'Sprint', [wordsTrainedSprint, `${sprintPercentage}%`, sprintStream]);
+    renderGameBlock(container, 'AudioCall', [wordsTrainedAudioCall, `${audioCallPercentage}%`, audioCallStream]);
 }
 
 function renderToggleButton(parentElement: HTMLElement): void {
@@ -171,16 +191,18 @@ function renderAllTimeStats(parentElement: HTMLElement): void {
     renderGraph(container);
 }
 
-export default function renderStatisticsPage(): void {
+export default async function renderStatisticsPage(): Promise<void> {
+    const data = await getUserStatistics();
     const container = createElement({
         type: 'div',
         parentElement: document.body,
         classes: ['statistics-container'],
     });
     createHeader(container);
-    renderTodaysStatistics(container);
-    renderGameStatistic(container);
+    renderTodaysStatistics(container, data);
+    renderGameStatistic(container, data);
     renderAllTimeStats(container);
     createFooter(container);
-    statisticsControls();
+    statisticsControls(data);
+    listenToggle();
 }

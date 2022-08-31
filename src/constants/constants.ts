@@ -26,7 +26,7 @@ export const KEY_ARROWS = {
 export const RESULT_TAB_LABELS = ['RESULT', 'WATCH WORDS'];
 export const CHOOSE_LEVEL = 'Chooce level:';
 export const START = 'Start';
-export const SPRINT_START_TIME = 30;
+export const SPRINT_START_TIME = 5;
 export const MAX_PAGES = 30;
 export const RANDOM_MIDDLE = 0.5;
 export const MULTIPLY = 'multiply';
@@ -128,7 +128,7 @@ export const ANSWER_OPTIONS_COUNT = 5;
 export const GAME_LIMIT = 10;
 export const TODAYS_STATISTIC_LABEL = 'Statistic of the Day';
 export const STATISTIC_ICON = {
-    'complete-icon.svg': 'Words learnt:',
+    'complete-icon.svg': 'New words trained:',
     'check-mark-line-icon.svg': 'Right answers:',
     'double-tick-icon.svg': 'The longest streak of right answers:',
 };

@@ -147,11 +147,11 @@ export default function renderSprintGame(parentElement: HTMLElement, data: Word[
         classes: ['sprint-container'],
     });
     state.sprintGame.isGame = true;
+    resetSprintPoints();
     renderClockBlock(gameContainer);
     renderPointsBlock(gameContainer);
     renderTickBlock(gameContainer);
     renderAnswerBlock(gameContainer);
     renderButtonsBlock(gameContainer);
     setAnswerBlock(data);
-    resetSprintPoints();
 }
