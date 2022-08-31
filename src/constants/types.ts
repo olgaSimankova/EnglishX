@@ -144,6 +144,8 @@ export interface UserResponse {
 export interface GamePercentage {
     right: number;
     wrong: number;
+    streak: number;
+    newWords: number;
 }
 export interface GameObject {
     sprintGame?: GamePercentage;
@@ -168,7 +170,6 @@ export interface GameStreak {
 export interface OptionalUser {
     stats: Stats;
     wordList: string;
-    games: GameStreak;
 }
 
 export interface UserStatsResponse {
@@ -206,4 +207,8 @@ export interface OptionalWord {
 export interface WordStatsResponse {
     wordStatus: WordStatus;
     optional: object;
+}
+
+export interface DateWithWords {
+    [key: string]: string;
 }

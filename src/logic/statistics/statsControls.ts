@@ -1,22 +1,33 @@
 import Chart from 'chart.js/auto';
-import { GameTags, UserStatsResponse } from '../../constants/types';
+import { DateWithWords, GameTags, UserStatsResponse } from '../../constants/types';
 import getDate from '../../utils/getDate';
 
-export default function statisticsControls(): void {
+function getNewWordsStats(data: UserStatsResponse | void): DateWithWords {
+    const obj: DateWithWords = {};
+    if (data) {
+        Object.keys(data.optional.stats).forEach((date) => {
+            obj[date] = data.optional.stats[date].newWords.toString();
+        });
+    }
+    return obj;
+}
+
+export default function statisticsControls(data: UserStatsResponse | void): void {
     const chart = (document.getElementById('chart') as HTMLCanvasElement).getContext('2d');
+    const toggle = document.querySelector('.toggle-button') as HTMLInputElement;
+    console.log(toggle.checked);
     if (chart) {
+        const newWordsPerDay = getNewWordsStats(data);
+        const labels = Object.keys(newWordsPerDay);
+        console.log(newWordsPerDay);
         const chartObj = new Chart(chart, {
             type: 'bar',
             data: {
-                labels: ['label1', 'label2', 'label3', 'label4'],
+                labels,
                 datasets: [
                     {
                         label: 'TAG1',
                         data: [1, 2, 3, 4, 5],
-                    },
-                    {
-                        label: 'TAG2',
-                        data: [5, 3, 13, 44, 5],
                     },
                 ],
             },
@@ -62,7 +73,7 @@ export function getTrainedWordsGame(data: UserStatsResponse | void, tag: GameTag
     const date = getDate();
     if (data && data.optional.stats[date] && data.optional.stats[date].games[tag]) {
         const { games } = data.optional.stats[date];
-        return ((games[tag]?.right || 0) + (games[tag]?.wrong || 0)).toString();
+        return (games[tag]?.newWords || 0).toString();
     }
     return output;
 }
@@ -82,5 +93,6 @@ export function getGamePersentage(data: UserStatsResponse | void, tag: GameTags)
 }
 
 export function getGameStreak(data: UserStatsResponse | void, tag: GameTags): string {
-    return (data?.optional.games[tag] || 0).toString();
+    const date = getDate();
+    return (data?.optional.stats[date]?.games[tag]?.streak || 0).toString();
 }

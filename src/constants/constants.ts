@@ -128,7 +128,7 @@ export const ANSWER_OPTIONS_COUNT = 5;
 export const GAME_LIMIT = 10;
 export const TODAYS_STATISTIC_LABEL = 'Statistic of the Day';
 export const STATISTIC_ICON = {
-    'complete-icon.svg': 'Words learnt:',
+    'complete-icon.svg': 'New words trained:',
     'check-mark-line-icon.svg': 'Right answers:',
     'double-tick-icon.svg': 'The longest streak of right answers:',
 };

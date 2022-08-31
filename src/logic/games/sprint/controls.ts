@@ -120,7 +120,7 @@ export function setPoints(action: boolean): void {
     unpdateWordsResult(action);
 }
 
-export async function reloadNewWord(choice: boolean): Promise<Word[]> {
+export async function reloadNewWord(): Promise<Word[]> {
     state.sprintGame.isFreeze = true;
     state.sprintGame.usedNumbers = [];
     state.sprintGame.currentPage -= 1;
@@ -160,7 +160,7 @@ export async function choiceAction(e: Event, data: Word[], length: number, reloa
         setAnswerBlock(newData);
         state.sprintGame.wordsLearnt += 1;
     } else if (reload && state.sprintGame.currentPage && value) {
-        newData = await reloadNewWord(GAME_BUTTONS[value as keyof typeof GAME_BUTTONS]);
+        newData = await reloadNewWord();
         state.sprintGame.currentMaxLength += newData.length;
     } else {
         state.sprintGame.isGame = false;

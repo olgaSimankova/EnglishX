@@ -133,7 +133,7 @@ export function listenKeyboard(data: Word[], reload = false): void {
                 setAnswerBlock(newData);
                 state.sprintGame.wordsLearnt += 1;
             } else if (reload && state.sprintGame.currentPage) {
-                newData = await reloadNewWord(choice);
+                newData = await reloadNewWord();
                 length += newData.length;
             } else {
                 state.sprintGame.isGame = false;

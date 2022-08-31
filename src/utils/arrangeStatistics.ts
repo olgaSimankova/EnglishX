@@ -1,5 +1,5 @@
 import { getUserStatistics, setUserStatistics } from '../api/userStatistics';
-import { GameStreak, GameTags, Stats, UserStatsResponse, Word } from '../constants/types';
+import { GameTags, Stats, UserStatsResponse, Word } from '../constants/types';
 import state from '../state/state';
 import getDate from './getDate';
 
@@ -45,11 +45,17 @@ function createNewStats(
     if (currentStat && currentStat.optional.stats) {
         const { stats } = currentStat.optional;
         if (stats[date]) {
-            stats[date].newWords += countNewWords(currentStat.optional.wordList, createWordIdString(wordsTrained));
+            const currNewWords = countNewWords(currentStat.optional.wordList, createWordIdString(wordsTrained));
+            stats[date].newWords += currNewWords;
             stats[date].allWords += wordsTrained.length;
             stats[date].games[tag] = {
                 right: (stats[date].games[tag]?.right || 0) + goodAnswers.length,
                 wrong: (stats[date].games[tag]?.wrong || 0) + badAnswers.length,
+                streak:
+                    (stats[date].games[tag]?.streak || 0) < state[tag].bestStreak
+                        ? state[tag].bestStreak
+                        : stats[date].games[tag]?.streak || 0,
+                newWords: (stats[date].games[tag]?.newWords || 0) + currNewWords,
             };
         } else {
             stats[date] = {
@@ -59,6 +65,8 @@ function createNewStats(
                     [tag]: {
                         right: goodAnswers.length,
                         wrong: badAnswers.length,
+                        streak: state[tag].bestStreak,
+                        newWords: wordsTrained.length,
                     },
                 },
             };
@@ -73,22 +81,11 @@ function createNewStats(
                 [tag]: {
                     right: goodAnswers.length,
                     wrong: badAnswers.length,
+                    streak: state[tag].bestStreak,
+                    newWords: wordsTrained.length,
                 },
             },
         },
-    };
-}
-
-function createGameStreak(currentStat: UserStatsResponse | void): GameStreak {
-    return {
-        sprintGame:
-            (currentStat?.optional.games?.sprintGame || 0) > state.sprintGame.bestStreak
-                ? currentStat?.optional.games?.sprintGame
-                : state.sprintGame.bestStreak,
-        audioCallGame:
-            (currentStat?.optional.games?.audioCallGame || 0) > state.audioCallGame.bestStreak
-                ? currentStat?.optional.games?.audioCallGame
-                : state.audioCallGame.bestStreak,
     };
 }
 
@@ -96,13 +93,11 @@ export default async function saveGameResults(goodAnswers: Word[], badAnswers: W
     const currentStatistics = await getUserStatistics();
     const wordListUpdated = createNewWordList(currentStatistics, goodAnswers, badAnswers);
     const statsUpdated = createNewStats(currentStatistics, goodAnswers, badAnswers, tag);
-    const gameStreakUpdate = createGameStreak(currentStatistics);
     const opt = {
         learnedWords: 0,
         optional: {
             stats: statsUpdated,
             wordList: wordListUpdated,
-            games: gameStreakUpdate,
         },
     };
     setUserStatistics(opt);

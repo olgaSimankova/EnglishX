@@ -202,5 +202,5 @@ export default async function renderStatisticsPage(): Promise<void> {
     renderGameStatistic(container, data);
     renderAllTimeStats(container);
     createFooter(container);
-    statisticsControls();
+    statisticsControls(data);
 }
