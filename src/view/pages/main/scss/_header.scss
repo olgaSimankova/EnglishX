@@ -116,7 +116,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  }
+  
   &:hover .drop-down-container {
     display: flex;
     flex-direction: column;
@@ -143,8 +143,8 @@
       margin: 0;
     }
   }
-}
+}}
 
-.header__link > a {
+.games-drop-down > a {
   z-index: 1;
 }
