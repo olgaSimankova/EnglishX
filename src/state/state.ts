@@ -32,7 +32,7 @@ export const state: StateInterface = {
         currentLevel: 0,
         currentPage: 1,
         wordsOnPage: [],
-        currentWordId: '0',
+        currentWordNo: '0',
     } as Textbook,
     controls: {
         isSound: true,
@@ -44,6 +44,8 @@ export const state: StateInterface = {
         name: '',
         isAuthenticated: false,
         userId: '',
+        token: '',
+        refreshToken: '',
     } as User,
 } as StateInterface;
 

@@ -81,7 +81,7 @@ export interface Textbook {
     view: string;
     currentLevel: number;
     currentPage: number;
-    currentWordId: string;
+    currentWordNo: string;
     wordsOnPage: Word[];
 }
 
@@ -96,6 +96,8 @@ export interface User {
     isAuthenticated?: boolean; // I've checked it - this field must stay optional due to createUser API request
     name?: string;
     userId?: string;
+    token?: string;
+    refreshToken?: string;
 }
 
 export interface StateInterface {
@@ -174,14 +176,14 @@ export interface GamesStat {
 }
 
 export interface OptionalWord {
-    addTime: string;
-    try: number;
-    games: GamesStat;
-    isDeleted: boolean;
-    wordId: string;
+    addTime?: string;
+    try?: number;
+    games?: GamesStat;
+    isDeleted?: boolean;
+    wordId?: string;
 }
 
-export interface WordStatsResponse {
-    wordStatus: WordStatus;
-    optional: object;
+export interface WordStats {
+    difficulty: WordStatus;
+    optional?: OptionalWord;
 }

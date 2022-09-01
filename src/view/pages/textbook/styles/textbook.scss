@@ -47,3 +47,15 @@ opacity: 0.6;
 .textbook_text {
     margin: 0 25px;
 }
+
+#vocabulary.hidden {
+    display: none;
+}
+
+.word_categories_container {
+    display: flex;
+}
+
+.word_categories_container.hidden {
+    display: none;
+}

@@ -6,5 +6,6 @@ export default function applyLocalStorage(): void {
     if (userId) {
         state.user.isAuthenticated = true;
         state.user.userId = userId;
+        state.user.token = getFromLocalStorage('token');
     }
 }

@@ -1,16 +1,17 @@
-import getWords from '../../../api/words';
+import { getWords } from '../../../api/words';
 import { API_BASE_LINK, WORD_CATEGORIES } from '../../../constants/constants';
 import { Difficulty, Levels, Word } from '../../../constants/types';
+import applyLocalStorage from '../../../logic/main/applyLocalStorage';
+import { checkTokenExpiration } from '../../../logic/main/authentication';
 import listenPagination from '../../../logic/textbook/pagination';
 import { listenLevelCards, listenTextbookAudio, listenWordCards } from '../../../logic/textbook/textbookEvents';
 import getPaginationBtns from '../../../logic/textbook/utils/createPagination';
-import { listenTextbookTitleContainer } from '../../../logic/textbook/vocabulary';
+import { listenDifficultWordBtn, listenTextbookTitleView } from '../../../logic/textbook/vocabulary';
 import state from '../../../state/state';
-import setStateUserIsAuthentificated from '../../../utils/authentification';
 import createElement from '../../../utils/createElement';
 import createGamesSection from '../main/createGamesSection';
 
-function getLevelsSection(parent: HTMLElement): void {
+function getTextbookHeading(parent: HTMLElement): void {
     const textbookHeading = createElement({
         type: 'section',
         parentElement: parent,
@@ -33,10 +34,15 @@ function getLevelsSection(parent: HTMLElement): void {
         attributes: [['id', 'vocabulary']],
     });
 
-    if (state.textBook.view === 'textbook') {
-        textbookBtn.classList.toggle('active', true);
+    if (state.user.isAuthenticated && checkTokenExpiration()) {
+        console.log(checkTokenExpiration());
+        if (state.textBook.view === 'textbook') {
+            textbookBtn.classList.add('active');
+        } else {
+            vocabularyBtn.classList.add('active');
+        }
     } else {
-        vocabularyBtn.classList.toggle('active', true);
+        vocabularyBtn.classList.add('hidden');
     }
 
     createElement({
@@ -45,6 +51,9 @@ function getLevelsSection(parent: HTMLElement): void {
         classes: ['textbook_text'],
         text: 'Choose the words difficulty level',
     });
+}
+
+function getLevelsSection(parent: HTMLElement): void {
     const levelsSection = createElement({
         type: 'div',
         parentElement: parent,
@@ -96,7 +105,7 @@ function getLevelsSection(parent: HTMLElement): void {
         });
     });
     listenLevelCards();
-    listenTextbookTitleContainer();
+    listenTextbookTitleView();
 }
 
 function getWordCategories(parent: HTMLElement) {
@@ -127,6 +136,7 @@ function getWordCategories(parent: HTMLElement) {
             classes: ['circle_category'],
         });
     });
+    categoriesWrapper.classList.toggle('hidden', state.textBook.view === 'textbook');
 }
 
 export function getWordsCards(words: Word[], parent: HTMLElement) {
@@ -154,7 +164,7 @@ export function getWordsCards(words: Word[], parent: HTMLElement) {
         createElement({
             type: 'span',
             parentElement: wordCard,
-            classes: ['difficult_word', 'hidden'],
+            classes: ['difficult_word'],
         });
     });
 }
@@ -208,6 +218,7 @@ export function getWordData(word: Word, parent: HTMLElement) {
         parentElement: wordActions,
         classes: ['word__actions_btn', `words__actions_btn_${Levels[state.textBook.currentLevel]}`],
         text: 'difficult word',
+        attributes: [['id', 'add_difficult_word']],
     });
     createElement({
         type: 'button',
@@ -215,7 +226,7 @@ export function getWordData(word: Word, parent: HTMLElement) {
         classes: ['word__actions_btn', `words__actions_btn_${Levels[state.textBook.currentLevel]}`],
         text: 'delete word',
     });
-    if (!state.user.isAuthenticated) wordActions.classList.add('hidden');
+    if (!state.user.isAuthenticated || !checkTokenExpiration()) wordActions.classList.add('hidden');
 
     const wordDescription = createElement({
         type: 'div',
@@ -286,6 +297,7 @@ export function getWordData(word: Word, parent: HTMLElement) {
     });
     if (!state.user.isAuthenticated) answersInGames.classList.add('hidden');
     listenTextbookAudio();
+    listenDifficultWordBtn();
 }
 
 async function getWordsSection(parent: HTMLElement): Promise<void> {
@@ -333,13 +345,13 @@ function getPaginationSection(parent: HTMLElement) {
 }
 
 export async function getTextbookPage() {
-    // const { view } = state.textBook;
+    applyLocalStorage();
     const wrapper = createElement({
         type: 'div',
         parentElement: document.body,
         classes: ['wrapper'],
     });
-    setStateUserIsAuthentificated();
+    getTextbookHeading(wrapper);
     getLevelsSection(wrapper);
     getWordCategories(wrapper);
     await getWordsSection(wrapper);

@@ -111,4 +111,21 @@
       margin-right: 60px;
     }
   }
+
+  .header__text.hidden {
+    display: none;
+  }
+
+  .header__logout {
+    width: 20px;
+    height: 20px;
+    background: center/contain no-repeat url(../../../../assets/img/log-out.png);
+  }
+  .header__logout:hover {
+    opacity: 0.6;
+  }
+
+  .header__logout.hidden{
+    visibility: hidden;
+  }
 }

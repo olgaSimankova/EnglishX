@@ -2,7 +2,7 @@ import { createUser } from '../../api/login-register';
 import { INVALID_COLOR_RED, VALID_COLOR_GREEN } from '../../constants/constants';
 import { setLocalStorage } from '../../utils/localStorage';
 import { doPasswordsMatch, isEmailValid, isPasswordValid } from '../../utils/validation';
-import { toggleModal } from './loginModal';
+import { toggleHeaderLoginView, toggleModal } from './loginModal';
 
 function deleteRegisterModal(): void {
     const registerationModal = document.getElementById('registration') as HTMLElement;
@@ -57,6 +57,9 @@ function listenRegisterModal(): void {
                     password: registerForm.password.value,
                 }).then((user) => {
                     setLocalStorage('userId', user.userId);
+                    setLocalStorage('token', user.token);
+                    setLocalStorage('isAuthenticated', 'true');
+                    toggleHeaderLoginView();
                     deleteRegisterModal();
                     toggleModal(false);
                 });

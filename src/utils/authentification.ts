@@ -1,6 +1,6 @@
-import state from '../state/state';
-import { getFromLocalStorage } from './localStorage';
+// import state from '../state/state';
+// import { getFromLocalStorage } from './localStorage';
 
-export default function setStateUserIsAuthentificated() {
-    state.user.isAuthenticated = getFromLocalStorage('isAuthenticated') === 'true';
-}
+// export default function setStateUserIsAuthentificated() {
+//     state.user.isAuthenticated = getFromLocalStorage('isAuthenticated') === 'true';
+// }

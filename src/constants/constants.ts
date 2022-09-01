@@ -144,3 +144,6 @@ export const PROGRESS_LABEL = 'Progress';
 export const AUDIOCALL_KEYBOARD_KEYS = ['1', '2', '3', '4', '5'];
 
 export const WORD_CATEGORIES = ['In Progress', 'Difficult', 'Deleted'];
+
+export const TOKEN_EXPIRATION_TIME = 14400000;
+export const SUCCESSFUL_OPERATION_STATUS = 200;

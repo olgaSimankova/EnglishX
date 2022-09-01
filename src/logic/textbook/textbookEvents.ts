@@ -1,4 +1,4 @@
-import getWords from '../../api/words';
+import { getWords } from '../../api/words';
 import { Word } from '../../constants/types';
 import state from '../../state/state';
 import { getAllAudios, playAllAudio } from '../../utils/playAudio';
@@ -36,7 +36,7 @@ function updateLevelColor(): void {
 function updateWordsColor(): void {
     const wordCards = document.querySelectorAll('.words__card') as NodeListOf<Element>;
     wordCards.forEach((card) => {
-        if (card.id === `${state.textBook.currentWordId}`) {
+        if (card.id === `${state.textBook.currentWordNo}`) {
             card.classList.toggle('active', true);
         } else {
             card.classList.toggle('active', false);
@@ -49,7 +49,7 @@ export function listenWordCards() {
     cardsContainer.addEventListener('click', (event: Event) => {
         const btn = (event.target as HTMLElement).closest('.words__card');
         if (btn) {
-            state.textBook.currentWordId = btn.id;
+            state.textBook.currentWordNo = btn.id;
             updateWordData(state.textBook.wordsOnPage[+btn.id]);
             updateWordsColor();
         }
