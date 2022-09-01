@@ -112,3 +112,28 @@
     }
   }
 }
+
+.games-drop-down {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  &:hover .drop-down-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .drop-down-container {
+    position: absolute;
+    padding-top: 2rem;
+    display: none;
+
+    .reset-margin {
+      margin: 0;
+    }
+  }
+}
+
+.header__link > a {
+  z-index: 1;
+}
