@@ -35,7 +35,6 @@ function getTextbookHeading(parent: HTMLElement): void {
     });
 
     if (state.user.isAuthenticated && checkTokenExpiration()) {
-        console.log(checkTokenExpiration());
         if (state.textBook.view === 'textbook') {
             textbookBtn.classList.add('active');
         } else {

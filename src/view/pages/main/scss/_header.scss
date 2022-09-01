@@ -95,8 +95,7 @@
         transform-origin: left;
       }
     }
-  }
-
+  
   &__login {
     display: flex;
     align-items: center;
@@ -128,4 +127,42 @@
   .header__logout.hidden{
     visibility: hidden;
   }
+}
+}
+
+.games-drop-down {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  
+  &:hover .drop-down-container {
+    display: flex;
+    flex-direction: column;
+  }
+  @media (max-width: $mobile) {
+    &:hover .drop-down-container {
+      display: none;
+    }
+
+  }
+
+  .drop-down-container {
+    position: absolute;
+    padding-top: 2rem;
+    display: none;
+
+    @media (max-width: $mobile) {
+      .drop-down-container {
+        display: none;
+      }
+    }
+
+    .reset-margin {
+      margin: 0;
+    }
+  }
+}
+
+.games-drop-down > a {
+  z-index: 1;
 }

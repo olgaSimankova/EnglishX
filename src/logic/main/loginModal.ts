@@ -60,12 +60,9 @@ function listenLoginModal(): void {
                     email: loginForm.email.value,
                     password: loginForm.password.value,
                 });
-                setLocalStorage('userId', loginResponse.userId);
                 toggleModal(false);
-                if (loginResponse.message === 'Authenticated') {
-                    saveTokenAndData(loginResponse);
-                    toggleHeaderLoginView();
-                }
+                saveTokenAndData(loginResponse);
+                toggleHeaderLoginView();
             } catch {
                 toggleFailLoginMessage(true);
             }

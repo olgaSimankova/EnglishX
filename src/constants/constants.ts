@@ -26,7 +26,7 @@ export const KEY_ARROWS = {
 export const RESULT_TAB_LABELS = ['RESULT', 'WATCH WORDS'];
 export const CHOOSE_LEVEL = 'Chooce level:';
 export const START = 'Start';
-export const SPRINT_START_TIME = 30;
+export const SPRINT_START_TIME = 5;
 export const MAX_PAGES = 30;
 export const RANDOM_MIDDLE = 0.5;
 export const MULTIPLY = 'multiply';
@@ -98,18 +98,6 @@ export const LEARNING_STEPS = [
 ];
 export const GAMES = [
     {
-        name: 'Savannah',
-        descr: 'Choose the correct translation of the falling down word',
-        link: '#',
-    },
-
-    {
-        name: 'Oasis',
-        descr: 'Write the missing word in the sentence',
-        link: '#',
-    },
-
-    {
         name: 'Sprint',
         descr: 'Determine the correct translation of the word as soon as possible',
         link: './sprint.html',
@@ -123,23 +111,23 @@ export const GAMES = [
 ];
 export const FOOTER_LINKS_TEXT = ['About Us', 'TextBook', 'Games', 'Statistic', 'Contacts'];
 export const SITEMAP_LINKS = ['#team', '#', '#', '#', '#footer'];
-export const GAMES_LINKS = ['#', '#', '#', '#'];
+export const GAMES_LINKS = ['#', '#'];
 export const ANSWER_OPTIONS_COUNT = 5;
 export const GAME_LIMIT = 10;
 export const TODAYS_STATISTIC_LABEL = 'Statistic of the Day';
 export const STATISTIC_ICON = {
-    'complete-icon.svg': 'Words learnt:',
+    'complete-icon.svg': 'New words trained:',
     'check-mark-line-icon.svg': 'Right answers:',
     'double-tick-icon.svg': 'The longest streak of right answers:',
 };
-export const HEADER_LINKS = ['#team', './textbook.html', '#', '#'];
+export const HEADER_LINKS = ['../#team', './textbook.html', '../#games', './statistics.html'];
 export const PAGINATION_BTNS = 9;
 export const LAST_PAGE = 30;
 export const AUDIO_TYPES = ['audio', 'audioMeaning', 'audioExample'];
 
 export const ALL_THE_TIME_LABEL = 'Statistics for all time';
 export const ALL_THE_TIME_DESCRIPTION = 'Only registered users can see statistics';
-export const LEARNT_WORDS_LABEL = 'Learnt words';
+export const LEARNT_WORDS_LABEL = 'Learned words';
 export const PROGRESS_LABEL = 'Progress';
 export const AUDIOCALL_KEYBOARD_KEYS = ['1', '2', '3', '4', '5'];
 

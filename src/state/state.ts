@@ -15,6 +15,8 @@ export const state: StateInterface = {
         currentMaxLength: 0,
         isFreeze: false,
         isGame: false,
+        bestStreak: 0,
+        currentStreak: 0,
     } as SprintState,
 
     audioCallGame: {
@@ -26,6 +28,8 @@ export const state: StateInterface = {
         currentMistakes: [],
         wordsLearnt: 0,
         status: AudioCallStatus.waitingAnswer,
+        bestStreak: 0,
+        currentStreak: 0,
     },
     textBook: {
         view: 'textbook',

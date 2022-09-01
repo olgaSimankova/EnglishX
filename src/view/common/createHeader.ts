@@ -1,6 +1,25 @@
 import createElement from '../../utils/createElement';
-import { BUTTON_NAMES, HEADER_LINKS } from '../../constants/constants';
+import { BUTTON_NAMES, GAMES, HEADER_LINKS } from '../../constants/constants';
 import burger from '../../logic/main/burger';
+
+export function createDropList(): void {
+    const gamesContainer = document.querySelector('.games-drop-down') as HTMLElement;
+    gamesContainer.setAttribute('href', '../#games');
+    const container = createElement({
+        type: 'div',
+        parentElement: gamesContainer,
+        classes: ['drop-down-container'],
+    });
+    GAMES.forEach((game) => {
+        createElement({
+            type: 'a',
+            parentElement: container,
+            classes: ['header__link', 'reset-margin'],
+            text: game.name,
+            attributes: [['href', game.link]],
+        });
+    });
+}
 
 export default function createHeader(parent: HTMLElement): void {
     const header = createElement({
@@ -48,7 +67,7 @@ export default function createHeader(parent: HTMLElement): void {
         const navLink = createElement({
             type: 'li',
             parentElement: navList,
-            classes: ['header__link'],
+            classes: ['header__link', `${value.toLocaleLowerCase().split(' ')[0]}-drop-down`],
         });
         createElement({
             type: 'a',
@@ -85,4 +104,5 @@ export default function createHeader(parent: HTMLElement): void {
     });
 
     burger();
+    createDropList();
 }

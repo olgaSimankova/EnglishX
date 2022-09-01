@@ -1,6 +1,8 @@
 import { RESULT_TAB_LABELS } from '../../../constants/constants';
-import { Word } from '../../../constants/types';
+import { GameTags, Word } from '../../../constants/types';
+import saveGameResults from '../../../utils/arrangeStatistics';
 import createElement from '../../../utils/createElement';
+import applyLocalStorage from '../../../utils/localStorage';
 import './gameResult.scss';
 
 function renderResultTabs(parentElement: HTMLElement): void {
@@ -182,7 +184,13 @@ function renderSLiderRightSide(parentElement: HTMLElement, goodAnswers: Word[], 
     renderListOfWords(knowContainer, goodAnswers, 'Know');
 }
 
-export default function renderResultPage(parentClass: string, goodAnswers: Word[], badAnswers: Word[]): void {
+export default function renderResultPage(
+    parentClass: string,
+    goodAnswers: Word[],
+    badAnswers: Word[],
+    tag: GameTags
+): void {
+    applyLocalStorage();
     const sprintContainer = document.querySelector(`.${parentClass}`) as HTMLElement;
     const resultContainer = createElement({
         type: 'div',
@@ -198,4 +206,5 @@ export default function renderResultPage(parentClass: string, goodAnswers: Word[
     renderSliderLeftSide(sliderContainer, goodAnswers, badAnswers);
     renderSLiderRightSide(sliderContainer, goodAnswers, badAnswers);
     renderResultBottomButtons(resultContainer);
+    saveGameResults(goodAnswers, badAnswers, tag);
 }

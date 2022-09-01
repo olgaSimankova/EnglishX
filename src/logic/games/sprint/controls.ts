@@ -10,7 +10,7 @@ import renderResultPage from '../../../view/common/gameResult/renderGameResults'
 import listenLevelButtons, { listenChoiceButtons, listenKeyboard, listerStartButton } from './events';
 import gameResultControls from '../../../view/common/gameResult/gameResultControls';
 
-export async function setAnswerBlock(data: Word[]): Promise<void> {
+export function setAnswerBlock(data: Word[]): void {
     const { length } = data;
     if (state.sprintGame.usedNumbers.length !== length) {
         let randomNumber = getRandomNumber(0, length);
@@ -39,9 +39,18 @@ function startTimer(): void {
             timeLeft -= 1;
             setHTMLElementContent('clock-counter', timeLeft.toString());
         } else {
+            state.sprintGame.bestStreak =
+                state.sprintGame.bestStreak > state.sprintGame.currentStreak
+                    ? state.sprintGame.bestStreak
+                    : state.sprintGame.currentStreak;
             clearInterval(id);
             deleteHTMLElement('sprint-container');
-            renderResultPage('game-container', state.sprintGame.currentLearned, state.sprintGame.currentMistakes);
+            renderResultPage(
+                'game-container',
+                state.sprintGame.currentLearned,
+                state.sprintGame.currentMistakes,
+                GameTags.sprintGame
+            );
             gameResultControls();
         }
     }, 1000);
@@ -97,25 +106,27 @@ export function setPoints(action: boolean): void {
     if (action) {
         increaseScore();
         playChoiceSound(Choice.right);
+        state.sprintGame.currentStreak += 1;
     } else {
         state.sprintGame.currentTick = 1;
         state.sprintGame.currentMultiply = 1;
         playChoiceSound(Choice.wrong);
+        state.sprintGame.bestStreak =
+            state.sprintGame.bestStreak > state.sprintGame.currentStreak
+                ? state.sprintGame.bestStreak
+                : state.sprintGame.currentStreak;
     }
     updateViewPoints();
     unpdateWordsResult(action);
 }
 
-export async function reloadNewWord(choice: boolean): Promise<Word[]> {
+export async function reloadNewWord(): Promise<Word[]> {
     state.sprintGame.isFreeze = true;
     state.sprintGame.usedNumbers = [];
     state.sprintGame.currentPage -= 1;
     const level = Levels[state.sprintGame.currentLevel as keyof typeof Levels];
     const newData = await getWords(level, state.sprintGame.currentPage);
-    const action = checkAnswerSprintGame(choice);
-    setPoints(action);
     setAnswerBlock(newData);
-    state.sprintGame.wordsLearnt += 1;
     state.sprintGame.isFreeze = false;
     return newData;
 }
@@ -143,14 +154,13 @@ export async function choiceAction(e: Event, data: Word[], length: number, reloa
     let newData = data;
     const target = e.target as HTMLElement;
     const value = target.getAttribute('data');
-    let action = false;
-    if (value && state.sprintGame.wordsLearnt < length) {
-        action = checkAnswerSprintGame(GAME_BUTTONS[value as keyof typeof GAME_BUTTONS]);
-        setPoints(action);
+    const action = checkAnswerSprintGame(GAME_BUTTONS[value as keyof typeof GAME_BUTTONS]);
+    setPoints(action);
+    if (value && state.sprintGame.wordsLearnt < length - 1) {
         setAnswerBlock(newData);
         state.sprintGame.wordsLearnt += 1;
-    } else if (reload && state.sprintGame.currentPage) {
-        newData = await reloadNewWord(action);
+    } else if (reload && state.sprintGame.currentPage && value) {
+        newData = await reloadNewWord();
         state.sprintGame.currentMaxLength += newData.length;
     } else {
         state.sprintGame.isGame = false;
