@@ -1,5 +1,5 @@
 import { getUserStatistics, setUserStatistics } from '../api/userStatistics';
-import { GameTags, Stats, UserStatsResponse, Word } from '../constants/types';
+import { GameTags, Stats, StatsProp, UserStatsResponse, Word } from '../constants/types';
 import state from '../state/state';
 import getDate from './getDate';
 
@@ -34,7 +34,23 @@ function countNewWords(allWords: string, newWords: string): number {
     return total.length - allArr.length;
 }
 
-function createNewStats(
+function generateNewStat(goodAnswers: Word[], badAnswers: Word[], tag: GameTags): StatsProp {
+    const wordsTrained = goodAnswers.concat(badAnswers);
+    return {
+        newWords: wordsTrained.length,
+        allWords: wordsTrained.length,
+        games: {
+            [tag]: {
+                right: goodAnswers.length,
+                wrong: badAnswers.length,
+                streak: state[tag].bestStreak,
+                newWords: wordsTrained.length,
+            },
+        },
+    };
+}
+
+function updateNewStats(
     currentStat: UserStatsResponse | void,
     goodAnswers: Word[],
     badAnswers: Word[],
@@ -58,41 +74,19 @@ function createNewStats(
                 newWords: (stats[date].games[tag]?.newWords || 0) + currNewWords,
             };
         } else {
-            stats[date] = {
-                newWords: wordsTrained.length,
-                allWords: wordsTrained.length,
-                games: {
-                    [tag]: {
-                        right: goodAnswers.length,
-                        wrong: badAnswers.length,
-                        streak: state[tag].bestStreak,
-                        newWords: wordsTrained.length,
-                    },
-                },
-            };
+            stats[date] = generateNewStat(goodAnswers, badAnswers, tag);
         }
         return stats;
     }
     return {
-        [date]: {
-            newWords: wordsTrained.length,
-            allWords: wordsTrained.length,
-            games: {
-                [tag]: {
-                    right: goodAnswers.length,
-                    wrong: badAnswers.length,
-                    streak: state[tag].bestStreak,
-                    newWords: wordsTrained.length,
-                },
-            },
-        },
+        [date]: generateNewStat(goodAnswers, badAnswers, tag),
     };
 }
 
 export default async function saveGameResults(goodAnswers: Word[], badAnswers: Word[], tag: GameTags): Promise<void> {
     const currentStatistics = await getUserStatistics();
     const wordListUpdated = createNewWordList(currentStatistics, goodAnswers, badAnswers);
-    const statsUpdated = createNewStats(currentStatistics, goodAnswers, badAnswers, tag);
+    const statsUpdated = updateNewStats(currentStatistics, goodAnswers, badAnswers, tag);
     const opt = {
         learnedWords: 0,
         optional: {
