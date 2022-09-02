@@ -18,7 +18,6 @@ export async function getWordStatistics(wordId: string): Promise<WordStats | voi
                     Accept: 'application/json',
                 },
             });
-            console.log(response);
             if (response.status === 200) {
                 return response.json();
             }
@@ -29,11 +28,15 @@ export async function getWordStatistics(wordId: string): Promise<WordStats | voi
     return undefined;
 }
 
-export async function setUserWordStats(wordId: string, optional: WordStats): Promise<WordStats | void> {
+export async function setUserWordStats(
+    wordId: string,
+    optional: WordStats,
+    flagUpdate = false
+): Promise<WordStats | void> {
     const { userId, token } = state.user;
     if (userId) {
         const response = await fetch(`${API_BASE_LINK}/users/${userId}/words/${wordId}`, {
-            method: 'POST',
+            method: !flagUpdate ? 'POST' : 'PUT',
             headers: {
                 Authorization: `Bearer ${token}`,
                 Accept: 'application/json',
