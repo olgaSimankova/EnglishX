@@ -1,4 +1,4 @@
-import { API_BASE_LINK, SUCCESSFUL_OPERATION_STATUS } from '../constants/constants';
+import { API_BASE_LINK } from '../constants/constants';
 import { User, UserResponse } from '../constants/types';
 import state from '../state/state';
 

@@ -1,7 +1,8 @@
-import { TOKEN_EXPIRATION_TIME } from '../../constants/constants';
+import { TOKEN_EXPIRATION_TIME, USER_SAVED_FIELDS } from '../../constants/constants';
 import { UserResponse } from '../../constants/types';
 import state from '../../state/state';
-import { getFromLocalStorage, setLocalStorage } from '../../utils/localStorage';
+import { getFromLocalStorage, removeFromLocalStorage, setLocalStorage } from '../../utils/localStorage';
+import { toggleHeaderLoginView } from './loginModal';
 
 export function saveTokenAndData(response: UserResponse): void {
     setLocalStorage('tokenTime', `${Date.now()}`);
@@ -21,4 +22,13 @@ export function checkTokenExpiration(): boolean {
     const timeNow = Date.now();
     const tokenTime = +getFromLocalStorage('tokenTime');
     return timeNow - tokenTime < TOKEN_EXPIRATION_TIME;
+}
+
+export function logOut(): void {
+    state.user.isAuthenticated = false;
+    state.user.token = '';
+    state.user.refreshToken = '';
+    USER_SAVED_FIELDS.forEach((field: string) => removeFromLocalStorage(field));
+    toggleHeaderLoginView();
+    location.reload();
 }
