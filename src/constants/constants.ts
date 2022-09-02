@@ -123,8 +123,15 @@ export const STATISTIC_ICON = {
 export const HEADER_LINKS = ['../#team', './textbook.html', '../#games', './statistics.html'];
 export const PAGINATION_BTNS = 9;
 export const LAST_PAGE = 30;
+export const AUDIO_TYPES = ['audio', 'audioMeaning', 'audioExample'];
+
 export const ALL_THE_TIME_LABEL = 'Statistics for all time';
 export const ALL_THE_TIME_DESCRIPTION = 'Only registered users can see statistics';
 export const LEARNT_WORDS_LABEL = 'Learned words';
 export const PROGRESS_LABEL = 'Progress';
 export const AUDIOCALL_KEYBOARD_KEYS = ['1', '2', '3', '4', '5'];
+
+export const WORD_CATEGORIES = ['In Progress', 'Difficult', 'Deleted'];
+
+export const TOKEN_EXPIRATION_TIME = 14400000;
+export const SUCCESSFUL_OPERATION_STATUS = 200;

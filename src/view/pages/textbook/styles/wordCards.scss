@@ -67,3 +67,21 @@
 .word__title {
     font-size: 1.65rem;
 }
+
+.words__card {
+    .difficult_word {
+        display: none;
+        position: relative;
+        height: 25px;
+        width: 25px;
+        left: 8rem;
+        background: center/contain no-repeat url(../../../../assets/img/difficult-word.png);
+        opacity: 0.5;
+    }
+}
+
+.words__card.difficult {
+    .difficult_word {
+        display: block;
+    }
+}

@@ -43,6 +43,8 @@ export interface Word {
     textExampleTranslate: string;
 }
 
+export type WordType = Word;
+
 export interface SprintState {
     currentLevel: string;
     currentEngWord?: Word;
@@ -82,9 +84,10 @@ export interface AudioCall {
 }
 
 export interface Textbook {
+    view: string;
     currentLevel: number;
     currentPage: number;
-    currentWordId: string;
+    currentWordNo: string;
     wordsOnPage: Word[];
 }
 
@@ -101,6 +104,7 @@ export interface User {
     name?: string;
     userId?: string;
     token?: string;
+    refreshToken?: string;
 }
 
 export interface StateInterface {
@@ -182,8 +186,7 @@ export interface UserStatsResponse {
 }
 
 export enum WordStatus {
-    newWord = 'newWord',
-    underStudy = 'underStudy',
+    weak = 'weak',
     learned = 'learned',
     hard = 'hard',
     deleted = 'deleted',
@@ -200,16 +203,16 @@ export interface GamesStat {
 }
 
 export interface OptionalWord {
-    addTime: string;
-    try: number;
-    games: GamesStat;
-    isDeleted: boolean;
-    wordId: string;
+    addTime?: string;
+    try?: number;
+    games?: GamesStat;
+    isDeleted?: boolean;
+    wordId?: string;
 }
 
-export interface WordStatsResponse {
-    wordStatus: WordStatus;
-    optional: object;
+export interface WordStats {
+    difficulty: WordStatus;
+    optional?: OptionalWord;
 }
 
 export interface DateWithWords {

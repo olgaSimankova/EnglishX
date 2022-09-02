@@ -97,6 +97,12 @@ export default function createHeader(parent: HTMLElement): void {
         text: 'Log in / Register',
     });
 
+    createElement({
+        type: 'div',
+        parentElement: login,
+        classes: ['header__logout', 'hidden'],
+    });
+
     burger();
     createDropList();
 }

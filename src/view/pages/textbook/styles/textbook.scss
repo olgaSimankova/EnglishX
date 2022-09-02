@@ -11,7 +11,7 @@
 }
 
 .header {
-    padding: 15px 110px;
+    padding: 15px 50px;
     box-sizing: border-box;
     background: center / cover no-repeat url('../../../../assets/img/background.jpg');
 }
@@ -21,8 +21,41 @@
 }
 
 .textbook_title {
-text-align: left;}
+text-align: left;
+font-weight: 700;
+font-size: 40px;
+opacity: 0.5;
+}
+
+.textbook_title.active {
+    opacity: 1;
+}
 
 .heading_section {
     margin: 15px 25px;
+    display: flex;
+    gap: 10px;
+}
+
+.heading_section button:first-child::after {
+    width: 2px;
+    content: '  |  ';
+line-height: 1rem;
+opacity: 0.6;
+}
+
+.textbook_text {
+    margin: 0 25px;
+}
+
+#vocabulary.hidden {
+    display: none;
+}
+
+.word_categories_container {
+    display: flex;
+}
+
+.word_categories_container.hidden {
+    display: none;
 }

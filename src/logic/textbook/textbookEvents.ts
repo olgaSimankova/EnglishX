@@ -1,6 +1,7 @@
-import getWords from '../../api/words';
+import { getWords } from '../../api/words';
 import { Word } from '../../constants/types';
 import state from '../../state/state';
+import { getAllAudios, playAllAudio } from '../../utils/playAudio';
 import { getWordData, getWordsCards } from '../../view/pages/textbook/createTextbookPage';
 import getPaginationBtns from './utils/createPagination';
 
@@ -35,7 +36,7 @@ function updateLevelColor(): void {
 function updateWordsColor(): void {
     const wordCards = document.querySelectorAll('.words__card') as NodeListOf<Element>;
     wordCards.forEach((card) => {
-        if (card.id === `${state.textBook.currentWordId}`) {
+        if (card.id === `${state.textBook.currentWordNo}`) {
             card.classList.toggle('active', true);
         } else {
             card.classList.toggle('active', false);
@@ -45,11 +46,11 @@ function updateWordsColor(): void {
 
 export function listenWordCards() {
     const cardsContainer = document.querySelector('.words__contaiter') as HTMLElement;
-    cardsContainer.addEventListener('click', async (event: Event) => {
-        if ((event.target as HTMLElement).classList.contains('words__card')) {
-            state.textBook.currentWordId = (event.target as HTMLElement).id;
-            console.log(state.textBook.currentWordId);
-            updateWordData(state.textBook.wordsOnPage[+state.textBook.currentWordId]); // Тимлид, что выглядит хуже: вот это или засунуть новый ID в переменную?
+    cardsContainer.addEventListener('click', (event: Event) => {
+        const btn = (event.target as HTMLElement).closest('.words__card');
+        if (btn) {
+            state.textBook.currentWordNo = btn.id;
+            updateWordData(state.textBook.wordsOnPage[+btn.id]);
             updateWordsColor();
         }
     });
@@ -65,4 +66,12 @@ export function listenLevelCards() {
             await updateWordsContainer();
         })
     );
+}
+
+export function listenTextbookAudio() {
+    const audioBtn = document.querySelector('.audio') as HTMLElement;
+    audioBtn.addEventListener('click', () => {
+        const audios = getAllAudios();
+        playAllAudio(...audios);
+    });
 }

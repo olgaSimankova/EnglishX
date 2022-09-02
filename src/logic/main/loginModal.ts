@@ -1,6 +1,8 @@
 import { loginUser } from '../../api/login-register';
+import state from '../../state/state';
 import { setLocalStorage } from '../../utils/localStorage';
 import renderRegistrationModal from '../../view/pages/main/loginRegisterModal/renderRegistrationModal';
+import { checkTokenExpiration, saveTokenAndData } from './authentication';
 import { changeFieldBackgroundColor } from './registerModal';
 
 function toggleModal(todo: boolean) {
@@ -12,6 +14,19 @@ function toggleModal(todo: boolean) {
 function toggleFailLoginMessage(todo: boolean): void {
     const message = document.querySelector('.wrong_pass_message') as HTMLElement;
     message.style.visibility = todo ? 'visible' : 'hidden';
+}
+
+export function toggleHeaderLoginView(): void {
+    const text = document.querySelector('.header__text') as HTMLElement;
+    const iconLogout = document.querySelector('.header__logout') as HTMLElement;
+    if (state.user.isAuthenticated && checkTokenExpiration()) {
+        iconLogout.classList.toggle('hidden', false);
+        text.classList.toggle('hidden', true);
+    } else {
+        iconLogout.classList.toggle('hidden', true);
+        text.classList.toggle('hidden', false);
+        state.user.isAuthenticated = false;
+    }
 }
 
 function listenLoginModal(): void {
@@ -41,13 +56,13 @@ function listenLoginModal(): void {
             event.preventDefault();
             const loginForm = document.querySelector('form') as HTMLFormElement;
             try {
-                const user = await loginUser({
+                const loginResponse = await loginUser({
                     email: loginForm.email.value,
                     password: loginForm.password.value,
                 });
-                setLocalStorage('userId', user.userId);
-                setLocalStorage('token', user.token);
                 toggleModal(false);
+                saveTokenAndData(loginResponse);
+                toggleHeaderLoginView();
             } catch {
                 toggleFailLoginMessage(true);
             }
