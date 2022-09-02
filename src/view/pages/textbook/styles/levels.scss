@@ -64,43 +64,106 @@
     }
 }
 
-.level__button.active,
-.level__button:hover {
+    .level__button.active,
+    .level__button:hover {
+        color: $darkGray;
+    
+        &:nth-of-type(1) {
+            .circle {
+                background-color: $color_A1;
+            }
+        }
+        &:nth-of-type(2) {
+            .circle {
+                background-color: $color_A2;
+            }
+        }
+        &:nth-of-type(3) {
+            .circle {
+                background-color: $color_B1;
+            }
+        }
+        &:nth-of-type(4) {
+            .circle {
+                background-color: $color_B2;
+            }
+        }
+        &:nth-of-type(5) {
+            .circle {
+                background-color: $color_C1;
+            }
+        }
+        &:nth-of-type(6) {
+            .circle {
+                background-color: $color_C2;
+            }
+        }
+    }
+
+
+.word_categories_container {
+    display: none;
+    gap: 15px;
+    margin: 15px 25px;    
+}
+
+.word_categories_container.active {
+    display: flex;
+    gap: 15px;
+    margin: 15px 25px;
+}
+
+.word_category_button {
+    height: 70px;
+    width: 200px;
+    background-color: $almostWhite;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    position: relative;
+    color: $gray;
+    transition: all 0.5s ease-out;    
+    padding: 10px 0 10px 4.5rem;
+
+    h2 {
+        font-size: 1.3rem;
+        line-height: 35px;
+    }
+    p {
+        font-size: 0.8rem;
+        font-style: italic;
+    }
+}
+
+.circle_category {
+    border-radius: 53px;
+    height: 110px;
+    width: 110px;
+    position: absolute;
+    top: -1rem;
+    left: -3rem;
+    overflow: hidden;
+    background-color: $lightGray;
+}
+
+.word_category_button.active,
+.word_category_button:hover {
     color: $darkGray;
 
     &:nth-of-type(1) {
-        .circle {
-            background-color: $color_A1;
+        .circle_category {
+            background-color: $color_progress;
         }
     }
     &:nth-of-type(2) {
-        .circle {
-            background-color: $color_A2;
-        }
-    }
-    &:nth-of-type(2) {
-        .circle {
-            background-color: $color_A2;
+        .circle_category {
+            background-color: $color_difficult;
         }
     }
     &:nth-of-type(3) {
-        .circle {
-            background-color: $color_B1;
-        }
-    }
-    &:nth-of-type(4) {
-        .circle {
-            background-color: $color_B2;
-        }
-    }
-    &:nth-of-type(5) {
-        .circle {
-            background-color: $color_C1;
-        }
-    }
-    &:nth-of-type(6) {
-        .circle {
-            background-color: $color_C2;
+        .circle_category {
+            background-color: $color_deleted;
         }
     }
 }

@@ -7,6 +7,8 @@ import createOurTeamSection from './createOurTeamSection';
 import createProcessSection from './createProcessSection';
 import createGamesSection from './createGamesSection';
 import createFooter from '../../common/createFooter';
+import { toggleHeaderLoginView } from '../../../logic/main/loginModal';
+import applyLocalStorage from '../../../logic/main/applyLocalStorage';
 
 export default function renderMain(): void {
     const heroSection = createElement({
@@ -17,7 +19,9 @@ export default function renderMain(): void {
     });
 
     createHeader(heroSection);
+    applyLocalStorage();
     renderModal();
+    toggleHeaderLoginView();
     createHeroSection(heroSection);
     createOurTeamSection(document.body);
     createProcessSection(document.body);

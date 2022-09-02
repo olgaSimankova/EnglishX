@@ -76,10 +76,15 @@ export default function createHeader(parent: HTMLElement): void {
             attributes: [['href', HEADER_LINKS[index]]],
         });
     });
+    const loginWrapper = createElement({
+        type: 'div',
+        parentElement: header,
+        classes: ['header__login__wrapper'],
+    });
 
     const login = createElement({
         type: 'a',
-        parentElement: header,
+        parentElement: loginWrapper,
         classes: ['header__login'],
         attributes: [['href', '#']],
     });
@@ -95,6 +100,12 @@ export default function createHeader(parent: HTMLElement): void {
         parentElement: login,
         classes: ['header__text'],
         text: 'Log in / Register',
+    });
+
+    createElement({
+        type: 'div',
+        parentElement: loginWrapper,
+        classes: ['header__logout', 'hidden'],
     });
 
     burger();

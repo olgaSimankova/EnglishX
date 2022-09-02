@@ -95,6 +95,11 @@
         transform-origin: left;
       }
     }
+  }
+  &__login__wrapper {
+    display: flex;
+    align-items: center;
+  }
   
   &__login {
     display: flex;
@@ -109,6 +114,21 @@
     @media (max-width: $mobile) {
       margin-right: 60px;
     }
+  }
+  &__text.hidden {
+    display: none;
+  }
+  &__logout {
+    width: 20px;
+    height: 20px;
+    background: center/contain no-repeat url(../../../../assets/img/log-out.png);
+    cursor: pointer;
+    &:hover {
+      opacity: 0.6;
+    }  
+  }
+  &__logout.hidden {
+    display: none;
   }
 }
 
@@ -143,7 +163,7 @@
       margin: 0;
     }
   }
-}}
+}
 
 .games-drop-down > a {
   z-index: 1;

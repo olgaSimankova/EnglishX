@@ -1,4 +1,4 @@
-import getWords from '../../../api/words';
+import { getWords } from '../../../api/words';
 import { KEY_ARROWS, MAX_PAGES, GAME_BUTTONS } from '../../../constants/constants';
 import { AudioCall, GameTags, Levels, SprintState, Word } from '../../../constants/types';
 import { state } from '../../../state/state';
