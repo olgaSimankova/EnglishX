@@ -1,8 +1,7 @@
 import { loginUser } from '../../api/login-register';
 import state from '../../state/state';
-import { setLocalStorage } from '../../utils/localStorage';
 import renderRegistrationModal from '../../view/pages/main/loginRegisterModal/renderRegistrationModal';
-import { checkTokenExpiration, saveTokenAndData } from './authentication';
+import { checkTokenExpiration, logOut, saveTokenAndData } from './authentication';
 import { changeFieldBackgroundColor } from './registerModal';
 
 function toggleModal(todo: boolean) {
@@ -22,6 +21,7 @@ export function toggleHeaderLoginView(): void {
     if (state.user.isAuthenticated && checkTokenExpiration()) {
         iconLogout.classList.toggle('hidden', false);
         text.classList.toggle('hidden', true);
+        iconLogout.addEventListener('click', () => logOut());
     } else {
         iconLogout.classList.toggle('hidden', true);
         text.classList.toggle('hidden', false);
@@ -63,6 +63,7 @@ function listenLoginModal(): void {
                 toggleModal(false);
                 saveTokenAndData(loginResponse);
                 toggleHeaderLoginView();
+                location.reload(); // Пока так. Позже сюда пойдет функция, изменяющая вид текстбука при логине.
             } catch {
                 toggleFailLoginMessage(true);
             }
