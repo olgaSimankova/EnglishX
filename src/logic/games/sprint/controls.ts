@@ -1,6 +1,6 @@
-import { getWords } from '../../../api/words';
+import { getWords, getWordStatistics, setUserWordStats } from '../../../api/words';
 import { GAME_BUTTONS, RANDOM_MIDDLE, START_POINTS } from '../../../constants/constants';
-import { Choice, GameTags, Levels, Word } from '../../../constants/types';
+import { Choice, GameTags, Levels, Word, WordStats, WordStatus } from '../../../constants/types';
 import state from '../../../state/state';
 import { deleteHTMLElement } from '../../../utils/createElement';
 import { getHTMLElementContent, setHTMLElementContent } from '../../../utils/handleHTMLTextContent';
@@ -9,6 +9,7 @@ import getRandomNumber from '../../../utils/randomize';
 import renderResultPage from '../../../view/common/gameResult/renderGameResults';
 import listenLevelButtons, { listenChoiceButtons, listenKeyboard, listerStartButton } from './events';
 import gameResultControls from '../../../view/common/gameResult/gameResultControls';
+import { initDefaultGamesStats, processGamesStatObject } from '../../../utils/sumObjects';
 
 export function setAnswerBlock(data: Word[]): void {
     const { length } = data;
@@ -19,6 +20,7 @@ export function setAnswerBlock(data: Word[]): void {
         }
         state.sprintGame.usedNumbers.push(randomNumber);
         const randomEng = data[randomNumber];
+        state.sprintGame.currentWordId = randomEng.id;
         state.sprintGame.currentEngWord = randomEng;
         const randomRu = Math.random() < RANDOM_MIDDLE ? randomEng : data[getRandomNumber(0, length)];
         state.sprintGame.currentRuWord = randomRu;
@@ -102,11 +104,37 @@ export function resetSprintPoints(): void {
     state.sprintGame.wordsLearnt = 0;
 }
 
+export async function saveAnswerToDB(isRight: boolean, tag: GameTags): Promise<void> {
+    const wordID = state[tag].currentWordId;
+    const oldStats = await getWordStatistics(wordID);
+    const initGame = initDefaultGamesStats();
+    if (!oldStats?.optional) {
+        const opt: WordStats = {
+            difficulty: isRight ? WordStatus.weak : WordStatus.hard,
+            optional: {
+                games: processGamesStatObject(initGame, isRight, tag),
+            },
+        };
+        setUserWordStats(wordID, opt);
+    } else if (oldStats.optional.games) {
+        const gamesIncreased = processGamesStatObject(oldStats.optional.games, isRight, tag);
+        const opt: WordStats = {
+            difficulty: isRight ? WordStatus.weak : WordStatus.hard,
+            optional: {
+                games: gamesIncreased,
+            },
+        };
+        console.log(opt);
+        setUserWordStats(wordID, opt);
+    }
+}
+
 export function setPoints(action: boolean): void {
     if (action) {
         increaseScore();
         playChoiceSound(Choice.right);
         state.sprintGame.currentStreak += 1;
+        saveAnswerToDB(true, GameTags.sprintGame);
     } else {
         state.sprintGame.currentTick = 1;
         state.sprintGame.currentMultiply = 1;
@@ -115,6 +143,7 @@ export function setPoints(action: boolean): void {
             state.sprintGame.bestStreak > state.sprintGame.currentStreak
                 ? state.sprintGame.bestStreak
                 : state.sprintGame.currentStreak;
+        saveAnswerToDB(false, GameTags.sprintGame);
     }
     updateViewPoints();
     unpdateWordsResult(action);

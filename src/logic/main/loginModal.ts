@@ -63,7 +63,7 @@ function listenLoginModal(): void {
                 toggleModal(false);
                 saveTokenAndData(loginResponse);
                 toggleHeaderLoginView();
-                location.reload(); // Пока так. Позже сюда пойдет функция, изменяющая вид текстбука при логине.
+                window.location.reload(); // Пока так. Позже сюда пойдет функция, изменяющая вид текстбука при логине.
             } catch {
                 toggleFailLoginMessage(true);
             }
