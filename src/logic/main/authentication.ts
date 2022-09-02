@@ -30,5 +30,5 @@ export function logOut(): void {
     state.user.refreshToken = '';
     USER_SAVED_FIELDS.forEach((field: string) => removeFromLocalStorage(field));
     toggleHeaderLoginView();
-    location.reload();
+    window.location.reload();
 }
