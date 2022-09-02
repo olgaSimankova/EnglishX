@@ -197,6 +197,7 @@ export default async function renderStatisticsPage(): Promise<void> {
         type: 'div',
         parentElement: document.body,
         classes: ['statistics-container'],
+        attributes: [['id', 'hero']],
     });
     createHeader(container);
     renderTodaysStatistics(container, data);
