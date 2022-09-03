@@ -13,6 +13,8 @@
 
 .words__contaiter {
     max-width: 800px;
+    height: 637px;
+    overflow-y: auto;
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
