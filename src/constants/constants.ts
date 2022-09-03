@@ -26,7 +26,7 @@ export const KEY_ARROWS = {
 export const RESULT_TAB_LABELS = ['RESULT', 'WATCH WORDS'];
 export const CHOOSE_LEVEL = 'Chooce level:';
 export const START = 'Start';
-export const SPRINT_START_TIME = 5;
+export const SPRINT_START_TIME = 30;
 export const MAX_PAGES = 30;
 export const RANDOM_MIDDLE = 0.5;
 export const MULTIPLY = 'multiply';
@@ -120,7 +120,7 @@ export const STATISTIC_ICON = {
     'check-mark-line-icon.svg': 'Right answers:',
     'double-tick-icon.svg': 'The longest streak of right answers:',
 };
-export const HEADER_LINKS = ['../#team', './textbook.html', '../#games', './statistics.html'];
+export const HEADER_LINKS = ['./#team', './textbook.html', './#games', './statistics.html'];
 export const PAGINATION_BTNS = 9;
 export const LAST_PAGE = 30;
 export const AUDIO_TYPES = ['audio', 'audioMeaning', 'audioExample'];
@@ -136,3 +136,4 @@ export const WORD_CATEGORIES = ['In Progress', 'Difficult', 'Deleted', 'Learnt']
 export const TOKEN_EXPIRATION_TIME = 14400000;
 export const SUCCESSFUL_OPERATION_STATUS = 200;
 export const USER_SAVED_FIELDS = ['userId', 'isAuthenticated', 'token', 'refreshToken', 'name'];
+export const WORDS_PER_PAGE = 3600;

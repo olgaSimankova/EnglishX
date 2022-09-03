@@ -1,3 +1,5 @@
+@import "../../../../global";
+
 .sprint-container {
     display: flex;
     flex-direction: column;
@@ -19,20 +21,39 @@
 .multiply-container,
 .result-container {
     display: flex;
+    align-items: center;
     gap: 10px;
     font-size: 24px;
+
+    @media (max-width: $mobile) {
+        font-size: 19px;
+    }
+}
+
+.points-container {
+    @media (max-width: $mobileSmall) {
+        flex-direction: column;
+    }
 }
 
 .multiply-container {
     border: 3px rgb(240, 237, 226) solid;
     border-radius: 30px;
     padding: 20px;
+
+    @media (max-width: $mobile) {
+        padding: 15px;
+    }
 }
 
 .result-container {
     border: 3px #f0ede2 solid;
     border-radius: 30px;
     padding: 20px;
+
+    @media (max-width: $mobile) {
+        padding: 15px;
+    }
 }
 
 .tick {
@@ -58,14 +79,23 @@
     justify-content: center;
     align-items: center;
     padding-bottom: 50px;
+    text-align: center;
 
     .word {
         color: #424551;
         font-size: 52px;
+
+        @media (max-width: $mobile) {
+            font-size: 36px;
+        }
     }
 
     .delimiter {
         font-size: 20px;
+    }
+
+    @media (max-width: $mobileSmall) {
+        flex-direction: column;
     }
 }
 
@@ -79,6 +109,11 @@
         background-color: rgba(226, 240, 228, 0.6);
         cursor: pointer;
     }
+
+    @media (max-width: $mobile) {
+        font-size: 22px;
+        padding: 15px;
+    }
 }
 
 .yes-button {
@@ -87,10 +122,10 @@
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
     border-right: 0;
-    background-image: url('../../../../assets/icons/arrow-left.svg');
-    background-size: 20px;
-    background-position: 40px 50px;
-    background-repeat: no-repeat;
+
+    @media (max-width: $mobile) {
+        background-position: 40px 37px;
+    }
 }
 
 .no-button {
@@ -98,8 +133,8 @@
     border: 2px red solid;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
-    background-image: url('../../../../assets/icons/arrow-right.svg');
-    background-size: 20px;
-    background-position: 40px 50px;
-    background-repeat: no-repeat;
+
+    @media (max-width: $mobile) {
+        background-position: 40px 37px;
+    }
 }

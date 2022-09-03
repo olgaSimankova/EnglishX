@@ -30,3 +30,7 @@ $color_learnt: #e9fd76;
     line-height: $line-height;
     text-align: $text-align;
 }
+
+body {
+    user-select: none;
+}

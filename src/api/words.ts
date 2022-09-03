@@ -1,4 +1,4 @@
-import { API_BASE_LINK, WORDS } from '../constants/constants';
+import { API_BASE_LINK, WORDS, WORDS_PER_PAGE } from '../constants/constants';
 import { Word, WordStats } from '../constants/types';
 import state from '../state/state';
 
@@ -7,11 +7,36 @@ export async function getWords(group: number, page: number): Promise<Word[]> {
     return response.json();
 }
 
-export async function setUserWordStats(wordId: string, optional: WordStats): Promise<WordStats | void> {
+export async function getWordStatistics(wordId: string): Promise<WordStats | void> {
+    try {
+        const { userId, token } = state.user;
+        if (userId) {
+            const response = await fetch(`${API_BASE_LINK}/users/${userId}/words/${wordId}`, {
+                method: 'GET',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    Accept: 'application/json',
+                },
+            });
+            if (response.status === 200) {
+                return response.json();
+            }
+        }
+    } catch {
+        console.log('new entry of word statistics');
+    }
+    return undefined;
+}
+
+export async function setUserWordStats(
+    wordId: string,
+    optional: WordStats,
+    flagUpdate = false
+): Promise<WordStats | void> {
     const { userId, token } = state.user;
     if (userId) {
         const response = await fetch(`${API_BASE_LINK}/users/${userId}/words/${wordId}`, {
-            method: 'POST',
+            method: !flagUpdate ? 'POST' : 'PUT',
             headers: {
                 Authorization: `Bearer ${token}`,
                 Accept: 'application/json',
@@ -24,16 +49,21 @@ export async function setUserWordStats(wordId: string, optional: WordStats): Pro
     return undefined;
 }
 
-export async function getUserAggregatedWords(category: string, level: number) {
+export async function getUserAggregatedWords(page: number, group: number, filter: string): Promise<void | WordStats[]> {
     const { userId, token } = state.user;
-    const filter = { $and: [{ 'userWord.difficulty': category }] };
-    const response = await fetch(`${API_BASE_LINK}/users/${userId}/aggregatedWords?group=${level}&filter=${filter}`, {
-        method: 'POST',
-        headers: {
-            Authorization: `Bearer ${token}`,
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-        },
-    });
-    console.log(response.json());
+    const response = await fetch(
+        `${API_BASE_LINK}/users/${userId}/aggregatedWords?group=${group}&wordsPerPage=${WORDS_PER_PAGE}}&filter=${filter}`,
+        {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+        }
+    );
+    if (response.status === 200) {
+        return response.json();
+    }
+    return undefined;
 }

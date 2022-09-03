@@ -17,6 +17,7 @@ export const state: StateInterface = {
         isGame: false,
         bestStreak: 0,
         currentStreak: 0,
+        currentWordId: '',
     } as SprintState,
 
     audioCallGame: {
@@ -30,6 +31,7 @@ export const state: StateInterface = {
         status: AudioCallStatus.waitingAnswer,
         bestStreak: 0,
         currentStreak: 0,
+        currentWordId: '',
     },
     textBook: {
         view: 'textbook',

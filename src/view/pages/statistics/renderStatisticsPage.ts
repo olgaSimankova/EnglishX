@@ -17,9 +17,10 @@ import {
     getTrainedWordsGame,
     getTrainedWordsToday,
 } from '../../../logic/statistics/utils';
-import createElement from '../../../utils/createElement';
+import createElement, { deleteHTMLElement } from '../../../utils/createElement';
 import createFooter from '../../common/createFooter';
 import createHeader from '../../common/createHeader';
+import renderLoading from '../../common/loading/renderLoading';
 import '../main/scss/style.scss';
 
 function renderStatisticBlock(parentElement: HTMLElement, numberLabel: string, description: string): void {
@@ -192,12 +193,15 @@ function renderAllTimeStats(parentElement: HTMLElement): void {
 }
 
 export default async function renderStatisticsPage(): Promise<void> {
-    const data = await getUserStatistics();
     const container = createElement({
         type: 'div',
         parentElement: document.body,
         classes: ['statistics-container'],
+        attributes: [['id', 'hero']],
     });
+    renderLoading(container);
+    const data = await getUserStatistics();
+    deleteHTMLElement('loading-container');
     createHeader(container);
     renderTodaysStatistics(container, data);
     renderGameStatistic(container, data);

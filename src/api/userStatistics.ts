@@ -35,7 +35,6 @@ export async function setUserStatistics(optional: UserStatsResponse): Promise<Us
             body: JSON.stringify(optional),
         });
         const data = await response.json();
-        console.log(response);
         return data;
     }
     return undefined;
