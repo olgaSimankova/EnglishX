@@ -99,14 +99,22 @@ export interface ControlsState {
     chartID?: Chart<'bar', string[], string>;
 }
 
+export interface aggregatedWords {
+    weak?: Word[];
+    learned?: Word[];
+    hard?: Word[];
+    deleted?: Word[];
+}
+
 export interface User {
     email: string;
     password: string;
-    isAuthenticated?: boolean; // I've checked it - this field must stay optional due to createUser API request
+    isAuthenticated?: boolean;
     name?: string;
     userId?: string;
     token?: string;
     refreshToken?: string;
+    aggregatedWords?: aggregatedWords;
 }
 
 export interface StateInterface {
@@ -189,9 +197,9 @@ export interface UserStatsResponse {
 
 export enum WordStatus {
     weak = 'weak',
-    learned = 'learned',
     hard = 'hard',
     deleted = 'deleted',
+    learned = 'learned',
 }
 
 export interface GameStat {
@@ -228,3 +236,19 @@ export interface GamesResults {
     sprintGame: string;
     audioCallGame: string;
 }
+
+interface aggregatedCount {
+    count: number;
+}
+
+export interface AggregatedResponse {
+    paginatedResults: Word[],
+    totalCount: aggregatedCount[]
+}[]
+
+// export enum WordCategories {
+//     'In Progress' = 'weak',
+//     'Difficult' = 'hard',
+//     'Deleted' = 'deleted',
+//     'Learnt' = 'learned',
+// }
