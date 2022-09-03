@@ -25,7 +25,11 @@ async function changeWordStatus(wordId: string, newStatus: WordStatus): Promise<
     console.log(currentStats);
     delete currentStats?.id;
     delete currentStats?.wordId;
-    if (!currentStats || (currentStats && !currentStats.optional?.games)) {
+    if (
+        !currentStats ||
+        (currentStats && !currentStats.optional?.games) ||
+        (currentStats.optional?.games && newStatus === WordStatus.deleted)
+    ) {
         const opt: WordStats = {
             difficulty: newStatus,
             optional: {
@@ -36,6 +40,9 @@ async function changeWordStatus(wordId: string, newStatus: WordStatus): Promise<
     } else if (currentStats.optional?.games && newStatus === WordStatus.hard) {
         currentStats.optional.games.audioCallGame.streak = 0;
         currentStats.optional.games.sprintGame.streak = 0;
+        currentStats.difficulty = newStatus;
+        setUserWordStats(wordId, currentStats, true);
+    } else if (currentStats.optional?.games && newStatus === WordStatus.weak) {
         currentStats.difficulty = newStatus;
         setUserWordStats(wordId, currentStats, true);
     }
