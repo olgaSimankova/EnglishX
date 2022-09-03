@@ -1,4 +1,4 @@
-import { getWordStatistics, setUserWordStats } from '../../api/words';
+import { getUserAggregatedWords, getWordStatistics, setUserWordStats } from '../../api/words';
 import { WordStats, WordStatus } from '../../constants/types';
 import state from '../../state/state';
 import { initDefaultGamesStats } from '../../utils/handleGameStatObjects';
@@ -49,10 +49,12 @@ async function changeWordStatus(wordId: string, newStatus: WordStatus): Promise<
 
 export const listenDifficultWordBtn = () => {
     const btn = document.querySelector('#add_difficult_word') as HTMLElement;
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', async () => {
         const { currentWordNo } = state.textBook;
         const cards = Array.from((document.querySelector('.words__contaiter') as HTMLElement).children);
         cards[+currentWordNo].classList.toggle('difficult', true);
         changeWordStatus(state.textBook.wordsOnPage[+currentWordNo].id, WordStatus.hard);
+        const filter = encodeURIComponent(JSON.stringify({ 'userWord.difficulty': 'hard' }));
+        console.log(await getUserAggregatedWords(1, 0, filter));
     });
 };

@@ -223,3 +223,8 @@ export interface WordStats {
 export interface DateWithWords {
     [key: string]: string;
 }
+
+export interface GamesResults {
+    sprintGame: string;
+    audioCallGame: string;
+}

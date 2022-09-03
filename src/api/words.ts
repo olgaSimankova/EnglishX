@@ -1,4 +1,4 @@
-import { API_BASE_LINK, WORDS } from '../constants/constants';
+import { API_BASE_LINK, WORDS, WORDS_PER_PAGE } from '../constants/constants';
 import { Word, WordStats } from '../constants/types';
 import state from '../state/state';
 
@@ -49,16 +49,21 @@ export async function setUserWordStats(
     return undefined;
 }
 
-// export async function getUserAggregatedWords() {
-//     const { userId, token } = state.user;
-//     const response = await fetch(`${API_BASE_LINK}/users/${userId}/aggregatedWords`, {
-//         method: 'POST',
-//         headers: {
-//             Authorization: `Bearer ${token}`,
-//             Accept: 'application/json',
-//             'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify(optional),
-//     });
-
-// }
+export async function getUserAggregatedWords(page: number, group: number, filter: string): Promise<void | WordStats[]> {
+    const { userId, token } = state.user;
+    const response = await fetch(
+        `${API_BASE_LINK}/users/${userId}/aggregatedWords?group=${group}&page=${page}&wordsPerPage=${WORDS_PER_PAGE}}&filter=${filter}`,
+        {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+        }
+    );
+    if (response.status === 200) {
+        return response.json();
+    }
+    return undefined;
+}

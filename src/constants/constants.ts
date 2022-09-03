@@ -136,3 +136,4 @@ export const WORD_CATEGORIES = ['In Progress', 'Difficult', 'Deleted'];
 export const TOKEN_EXPIRATION_TIME = 14400000;
 export const SUCCESSFUL_OPERATION_STATUS = 200;
 export const USER_SAVED_FIELDS = ['userId', 'isAuthenticated', 'token', 'refreshToken', 'name'];
+export const WORDS_PER_PAGE = 20;

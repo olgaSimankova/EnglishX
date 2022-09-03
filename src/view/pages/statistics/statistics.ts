@@ -1,10 +1,14 @@
+import { toggleHeaderLoginView } from '../../../logic/main/loginModal';
 import applyLocalStorage from '../../../utils/localStorage';
+import renderModal from '../main/loginRegisterModal/renderModal';
 import renderStatisticsPage from './renderStatisticsPage';
 import './statistics.scss';
 
-function startStatisticsPage(): void {
+async function startStatisticsPage(): Promise<void> {
     applyLocalStorage();
-    renderStatisticsPage();
+    await renderStatisticsPage();
+    toggleHeaderLoginView();
+    renderModal();
 }
 
 startStatisticsPage();

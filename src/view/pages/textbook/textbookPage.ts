@@ -8,10 +8,9 @@ import './styles/textbook.scss';
 
 (async function startTextbookPage() {
     createHeader(document.body);
-    toggleHeaderLoginView();
     applyLocalStorage();
-    toggleHeaderLoginView();
     renderModal();
+    toggleHeaderLoginView();
     (document.querySelector('.header') as HTMLElement).classList.remove('hero__container');
     await getTextbookPage();
 })();
