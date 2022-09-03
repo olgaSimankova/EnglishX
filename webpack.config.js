@@ -3,6 +3,7 @@ const { merge } = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const EslingPlugin = require('eslint-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 const isDev = process.env.NODE_ENV === 'development';
 const isProd = !isDev;
@@ -32,11 +33,8 @@ const baseConfig = {
                 use: ['html-loader'],
             },
             {
-                test: /\.(jpe?g|png|gif|svg)$/i,
-                loader: 'file-loader',
-                options: {
-                    name: 'assets/img/[name].[ext]',
-                },
+                test: /\.(?:ico|gif|png|jpg|jpeg|svg)$/i,
+                type: 'asset/resource',
             },
             {
                 test: /\.mp3$/,
@@ -80,6 +78,14 @@ const baseConfig = {
         }),
         new CleanWebpackPlugin(),
         new EslingPlugin({ extensions: 'ts' }),
+        new CopyPlugin({
+            patterns: [
+                {
+                    from: './src/assets',
+                    to: './assets',
+                },
+            ],
+        }),
     ],
 };
 
