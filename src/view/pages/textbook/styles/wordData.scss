@@ -114,12 +114,11 @@
 .answers_in_games {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
 
     .game-stat-container {
         display: flex;
         justify-content: space-between;
+        border-bottom: 1px dotted #1E212C;
     }
 }
 
@@ -129,6 +128,7 @@
 
 .answers__games_container {
     display: flex;
+    flex-direction: column;
     gap: 15px;
     margin: 10px 10px;
 }
