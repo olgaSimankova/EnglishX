@@ -8,6 +8,7 @@ import renderResultPage from '../../../view/common/gameResult/renderGameResults'
 import { renderQuestion } from '../../../view/pages/games/audio-call/renderAudioCallGame';
 import { deleteHTMLElement } from '../../../utils/createElement';
 import gameResultControls from '../../../view/common/gameResult/gameResultControls';
+import { saveAnswerToDB } from '../sprint/controls';
 
 const setWords = (data: Word[]): void => {
     state.audioCallGame.givenWords = data;
@@ -57,6 +58,7 @@ const setLearningWord = (): void => {
     const { length } = state.audioCallGame.needLearnWords;
     const learningWordIndex = getRandomNumber(0, length);
     state.audioCallGame.learningWord = state.audioCallGame.needLearnWords.splice(learningWordIndex, 1).pop();
+    state.audioCallGame.currentWordId = state.audioCallGame.learningWord?.id || '';
 };
 
 const showWordInfo = (): void => {
@@ -86,6 +88,7 @@ const showResult = (userChoice: HTMLElement): void => {
         playChoiceSound(Choice.right);
         currentLearned.push(learningWord as Word);
         state.audioCallGame.currentStreak += 1;
+        saveAnswerToDB(true, GameTags.audioCallGame);
     }
 
     if (rightAnswerText !== userChoiceText && isAnswerReceived()) {
@@ -97,6 +100,7 @@ const showResult = (userChoice: HTMLElement): void => {
                 ? state.audioCallGame.currentStreak
                 : state.audioCallGame.bestStreak;
         state.audioCallGame.currentStreak = 0;
+        saveAnswerToDB(false, GameTags.audioCallGame);
     }
 };
 

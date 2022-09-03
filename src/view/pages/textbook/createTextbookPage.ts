@@ -1,11 +1,12 @@
 import { getWords } from '../../../api/words';
 import { API_BASE_LINK, WORD_CATEGORIES } from '../../../constants/constants';
-import { Difficulty, Levels, Word } from '../../../constants/types';
+import { Difficulty, GamesStat, GameTags, Levels, Word } from '../../../constants/types';
 import applyLocalStorage from '../../../logic/main/applyLocalStorage';
 import { checkTokenExpiration } from '../../../logic/main/authentication';
 import listenPagination from '../../../logic/textbook/pagination';
 import { listenLevelCards, listenTextbookAudio, listenWordCards } from '../../../logic/textbook/textbookEvents';
 import getPaginationBtns from '../../../logic/textbook/utils/createPagination';
+import getGameStats from '../../../logic/textbook/utils/gameStats';
 import { listenDifficultWordBtn, listenTextbookTitleView } from '../../../logic/textbook/vocabulary';
 import state from '../../../state/state';
 import createElement from '../../../utils/createElement';
@@ -168,7 +169,7 @@ export function getWordsCards(words: Word[], parent: HTMLElement) {
     });
 }
 
-export function getWordData(word: Word, parent: HTMLElement) {
+export function getWordData(word: Word, parent: HTMLElement, stats?: GamesStat) {
     createElement({
         type: 'div',
         parentElement: parent,
@@ -282,17 +283,23 @@ export function getWordData(word: Word, parent: HTMLElement) {
         parentElement: answersInGames,
         classes: ['answers__games_container'],
     });
+    let sprint = 'SprintGame: 0 / 0';
+    let audio = 'AudioCallGame: 0 / 0';
+    if (stats) {
+        sprint = getGameStats(stats, GameTags.sprintGame);
+        audio = getGameStats(stats, GameTags.audioCallGame);
+    }
     createElement({
         type: 'span',
         parentElement: answersContainer,
         classes: ['sprint_answers'],
-        text: 'sprint: 0 / 0', // !!!!!!!!!!!!!!!!!!!! Implement later
+        text: sprint,
     });
     createElement({
         type: 'span',
         parentElement: answersContainer,
         classes: ['audio_call_answers'],
-        text: 'audio-call: 0 / 0', // !!!!!!!!!!!!!!!!!!!! Implement later
+        text: audio,
     });
     if (!state.user.isAuthenticated) answersInGames.classList.add('hidden');
     listenTextbookAudio();

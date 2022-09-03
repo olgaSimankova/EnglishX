@@ -4,6 +4,7 @@ import gameButtonsControls from '../../../logic/games/gameButtonsControls';
 import createElement from '../../../utils/createElement';
 import renderGameButtons from '../renderGameControlButtons';
 import './startGame.scss';
+import '../../pages/main/scss/style.scss';
 
 function renderUpperBlock(parentElement: HTMLElement, tag: string): void {
     const upperContainer = createElement({

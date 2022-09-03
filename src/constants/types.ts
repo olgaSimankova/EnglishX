@@ -63,6 +63,7 @@ export interface SprintState {
     isGame: boolean;
     bestStreak: number;
     currentStreak: number;
+    currentWordId: string;
 }
 
 export enum AudioCallStatus {
@@ -81,6 +82,7 @@ export interface AudioCall {
     status: AudioCallStatus;
     bestStreak: number;
     currentStreak: number;
+    currentWordId: string;
 }
 
 export interface Textbook {
@@ -195,11 +197,12 @@ export enum WordStatus {
 export interface GameStat {
     right: number;
     wrong: number;
+    streak: number;
 }
 
 export interface GamesStat {
-    sprint: GameStat;
-    audioCall: GameStat;
+    sprintGame: GameStat;
+    audioCallGame: GameStat;
 }
 
 export interface OptionalWord {
@@ -213,8 +216,15 @@ export interface OptionalWord {
 export interface WordStats {
     difficulty: WordStatus;
     optional?: OptionalWord;
+    id?: string;
+    wordId?: string;
 }
 
 export interface DateWithWords {
     [key: string]: string;
+}
+
+export interface GamesResults {
+    sprintGame: string;
+    audioCallGame: string;
 }

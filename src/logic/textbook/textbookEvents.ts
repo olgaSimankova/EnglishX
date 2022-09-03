@@ -1,14 +1,16 @@
-import { getWords } from '../../api/words';
+import { getWords, getWordStatistics } from '../../api/words';
 import { Word } from '../../constants/types';
 import state from '../../state/state';
+import { initDefaultGamesStats } from '../../utils/handleGameStatObjects';
 import { getAllAudios, playAllAudio } from '../../utils/playAudio';
 import { getWordData, getWordsCards } from '../../view/pages/textbook/createTextbookPage';
 import getPaginationBtns from './utils/createPagination';
 
-function updateWordData(word: Word) {
+async function updateWordData(word: Word) {
     const wordData = document.querySelector('.word__detail') as HTMLElement;
     wordData.innerHTML = '';
-    getWordData(word, wordData);
+    const data = await getWordStatistics(word.id);
+    getWordData(word, wordData, data?.optional?.games || initDefaultGamesStats());
 }
 
 export async function updateWordsContainer() {
