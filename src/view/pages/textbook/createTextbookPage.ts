@@ -251,6 +251,12 @@ export function getWordData(word: Word, parent: HTMLElement, stats?: GamesStat) 
         classes: ['word__actions_btn', `words__actions_btn_${Levels[state.textBook.currentLevel]}`],
         text: 'delete word',
     });
+    createElement({
+        type: 'button',
+        parentElement: wordActions,
+        classes: ['word__actions_btn', `words__actions_btn_${Levels[state.textBook.currentLevel]}`],
+        text: 'already know it',
+    });
     if (!state.user.isAuthenticated || !checkTokenExpiration()) wordActions.classList.add('hidden');
 
     const wordDescription = createElement({
