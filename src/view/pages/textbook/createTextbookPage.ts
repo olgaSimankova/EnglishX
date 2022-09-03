@@ -1,5 +1,5 @@
 import { getWords } from '../../../api/words';
-import { API_BASE_LINK, WORD_CATEGORIES } from '../../../constants/constants';
+import { API_BASE_LINK, GAMES_RESULTS, WORD_CATEGORIES } from '../../../constants/constants';
 import { Difficulty, GamesStat, GameTags, Levels, Word } from '../../../constants/types';
 import applyLocalStorage from '../../../logic/main/applyLocalStorage';
 import { checkTokenExpiration } from '../../../logic/main/authentication';
@@ -169,6 +169,31 @@ export function getWordsCards(words: Word[], parent: HTMLElement) {
     });
 }
 
+function renderGameStatBlock(parentElement: HTMLElement, tag: GameTags, data?: GamesStat): void {
+    let str = GAMES_RESULTS[tag];
+    if (data) {
+        str = getGameStats(data, tag);
+    }
+    const [gameName, gameScore] = str.split(':');
+    const container = createElement({
+        type: 'div',
+        parentElement,
+        classes: ['game-stat-container'],
+    });
+    createElement({
+        type: 'p',
+        parentElement: container,
+        classes: ['game-label'],
+        text: gameName,
+    });
+    createElement({
+        type: 'p',
+        parentElement: container,
+        classes: ['game-digits'],
+        text: gameScore,
+    });
+}
+
 export function getWordData(word: Word, parent: HTMLElement, stats?: GamesStat) {
     createElement({
         type: 'div',
@@ -271,7 +296,6 @@ export function getWordData(word: Word, parent: HTMLElement, stats?: GamesStat) 
         parentElement: wordDescription,
         classes: ['answers_in_games'],
     });
-
     createElement({
         type: 'h3',
         parentElement: answersInGames,
@@ -283,24 +307,9 @@ export function getWordData(word: Word, parent: HTMLElement, stats?: GamesStat) 
         parentElement: answersInGames,
         classes: ['answers__games_container'],
     });
-    let sprint = 'SprintGame: 0 / 0';
-    let audio = 'AudioCallGame: 0 / 0';
-    if (stats) {
-        sprint = getGameStats(stats, GameTags.sprintGame);
-        audio = getGameStats(stats, GameTags.audioCallGame);
-    }
-    createElement({
-        type: 'span',
-        parentElement: answersContainer,
-        classes: ['sprint_answers'],
-        text: sprint,
-    });
-    createElement({
-        type: 'span',
-        parentElement: answersContainer,
-        classes: ['audio_call_answers'],
-        text: audio,
-    });
+    renderGameStatBlock(answersContainer, GameTags.sprintGame, stats);
+    renderGameStatBlock(answersContainer, GameTags.audioCallGame, stats);
+
     if (!state.user.isAuthenticated) answersInGames.classList.add('hidden');
     listenTextbookAudio();
     listenDifficultWordBtn();

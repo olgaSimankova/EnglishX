@@ -113,6 +113,14 @@
 
 .answers_in_games {
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .game-stat-container {
+        display: flex;
+        justify-content: space-between;
+    }
 }
 
 .answers_in_games.hidden {

@@ -55,6 +55,6 @@ export const listenDifficultWordBtn = () => {
         cards[+currentWordNo].classList.toggle('difficult', true);
         changeWordStatus(state.textBook.wordsOnPage[+currentWordNo].id, WordStatus.hard);
         const filter = encodeURIComponent(JSON.stringify({ 'userWord.difficulty': 'hard' }));
-        console.log(await getUserAggregatedWords(1, 0, filter));
+        console.log(await getUserAggregatedWords(0, filter));
     });
 };
