@@ -10,6 +10,7 @@ import renderResultPage from '../../../view/common/gameResult/renderGameResults'
 import listenLevelButtons, { listenChoiceButtons, listenKeyboard, listerStartButton } from './events';
 import gameResultControls from '../../../view/common/gameResult/gameResultControls';
 import { initDefaultGamesStats, processGamesStatObject } from '../../../utils/handleGameStatObjects';
+import applyLocalStorage from '../../main/applyLocalStorage';
 
 export function setAnswerBlock(data: Word[]): void {
     const { length } = data;
@@ -32,6 +33,7 @@ export function setAnswerBlock(data: Word[]): void {
 export default function startPageControls(tag: GameTags, reload = false): void {
     listenLevelButtons(tag);
     listerStartButton(tag, reload);
+    applyLocalStorage();
 }
 
 function startTimer(): void {

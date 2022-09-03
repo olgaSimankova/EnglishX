@@ -3,7 +3,7 @@ import { Word, WordStats } from '../constants/types';
 import state from '../state/state';
 
 export async function getWords(group: number, page: number): Promise<Word[]> {
-    const response = await fetch(`${WORDS}?group=${group}&page=${0}`);
+    const response = await fetch(`${WORDS}?group=${group}&page=${page}`);
     return response.json();
 }
 
