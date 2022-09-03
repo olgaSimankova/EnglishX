@@ -1,10 +1,10 @@
 @import "../../../global.scss";
 
 .statistics-container {
-    padding: 23px 0 20px;
+    padding: 23px 0 0;
     background: center / cover no-repeat url('../../../assets/img/background.jpg');
     color: $darkGray;
-    
+
 
     .todays-statistics-container {
         margin: 40px auto 0;
@@ -27,7 +27,25 @@
                 font-weight: 900;
                 text-align: center;
                 padding-bottom: 10px;
+
+              @media (max-width: $mobile) {
+                font-size: 50px;
+              }
+
+              @media (max-width: $mobileSmall) {
+                font-size: 45px;
+              }
             }
+
+          @media (max-width: $mobile) {
+            gap: 40px;
+            font-size: 14px;
+          }
+
+          @media (max-width: $mobileSmall) {
+            gap: 27px;
+            font-size: 12px;
+          }
         }
     }
 }
@@ -50,7 +68,7 @@
         background-size: cover;
         background-repeat: no-repeat;
         font-size: 20px;
-    
+
 
         .game-title {
             font-size: 24px;
@@ -92,6 +110,10 @@
         font-weight: 600;
         text-align: center;
         padding: 20px 0;
+
+      @media (max-width: $mobileSmall) {
+        font-size: 30px;
+      }
     }
 
     .alltime-description {
@@ -107,16 +129,16 @@
     gap: 20px;
     padding: 20px;
   }
-  
+
   .text {
     cursor: pointer;
     font-size: 18px;
     user-select: none;
   }
-  
+
   .toggle-button {
     position: relative;
-    
+
     width: 75px;
     height: 35px;
     margin: 0;
@@ -128,33 +150,33 @@
     border-radius: 30px;
     outline: none;
     cursor: pointer;
-  
+
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-      
+
     transition: all 0.3s cubic-bezier(0.2, 0.85, 0.32, 1.2);
   }
-  
+
   .toggle-button::after {
     content: "";
-    
+
     position: absolute;
     width: 35px;
     height: 35px;
     background-color: #424551;
     border-radius: 50%;
-    
+
     transform: translateX(-10px);
-    
+
     transition: all 0.3s cubic-bezier(0.2, 0.85, 0.32, 1.2);
   }
-  
+
   .toggle-button:checked::after {
     transform: translateX(calc(45px));
     background-color: rgb(66, 69, 81);
   }
-  
+
   .toggle-button:checked {
     background-image: url('../../../assets/img/game-div-bg.jpg');
     background-size: cover;
@@ -167,4 +189,7 @@
     max-width: 800px;
     width: 100%;
   }
-  
+
+  .stat-description {
+    text-align: center;
+  }
