@@ -137,3 +137,7 @@ export const TOKEN_EXPIRATION_TIME = 14400000;
 export const SUCCESSFUL_OPERATION_STATUS = 200;
 export const USER_SAVED_FIELDS = ['userId', 'isAuthenticated', 'token', 'refreshToken', 'name'];
 export const WORDS_PER_PAGE = 20;
+export const GAMES_RESULTS = {
+    sprintGame: 'Sprint Game: 0 / 0',
+    audioCallGame: 'AudioCall Game: 0 / 0',
+};
