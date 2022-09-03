@@ -22,7 +22,6 @@ export const listenTextbookTitleView = () => {
 
 async function changeWordStatus(wordId: string, newStatus: WordStatus): Promise<void> {
     const currentStats = await getWordStatistics(wordId);
-    console.log(currentStats);
     delete currentStats?.id;
     delete currentStats?.wordId;
     if (
