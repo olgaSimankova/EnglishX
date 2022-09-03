@@ -216,6 +216,8 @@ export interface OptionalWord {
 export interface WordStats {
     difficulty: WordStatus;
     optional?: OptionalWord;
+    id?: string;
+    wordId?: string;
 }
 
 export interface DateWithWords {

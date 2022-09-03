@@ -1,6 +1,7 @@
-import { setUserWordStats } from '../../api/words';
-import { WordStatus } from '../../constants/types';
+import { getWordStatistics, setUserWordStats } from '../../api/words';
+import { WordStats, WordStatus } from '../../constants/types';
 import state from '../../state/state';
+import { initDefaultGamesStats } from '../../utils/handleGameStatObjects';
 
 export const listenTextbookTitleView = () => {
     const headingContainer = document.querySelector('.heading_section') as HTMLElement;
@@ -19,12 +20,33 @@ export const listenTextbookTitleView = () => {
     });
 };
 
+async function changeWordStatus(wordId: string, newStatus: WordStatus): Promise<void> {
+    const currentStats = await getWordStatistics(wordId);
+    console.log(currentStats);
+    delete currentStats?.id;
+    delete currentStats?.wordId;
+    if (!currentStats || (currentStats && !currentStats.optional?.games)) {
+        const opt: WordStats = {
+            difficulty: newStatus,
+            optional: {
+                games: initDefaultGamesStats(),
+            },
+        };
+        setUserWordStats(wordId, opt);
+    } else if (currentStats.optional?.games && newStatus === WordStatus.hard) {
+        currentStats.optional.games.audioCallGame.streak = 0;
+        currentStats.optional.games.sprintGame.streak = 0;
+        currentStats.difficulty = newStatus;
+        setUserWordStats(wordId, currentStats, true);
+    }
+}
+
 export const listenDifficultWordBtn = () => {
     const btn = document.querySelector('#add_difficult_word') as HTMLElement;
     btn.addEventListener('click', () => {
         const { currentWordNo } = state.textBook;
         const cards = Array.from((document.querySelector('.words__contaiter') as HTMLElement).children);
         cards[+currentWordNo].classList.toggle('difficult', true);
-        setUserWordStats(state.textBook.wordsOnPage[+currentWordNo].id, { difficulty: WordStatus.hard, optional: {} });
+        changeWordStatus(state.textBook.wordsOnPage[+currentWordNo].id, WordStatus.hard);
     });
 };
