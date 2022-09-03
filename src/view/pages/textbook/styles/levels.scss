@@ -166,4 +166,9 @@
             background-color: $color_deleted;
         }
     }
+    &:nth-of-type(4) {
+        .circle_category {
+            background-color: $color_learnt;
+        }
+    }
 }

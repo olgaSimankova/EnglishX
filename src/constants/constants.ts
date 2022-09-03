@@ -131,12 +131,14 @@ export const LEARNT_WORDS_LABEL = 'Learned words';
 export const PROGRESS_LABEL = 'Progress';
 export const AUDIOCALL_KEYBOARD_KEYS = ['1', '2', '3', '4', '5'];
 
-export const WORD_CATEGORIES = ['In Progress', 'Difficult', 'Deleted'];
+export const WORD_CATEGORIES = ['In Progress', 'Difficult', 'Deleted', 'Learnt'];
 
 export const TOKEN_EXPIRATION_TIME = 14400000;
 export const SUCCESSFUL_OPERATION_STATUS = 200;
 export const USER_SAVED_FIELDS = ['userId', 'isAuthenticated', 'token', 'refreshToken', 'name'];
-export const WORDS_PER_PAGE = 20;
+
+export const WORDS_PER_PAGE = 3600;
+
 export const GAMES_RESULTS = {
     sprintGame: 'Sprint Game: 0 / 0',
     audioCallGame: 'AudioCall Game: 0 / 0',

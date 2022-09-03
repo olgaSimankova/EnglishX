@@ -1,7 +1,9 @@
 import { getUserAggregatedWords, getWordStatistics, setUserWordStats } from '../../api/words';
-import { WordStats, WordStatus } from '../../constants/types';
+import { Word, WordStatus, WordStats } from '../../constants/types';
 import state from '../../state/state';
 import { initDefaultGamesStats } from '../../utils/handleGameStatObjects';
+import { getWordData, getWordsCards } from '../../view/pages/textbook/createTextbookPage';
+import { listenWordCards } from './textbookEvents';
 
 export const listenTextbookTitleView = () => {
     const headingContainer = document.querySelector('.heading_section') as HTMLElement;
@@ -55,6 +57,14 @@ export const listenDifficultWordBtn = () => {
         cards[+currentWordNo].classList.toggle('difficult', true);
         changeWordStatus(state.textBook.wordsOnPage[+currentWordNo].id, WordStatus.hard);
         const filter = encodeURIComponent(JSON.stringify({ 'userWord.difficulty': 'hard' }));
-        console.log(await getUserAggregatedWords(0, filter));
+        console.log(await getUserAggregatedWords(state.textBook.currentLevel, filter));
     });
+};
+
+export const updateVocabularyWordsSection = (words: Word[]) => {
+    const wordsSection = document.querySelector('.words__section') as HTMLElement;
+    wordsSection.innerHTML = '';
+    getWordsCards(words, wordsSection);
+    getWordData(words[0], wordsSection);
+    listenWordCards();
 };
