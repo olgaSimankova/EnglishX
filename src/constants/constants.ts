@@ -120,7 +120,7 @@ export const STATISTIC_ICON = {
     'check-mark-line-icon.svg': 'Right answers:',
     'double-tick-icon.svg': 'The longest streak of right answers:',
 };
-export const HEADER_LINKS = ['../#team', './textbook.html', '../#games', './statistics.html'];
+export const HEADER_LINKS = ['./#team', './textbook.html', './#games', './statistics.html'];
 export const PAGINATION_BTNS = 9;
 export const LAST_PAGE = 30;
 export const AUDIO_TYPES = ['audio', 'audioMeaning', 'audioExample'];
