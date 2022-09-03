@@ -4,10 +4,8 @@ import applyLocalStorage from '../../../../utils/localStorage';
 import renderGameStartPage from '../../../common/gameStartPage/renderGameStartPage';
 import './sprint.scss';
 
-function startSprintPage() {
+(function startSprintPage() {
     applyLocalStorage();
     renderGameStartPage('sprint');
     startPageControls(GameTags.sprintGame, true);
-}
-
-startSprintPage();
+})();
