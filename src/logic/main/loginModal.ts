@@ -15,25 +15,28 @@ function toggleFailLoginMessage(todo: boolean): void {
     message.style.visibility = todo ? 'visible' : 'hidden';
 }
 
+export function loginListener() {
+    toggleModal(true);
+}
+
 export function toggleHeaderLoginView(): void {
     const text = document.querySelector('.header__text') as HTMLElement;
     const iconLogout = document.querySelector('.header__logout') as HTMLElement;
+    const login = document.querySelector('.header__login') as HTMLElement;
     if (state.user.isAuthenticated && checkTokenExpiration()) {
         iconLogout.classList.toggle('hidden', false);
         text.classList.toggle('hidden', true);
         iconLogout.addEventListener('click', () => logOut());
+        login.removeEventListener('click', loginListener);
     } else {
         iconLogout.classList.toggle('hidden', true);
         text.classList.toggle('hidden', false);
         state.user.isAuthenticated = false;
+        login.addEventListener('click', loginListener);
     }
 }
 
 function listenLoginModal(): void {
-    const login = document.querySelector('.header__login') as HTMLElement;
-    login.addEventListener('click', () => {
-        toggleModal(true);
-    });
     (document.querySelector('.modal_BG') as HTMLElement).addEventListener('click', () => {
         toggleModal(false);
     });
@@ -63,7 +66,7 @@ function listenLoginModal(): void {
                 toggleModal(false);
                 saveTokenAndData(loginResponse);
                 toggleHeaderLoginView();
-                location.reload(); // Пока так. Позже сюда пойдет функция, изменяющая вид текстбука при логине.
+                window.location.reload(); // Пока так. Позже сюда пойдет функция, изменяющая вид текстбука при логине.
             } catch {
                 toggleFailLoginMessage(true);
             }

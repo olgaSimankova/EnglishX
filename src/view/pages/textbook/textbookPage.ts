@@ -8,7 +8,6 @@ import './styles/textbook.scss';
 
 (async function startTextbookPage() {
     createHeader(document.body);
-    toggleHeaderLoginView();
     applyLocalStorage();
     toggleHeaderLoginView();
     renderModal();

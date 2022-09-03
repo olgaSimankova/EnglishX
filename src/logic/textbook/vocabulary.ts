@@ -1,6 +1,8 @@
-import { setUserWordStats } from '../../api/words';
-import { WordStatus } from '../../constants/types';
+import { getUserAggregatedWords, setUserWordStats } from '../../api/words';
+import { Word, WordStatus } from '../../constants/types';
 import state from '../../state/state';
+import { getWordData, getWordsCards } from '../../view/pages/textbook/createTextbookPage';
+import { listenWordCards } from './textbookEvents';
 
 export const listenTextbookTitleView = () => {
     const headingContainer = document.querySelector('.heading_section') as HTMLElement;
@@ -17,6 +19,7 @@ export const listenTextbookTitleView = () => {
         textbookBtn.classList.toggle('active', event.target === textbookBtn);
         wordCategories.classList.toggle('hidden', state.textBook.view === 'textbook');
     });
+    getUserAggregatedWords('hard', 0);
 };
 
 export const listenDifficultWordBtn = () => {
@@ -27,4 +30,12 @@ export const listenDifficultWordBtn = () => {
         cards[+currentWordNo].classList.toggle('difficult', true);
         setUserWordStats(state.textBook.wordsOnPage[+currentWordNo].id, { difficulty: WordStatus.hard, optional: {} });
     });
+};
+
+export const updateVocabularyWordsSection = (words: Word[]) => {
+    const wordsSection = document.querySelector('.words__section') as HTMLElement;
+    wordsSection.innerHTML = '';
+    getWordsCards(words, wordsSection);
+    getWordData(words[0], wordsSection);
+    listenWordCards();
 };

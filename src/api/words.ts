@@ -24,16 +24,16 @@ export async function setUserWordStats(wordId: string, optional: WordStats): Pro
     return undefined;
 }
 
-// export async function getUserAggregatedWords() {
-//     const { userId, token } = state.user;
-//     const response = await fetch(`${API_BASE_LINK}/users/${userId}/aggregatedWords`, {
-//         method: 'POST',
-//         headers: {
-//             Authorization: `Bearer ${token}`,
-//             Accept: 'application/json',
-//             'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify(optional),
-//     });
-
-// }
+export async function getUserAggregatedWords(category: string, level: number) {
+    const { userId, token } = state.user;
+    const filter = { $and: [{ 'userWord.difficulty': category }] };
+    const response = await fetch(`${API_BASE_LINK}/users/${userId}/aggregatedWords?group=${level}&filter=${filter}`, {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+    });
+    console.log(response.json());
+}

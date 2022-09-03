@@ -37,10 +37,10 @@ export const GAME_BUTTONS = {
     YES: true,
     NO: false,
 };
-// export const WORDS = 'http://localhost:8000/words';
-// export const API_BASE_LINK = 'http://localhost:8000';
-export const WORDS = 'https://eng-guru.herokuapp.com/words';
-export const API_BASE_LINK = 'https://eng-guru.herokuapp.com';
+export const WORDS = 'http://localhost:8000/words';
+export const API_BASE_LINK = 'http://localhost:8000';
+// export const WORDS = 'https://eng-guru.herokuapp.com/words';
+// export const API_BASE_LINK = 'https://eng-guru.herokuapp.com';
 
 export const BUTTON_NAMES = ['About Us', 'TextBook', 'Games', 'Statistic'];
 
@@ -131,7 +131,7 @@ export const LEARNT_WORDS_LABEL = 'Learned words';
 export const PROGRESS_LABEL = 'Progress';
 export const AUDIOCALL_KEYBOARD_KEYS = ['1', '2', '3', '4', '5'];
 
-export const WORD_CATEGORIES = ['In Progress', 'Difficult', 'Deleted'];
+export const WORD_CATEGORIES = ['In Progress', 'Difficult', 'Deleted', 'Learnt'];
 
 export const TOKEN_EXPIRATION_TIME = 14400000;
 export const SUCCESSFUL_OPERATION_STATUS = 200;
