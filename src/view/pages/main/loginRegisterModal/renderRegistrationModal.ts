@@ -113,6 +113,11 @@ export default function renderRegistrationModal() {
         classes: ['login-form__links-wrapper'],
     });
     createElement({
+        type: 'span',
+        parentElement: linksWrapper,
+        classes: ['submit-spinner', 'submit-spinner__registr', 'submit-spinner_hide'],
+    });
+    createElement({
         type: 'input',
         parentElement: linksWrapper,
         attributes: [

@@ -52,6 +52,13 @@ function renderLoginForm(parentElement: HTMLElement) {
         parentElement: form,
         classes: ['login-form__links-wrapper'],
     });
+
+    createElement({
+        type: 'span',
+        parentElement: linksWrapper,
+        classes: ['submit-spinner', 'submit-spinner_hide'],
+    });
+
     createElement({
         type: 'input',
         parentElement: linksWrapper,
