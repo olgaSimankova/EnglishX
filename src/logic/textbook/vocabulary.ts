@@ -32,6 +32,7 @@ const updateVocabularyWordsSection = async (words: Word[]) => {
     }
     listenWordCards();
     setDifficultyToCard();
+    toggleWordActions();
 };
 
 export const listenTextbookTitleView = () => {
@@ -125,6 +126,7 @@ export function listenVocabularyCategories() {
                     CATEGORIES_BRIDGE[id as keyof typeof CATEGORIES_BRIDGE] as keyof aggregatedWords
                 ];
             updateVocabularyWordsSection(words || []);
+            toggleWordActions();
         }
     });
 }
