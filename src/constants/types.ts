@@ -242,13 +242,6 @@ interface aggregatedCount {
 }
 
 export interface AggregatedResponse {
-    paginatedResults: Word[],
-    totalCount: aggregatedCount[]
-}[]
-
-// export enum WordCategories {
-//     'In Progress' = 'weak',
-//     'Difficult' = 'hard',
-//     'Deleted' = 'deleted',
-//     'Learnt' = 'learned',
-// }
+    paginatedResults: Word[];
+    totalCount: aggregatedCount[];
+}

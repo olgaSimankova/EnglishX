@@ -1,6 +1,6 @@
 import { getWords } from '../../../api/words';
 import { API_BASE_LINK, GAMES_RESULTS, WORD_CATEGORIES } from '../../../constants/constants';
-import { Difficulty, GamesStat, GameTags, Levels, Word, WordStatus } from '../../../constants/types';
+import { Difficulty, GamesStat, GameTags, Levels, Word } from '../../../constants/types';
 import applyLocalStorage from '../../../logic/main/applyLocalStorage';
 import { checkTokenExpiration } from '../../../logic/main/authentication';
 import listenPagination from '../../../logic/textbook/pagination';
@@ -8,13 +8,14 @@ import { listenLevelCards, listenTextbookAudio, listenWordCards } from '../../..
 import getPaginationBtns from '../../../logic/textbook/utils/createPagination';
 import getGameStats from '../../../logic/textbook/utils/gameStats';
 import {
-    fillStateWithAllUserWords,
+    // fillStateWithAllUserWords,
     listenDifficultWordBtn,
     listenTextbookTitleView,
     listenVocabularyCategories,
 } from '../../../logic/textbook/vocabulary';
 import state from '../../../state/state';
-import createElement from '../../../utils/createElement';
+import createElement, { deleteHTMLElement } from '../../../utils/createElement';
+import renderLoading from '../../common/loading/renderLoading';
 import createGamesSection from '../main/createGamesSection';
 
 function getTextbookHeading(parent: HTMLElement): void {
@@ -340,7 +341,9 @@ async function getWordsSection(parent: HTMLElement): Promise<void> {
         parentElement: parent,
         classes: ['words__section'],
     });
+    renderLoading(parent);
     state.textBook.wordsOnPage = await getWords(state.textBook.currentLevel, state.textBook.currentPage - 1);
+    deleteHTMLElement('loading-container');
     const wordsContainer = createElement({
         type: 'div',
         parentElement: wordsSection,
@@ -379,7 +382,7 @@ export async function getTextbookPage() {
         parentElement: document.body,
         classes: ['wrapper'],
     });
-    fillStateWithAllUserWords();
+    // fillStateWithAllUserWords();
     getTextbookHeading(wrapper);
     getLevelsSection(wrapper);
     getWordCategories(wrapper);
