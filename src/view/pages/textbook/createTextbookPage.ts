@@ -19,7 +19,8 @@ import {
     listenVocabularyCategories,
 } from '../../../logic/textbook/vocabulary';
 import state from '../../../state/state';
-import createElement from '../../../utils/createElement';
+import createElement, { deleteHTMLElement } from '../../../utils/createElement';
+import renderLoading from '../../common/loading/renderLoading';
 import createGamesSection from '../main/createGamesSection';
 
 function getTextbookHeading(parent: HTMLElement): void {
@@ -345,7 +346,9 @@ async function getWordsSection(parent: HTMLElement): Promise<void> {
         parentElement: parent,
         classes: ['words__section'],
     });
+    renderLoading(parent);
     state.textBook.wordsOnPage = await getWords(state.textBook.currentLevel, state.textBook.currentPage - 1);
+    deleteHTMLElement('loading-container');
     const wordsContainer = createElement({
         type: 'div',
         parentElement: wordsSection,

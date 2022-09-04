@@ -8,7 +8,6 @@ import { listenWordCards, setDifficultyToCard, wordListenerCallback } from './te
 import toggleClassActiveButton from './utils/toggleActiveClass';
 
 export function renderQuantityOfStatusWords(): void {
-    console.log('render');
     WORD_CATEGORIES.forEach((category) => {
         const cls = category.split(' ').join('').toLocaleLowerCase();
         const el = document.querySelector(`.${cls}`);
