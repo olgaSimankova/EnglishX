@@ -33,7 +33,7 @@
   border-radius: 30px;
   transition: all .4s ease 0s;
 
-  &:hover {
+  &:not(.inactive):hover {
     transform: translate(0, -25px);
     box-shadow: 0 0 26px rgba(255, 0, 10, 0.6);
 
@@ -123,8 +123,4 @@
   100% {
     transform: translateX(0);
   }
-}
-
-.inactive {
-  opacity: 0.5;
 }

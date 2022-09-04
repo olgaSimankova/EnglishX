@@ -5,6 +5,7 @@ import { initDefaultGamesStats } from '../../utils/handleGameStatObjects';
 import { getAllAudios, playAllAudio } from '../../utils/playAudio';
 import { getWordData, getWordsCards } from '../../view/pages/textbook/createTextbookPage';
 import getPaginationBtns from './utils/createPagination';
+import { toggleActivePage } from './utils/isWordsAvailableForGame';
 import { fillStateWithAllUserWords, renderQuantityOfStatusWords, setWordsToContainer } from './vocabulary';
 
 async function updateWordData(word: Word) {
@@ -14,7 +15,7 @@ async function updateWordData(word: Word) {
     getWordData(word, wordData, data?.optional?.games || initDefaultGamesStats());
 }
 
-function findWordInCategory(engWord: string): WordStatus {
+export function findWordInCategory(engWord: string): WordStatus {
     let wordStatus = WordStatus.weak;
     Object.values(WordStatus).forEach((status) => {
         if (
@@ -47,6 +48,7 @@ export async function updateWordsContainer() {
     getWordsCards(state.textBook.wordsOnPage, wordsContainer);
     updateWordData(state.textBook.wordsOnPage[0]);
     setDifficultyToCard();
+    toggleActivePage();
 }
 
 function updateLevelColor(): void {

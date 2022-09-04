@@ -1,10 +1,16 @@
-import { getUserAggregatedWords, getWordStatistics, setUserWordStats } from '../../api/words';
+import {
+    getUserAggregatedWords,
+    getUserAggregatedWordsFromPage,
+    getWordStatistics,
+    setUserWordStats,
+} from '../../api/words';
 import { CATEGORIES_BRIDGE, GAMES_LINKS, WORD_CATEGORIES } from '../../constants/constants';
 import { Word, WordStatus, WordStats, AggregatedResponse, aggregatedWords } from '../../constants/types';
 import state from '../../state/state';
 import { initDefaultGamesStats } from '../../utils/handleGameStatObjects';
 import { getWordData, getWordsCards } from '../../view/pages/textbook/createTextbookPage';
 import { listenWordCards, setDifficultyToCard, wordListenerCallback } from './textbookEvents';
+import { toggleActivePage } from './utils/isWordsAvailableForGame';
 import toggleClassActiveButton from './utils/toggleActiveClass';
 
 export function renderQuantityOfStatusWords(): void {
@@ -32,7 +38,7 @@ const updateVocabularyWordsSection = async (words: Word[]) => {
     setDifficultyToCard();
 };
 
-function makeGamesInactive(flag: boolean): void {
+export function makeGamesInactive(flag: boolean): void {
     const games = document.querySelectorAll('.game');
     games.forEach((game, i) => {
         game.classList.toggle('inactive', flag);
@@ -42,13 +48,14 @@ function makeGamesInactive(flag: boolean): void {
 
 export async function setWordsToContainer(status: WordStatus): Promise<void> {
     const currentWords = state.user.aggregatedWords?.[status] || [];
+    state.textBook.currentWordStatus = status;
     const { currentWordStatus } = state.textBook;
-    if (!currentWords.length || currentWordStatus !== WordStatus.weak) {
+    console.log(currentWords);
+    if (!currentWords.length || currentWordStatus === WordStatus.deleted || currentWordStatus === WordStatus.learned) {
         makeGamesInactive(true);
     } else {
         makeGamesInactive(false);
     }
-    state.textBook.currentWordStatus = status;
     await updateVocabularyWordsSection(currentWords);
     const id = Object.entries(CATEGORIES_BRIDGE).filter((el) => el[1] === status)[0][0];
     toggleClassActiveButton('word_category_button', id);
@@ -63,9 +70,12 @@ export const listenTextbookTitleView = () => {
         if (event.target === textbookBtn) {
             state.textBook.view = 'textbook';
             await updateVocabularyWordsSection(state.textBook.wordsOnPage);
+            makeGamesInactive(false);
+            toggleActivePage();
         } else if (event.target === vocabularyBtn) {
             state.textBook.view = 'vocabulary';
             setWordsToContainer(WordStatus.weak);
+            toggleActivePage(true);
         }
         vocabularyBtn.classList.toggle('active', event.target === vocabularyBtn);
         textbookBtn.classList.toggle('active', event.target === textbookBtn);
