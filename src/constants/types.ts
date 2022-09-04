@@ -245,3 +245,10 @@ export interface AggregatedResponse {
     paginatedResults: Word[];
     totalCount: aggregatedCount[];
 }
+
+export enum WordActions {
+    difficult = 'add_difficult_word',
+    delete = 'delete_word',
+    learnt = 'learnt_word',
+    restore = 'restore_word',
+}

@@ -14,7 +14,7 @@ import getPaginationBtns from '../../../logic/textbook/utils/createPagination';
 import getGameStats from '../../../logic/textbook/utils/gameStats';
 import {
     fillStateWithAllUserWords,
-    listenDifficultWordBtn,
+    listenWordActionsButtons,
     listenTextbookTitleView,
     listenVocabularyCategories,
 } from '../../../logic/textbook/vocabulary';
@@ -22,6 +22,7 @@ import state from '../../../state/state';
 import createElement from '../../../utils/createElement';
 import createGamesSection from '../main/createGamesSection';
 import toggleWordActions from '../../../logic/textbook/utils/toggleWordActions';
+import removeDeletedWords from '../../../logic/textbook/utils/removeDeletedWords';
 
 function getTextbookHeading(parent: HTMLElement): void {
     const textbookHeading = createElement({
@@ -263,12 +264,14 @@ export function getWordData(word: Word, parent: HTMLElement, stats?: GamesStat) 
         parentElement: wordActions,
         classes: ['word__actions_btn', `words__actions_btn_${Levels[state.textBook.currentLevel]}`],
         text: 'delete word',
+        attributes: [['id', 'delete_word']],
     });
     createElement({
         type: 'button',
         parentElement: wordActions,
         classes: ['word__actions_btn', `words__actions_btn_${Levels[state.textBook.currentLevel]}`],
         text: 'already know it',
+        attributes: [['id', 'learnt_word']],
     });
     createElement({
         type: 'button',
@@ -339,10 +342,10 @@ export function getWordData(word: Word, parent: HTMLElement, stats?: GamesStat) 
 
     if (!state.user.isAuthenticated) answersInGames.classList.add('hidden');
     listenTextbookAudio();
-    listenDifficultWordBtn();
+    listenWordActionsButtons();
 }
 
-async function getWordsSection(parent: HTMLElement): Promise<void> {
+export async function getWordsSection(parent: HTMLElement): Promise<void> {
     createElement({
         type: 'h1',
         parentElement: parent,
@@ -355,6 +358,7 @@ async function getWordsSection(parent: HTMLElement): Promise<void> {
         classes: ['words__section'],
     });
     state.textBook.wordsOnPage = await getWords(state.textBook.currentLevel, state.textBook.currentPage - 1);
+    await removeDeletedWords();
     const wordsContainer = createElement({
         type: 'div',
         parentElement: wordsSection,
