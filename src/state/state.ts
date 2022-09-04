@@ -52,6 +52,7 @@ export const state: StateInterface = {
         userId: '',
         token: '',
         refreshToken: '',
+        aggregatedWords: [],
     } as User,
 } as StateInterface;
 

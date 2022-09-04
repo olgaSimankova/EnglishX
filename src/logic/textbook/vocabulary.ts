@@ -68,3 +68,29 @@ export const updateVocabularyWordsSection = (words: Word[]) => {
     getWordData(words[0], wordsSection);
     listenWordCards();
 };
+
+export function fillStateWithAllUserWords() {
+    Object.values(WordStatus).forEach(async (wordStatus) => {
+        const filter = encodeURIComponent(JSON.stringify({ 'userWord.difficulty': wordStatus }));
+        const words = await getUserAggregatedWords(state.textBook.currentLevel, filter);
+        if (words) {
+            state.user.aggregatedWords![wordStatus] = words[0].paginatedResults;
+            console.log(words[0].paginatedResults);
+            console.log(words[0].totalCount);
+        }
+    });
+}
+
+export function listenVocabularyCategories() {
+    const categories = document.querySelector('.word_categories_container') as HTMLElement;
+    categories.addEventListener('click', (event: Event) => {
+        if ((event.target as HTMLElement).classList.contains('word_category_button')) {
+            // const wordCategory = (event.target as HTMLElement).dataset.id as keyof WordStatus;
+            if (state.user.aggregatedWords) {
+                fillStateWithAllUserWords();
+                const words = state.user.aggregatedWords.hard;
+                updateVocabularyWordsSection(words || []);
+            }
+        }
+    });
+}

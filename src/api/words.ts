@@ -1,5 +1,5 @@
 import { API_BASE_LINK, WORDS } from '../constants/constants';
-import { Word, WordStats } from '../constants/types';
+import { AggregatedResponse, Word, WordStats } from '../constants/types';
 import state from '../state/state';
 
 export async function getWords(group: number, page: number): Promise<Word[]> {
@@ -49,7 +49,7 @@ export async function setUserWordStats(
     return undefined;
 }
 
-export async function getUserAggregatedWords(group: number, filter: string): Promise<void | WordStats[]> {
+export async function getUserAggregatedWords(group: number, filter: string): Promise<AggregatedResponse | void> {
     const { userId, token } = state.user;
     const response = await fetch(
         `${API_BASE_LINK}/users/${userId}/aggregatedWords?group=${group}&wordsPerPage=3600&filter=${filter}`,
