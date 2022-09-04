@@ -1,5 +1,5 @@
 import { getWords, getWordStatistics } from '../../api/words';
-import { Word } from '../../constants/types';
+import { Word, WordStatus } from '../../constants/types';
 import state from '../../state/state';
 import { initDefaultGamesStats } from '../../utils/handleGameStatObjects';
 import { getAllAudios, playAllAudio } from '../../utils/playAudio';
@@ -13,12 +13,27 @@ async function updateWordData(word: Word) {
     getWordData(word, wordData, data?.optional?.games || initDefaultGamesStats());
 }
 
+function findWordInCategory(engWord: string): WordStatus {
+    return WordStatus.hard; // stopped here
+}
+
+export function setDifficultyToCard(): void {
+    const cards = document.querySelectorAll('.words__card');
+    cards.forEach((card) => {
+        const engWord = card.childNodes[0].textContent;
+        if (engWord) {
+            findWordInCategory(engWord);
+        }
+    });
+}
+
 export async function updateWordsContainer() {
     state.textBook.wordsOnPage = await getWords(state.textBook.currentLevel, state.textBook.currentPage - 1);
     const wordsContainer = document.querySelector('.words__contaiter') as HTMLElement;
     wordsContainer.innerHTML = '';
     getWordsCards(state.textBook.wordsOnPage, wordsContainer);
     updateWordData(state.textBook.wordsOnPage[0]);
+    setDifficultyToCard();
 }
 
 function updateLevelColor(): void {

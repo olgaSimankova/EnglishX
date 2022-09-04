@@ -1,10 +1,15 @@
 import { getWords } from '../../../api/words';
 import { API_BASE_LINK, GAMES_RESULTS, WORD_CATEGORIES } from '../../../constants/constants';
-import { Difficulty, GamesStat, GameTags, Levels, Word, WordStatus } from '../../../constants/types';
+import { Difficulty, GamesStat, GameTags, Levels, Word } from '../../../constants/types';
 import applyLocalStorage from '../../../logic/main/applyLocalStorage';
 import { checkTokenExpiration } from '../../../logic/main/authentication';
 import listenPagination from '../../../logic/textbook/pagination';
-import { listenLevelCards, listenTextbookAudio, listenWordCards } from '../../../logic/textbook/textbookEvents';
+import {
+    listenLevelCards,
+    listenTextbookAudio,
+    listenWordCards,
+    setDifficultyToCard,
+} from '../../../logic/textbook/textbookEvents';
 import getPaginationBtns from '../../../logic/textbook/utils/createPagination';
 import getGameStats from '../../../logic/textbook/utils/gameStats';
 import {
@@ -135,6 +140,7 @@ function getWordCategories(parent: HTMLElement) {
         createElement({
             type: 'p',
             parentElement: btn,
+            classes: [item.split(' ').join('').toLocaleLowerCase()],
             text: `Words: 0`,
         });
         createElement({
@@ -387,4 +393,5 @@ export async function getTextbookPage() {
     await getWordsSection(wrapper);
     getPaginationSection(wrapper);
     createGamesSection(wrapper);
+    setDifficultyToCard();
 }
