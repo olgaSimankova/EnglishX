@@ -4,9 +4,10 @@ import { Word, WordStatus, WordStats, AggregatedResponse, aggregatedWords } from
 import state from '../../state/state';
 import { initDefaultGamesStats } from '../../utils/handleGameStatObjects';
 import { getWordData, getWordsCards } from '../../view/pages/textbook/createTextbookPage';
-import { listenWordCards } from './textbookEvents';
+import { listenWordCards, wordListenerCallback } from './textbookEvents';
 
 function renderQuantityOfStatusWords(): void {
+    console.log('render');
     WORD_CATEGORIES.forEach((category) => {
         const cls = category.split(' ').join('').toLocaleLowerCase();
         const el = document.querySelector(`.${cls}`);
@@ -70,15 +71,16 @@ function handlePaginationResult(data: AggregatedResponse): Word[] {
     return output;
 }
 
-export function fillStateWithAllUserWords() {
-    Object.values(WordStatus).forEach(async (wordStatus) => {
-        const filter = encodeURIComponent(JSON.stringify({ 'userWord.difficulty': wordStatus }));
-        const words = await getUserAggregatedWords(state.textBook.currentLevel, filter);
-        if (words && state.user.aggregatedWords) {
-            const data = handlePaginationResult(words);
-            state.user.aggregatedWords[wordStatus] = data;
-        }
-    });
+export async function fillStateWithAllUserWords(): Promise<void> {
+    await Promise.all(
+        Object.values(WordStatus).map(async (wordStatus) => {
+            const filter = encodeURIComponent(JSON.stringify({ 'userWord.difficulty': wordStatus }));
+            const words = await getUserAggregatedWords(state.textBook.currentLevel, filter);
+            if (words && state.user.aggregatedWords) {
+                state.user.aggregatedWords[wordStatus] = handlePaginationResult(words);
+            }
+        })
+    );
 }
 
 export const listenDifficultWordBtn = () => {
@@ -88,29 +90,36 @@ export const listenDifficultWordBtn = () => {
         const cards = Array.from((document.querySelector('.words__contaiter') as HTMLElement).children);
         cards[+currentWordNo].classList.toggle('difficult', true);
         await changeWordStatus(state.textBook.wordsOnPage[+currentWordNo].id, WordStatus.hard);
-        fillStateWithAllUserWords();
-        setTimeout(renderQuantityOfStatusWords, 1000); // ???? works but wtf
+        await fillStateWithAllUserWords();
+        setTimeout(renderQuantityOfStatusWords, 2000); // server needs time to filter words
     });
 };
 
-export const updateVocabularyWordsSection = (words: Word[]) => {
+const updateVocabularyWordsSection = async (words: Word[]) => {
     const wordsSection = document.querySelector('.words__section') as HTMLElement;
-    wordsSection.innerHTML = '';
-    getWordsCards(words, wordsSection);
-    getWordData(words[0], wordsSection);
+    const wordsContainer = document.querySelector('.words__contaiter') as HTMLElement;
+    const wordsDetail = document.querySelector('.word__detail') as HTMLElement;
+    wordsContainer.innerHTML = '';
+    wordsDetail.innerHTML = '';
+    wordsContainer.removeEventListener('click', wordListenerCallback);
+    getWordsCards(words, wordsContainer);
+    if (words.length) {
+        getWordData(words[0], wordsDetail);
+    }
     listenWordCards();
 };
 
 export function listenVocabularyCategories() {
     const categories = document.querySelector('.word_categories_container') as HTMLElement;
     categories.addEventListener('click', (event: Event) => {
-        if ((event.target as HTMLElement).classList.contains('word_category_button')) {
-            // const wordCategory = (event.target as HTMLElement).dataset.id as keyof WordStatus;
-            if (state.user.aggregatedWords) {
-                fillStateWithAllUserWords();
-                const words = state.user.aggregatedWords.hard;
-                updateVocabularyWordsSection(words || []);
-            }
+        const { id } = (event.target as HTMLElement).parentNode as HTMLElement;
+        // for Olia,  help me please :)
+        if (id) {
+            const words =
+                state.user.aggregatedWords?.[
+                    CATEGORIES_BRIDGE[id as keyof typeof CATEGORIES_BRIDGE] as keyof aggregatedWords
+                ];
+            updateVocabularyWordsSection(words || []);
         }
     });
 }

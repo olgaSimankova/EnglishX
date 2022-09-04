@@ -393,5 +393,6 @@ export async function getTextbookPage() {
     await getWordsSection(wrapper);
     getPaginationSection(wrapper);
     createGamesSection(wrapper);
+    await fillStateWithAllUserWords();
     setDifficultyToCard();
 }
