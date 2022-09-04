@@ -19,7 +19,7 @@ function renderQuantityOfStatusWords(): void {
     });
 }
 
-const updateVocabularyWordsSection = async (words: Word[]) => {
+export const updateVocabularyWordsSection = (words: Word[]) => {
     const wordsContainer = document.querySelector('.words__contaiter') as HTMLElement;
     const wordsDetail = document.querySelector('.word__detail') as HTMLElement;
     wordsContainer.innerHTML = '';
@@ -32,6 +32,11 @@ const updateVocabularyWordsSection = async (words: Word[]) => {
     listenWordCards();
 };
 
+export function showHidePagination() {
+    const pagination = document.querySelector('.pagination_wrapper') as HTMLElement;
+    pagination.classList.toggle('hidden', state.textBook.view === 'vocabulary');
+}
+
 export const listenTextbookTitleView = () => {
     const headingContainer = document.querySelector('.heading_section') as HTMLElement;
     headingContainer.addEventListener('click', (event: Event) => {
@@ -43,6 +48,7 @@ export const listenTextbookTitleView = () => {
         } else if (event.target === vocabularyBtn) {
             state.textBook.view = 'vocabulary';
         }
+        showHidePagination();
         updateVocabularyWordsSection(state.textBook.wordsOnPage);
         vocabularyBtn.classList.toggle('active', event.target === vocabularyBtn);
         textbookBtn.classList.toggle('active', event.target === textbookBtn);
