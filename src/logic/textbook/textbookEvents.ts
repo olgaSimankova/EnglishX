@@ -5,6 +5,7 @@ import { initDefaultGamesStats } from '../../utils/handleGameStatObjects';
 import { getAllAudios, playAllAudio } from '../../utils/playAudio';
 import { getWordData, getWordsCards } from '../../view/pages/textbook/createTextbookPage';
 import getPaginationBtns from './utils/createPagination';
+import { fillStateWithAllUserWords, renderQuantityOfStatusWords } from './vocabulary';
 
 async function updateWordData(word: Word) {
     const wordData = document.querySelector('.word__detail') as HTMLElement;
@@ -95,6 +96,9 @@ export function listenLevelCards() {
             state.textBook.currentPage = 1;
             updateLevelColor();
             await updateWordsContainer();
+            await fillStateWithAllUserWords();
+            setDifficultyToCard();
+            renderQuantityOfStatusWords();
         })
     );
 }

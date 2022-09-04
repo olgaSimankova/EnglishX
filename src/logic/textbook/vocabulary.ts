@@ -4,10 +4,10 @@ import { Word, WordStatus, WordStats, AggregatedResponse, aggregatedWords } from
 import state from '../../state/state';
 import { initDefaultGamesStats } from '../../utils/handleGameStatObjects';
 import { getWordData, getWordsCards } from '../../view/pages/textbook/createTextbookPage';
-import { listenWordCards, wordListenerCallback } from './textbookEvents';
+import { listenWordCards, setDifficultyToCard, wordListenerCallback } from './textbookEvents';
 import toggleClassActiveButton from './utils/toggleActiveClass';
 
-function renderQuantityOfStatusWords(): void {
+export function renderQuantityOfStatusWords(): void {
     console.log('render');
     WORD_CATEGORIES.forEach((category) => {
         const cls = category.split(' ').join('').toLocaleLowerCase();
@@ -30,11 +30,12 @@ const updateVocabularyWordsSection = async (words: Word[]) => {
         getWordData(words[0], wordsDetail);
     }
     listenWordCards();
+    setDifficultyToCard();
 };
 
 export const listenTextbookTitleView = () => {
     const headingContainer = document.querySelector('.heading_section') as HTMLElement;
-    headingContainer.addEventListener('click', (event: Event) => {
+    headingContainer.addEventListener('click', async (event: Event) => {
         const textbookBtn = headingContainer.querySelector('#textbook') as HTMLElement;
         const vocabularyBtn = headingContainer.querySelector('#vocabulary') as HTMLElement;
         const wordCategories = document.querySelector('.word_categories_container') as HTMLElement;
@@ -43,7 +44,7 @@ export const listenTextbookTitleView = () => {
         } else if (event.target === vocabularyBtn) {
             state.textBook.view = 'vocabulary';
         }
-        updateVocabularyWordsSection(state.textBook.wordsOnPage);
+        await updateVocabularyWordsSection(state.textBook.wordsOnPage);
         vocabularyBtn.classList.toggle('active', event.target === vocabularyBtn);
         textbookBtn.classList.toggle('active', event.target === textbookBtn);
         wordCategories.classList.toggle('hidden', state.textBook.view === 'textbook');
