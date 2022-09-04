@@ -138,7 +138,18 @@ export default function createFooter(parent: HTMLElement): void {
         classes: ['footer__message'],
     });
 
-    message.innerHTML = `© 2022 All rights reserved. Made with <span>by Team93 for RSSchool`;
+    const courseLogo = createElement({
+        type: 'a',
+        parentElement: message,
+        classes: ['footer__course'],
+        attributes: [
+            ['href', 'https://rs.school/js/'],
+            ['target', '_blank'],
+        ],
+    });
+
+    message.innerHTML = `© 2022 All rights reserved. Made with <span>by Team93 for`;
+    message.append(courseLogo);
 
     createElement({
         type: 'a',

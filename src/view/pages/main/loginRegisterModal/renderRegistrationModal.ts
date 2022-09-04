@@ -129,6 +129,14 @@ export default function renderRegistrationModal() {
     });
 
     createElement({
+        type: 'div',
+        parentElement: form,
+        classes: ['user-exist'],
+        text: 'user already exists',
+        attributes: [['style', 'visibility:hidden']],
+    });
+
+    createElement({
         type: 'input',
         parentElement: form,
         attributes: [

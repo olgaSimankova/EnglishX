@@ -56,12 +56,14 @@ function listenRegisterModal(): void {
                     email: registerForm.email.value,
                     password: registerForm.password.value,
                 }).then((user) => {
-                    setLocalStorage('userId', user.userId);
-                    setLocalStorage('token', user.token);
-                    setLocalStorage('isAuthenticated', 'true');
-                    toggleHeaderLoginView();
-                    deleteRegisterModal();
-                    toggleModal(false);
+                    if (user) {
+                        setLocalStorage('userId', user.userId);
+                        setLocalStorage('token', user.token);
+                        setLocalStorage('isAuthenticated', 'true');
+                        toggleHeaderLoginView();
+                        deleteRegisterModal();
+                        toggleModal(false);
+                    }
                 });
             } else {
                 console.log('Incorrect email/password');
