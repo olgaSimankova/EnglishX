@@ -384,7 +384,6 @@ export async function getTextbookPage() {
         parentElement: document.body,
         classes: ['wrapper'],
     });
-    fillStateWithAllUserWords();
     getTextbookHeading(wrapper);
     getLevelsSection(wrapper);
     getWordCategories(wrapper);
