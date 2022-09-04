@@ -48,10 +48,6 @@ opacity: 0.6;
 
 .textbook_text {
     margin: 25px;
-    
-    @media (max-width: 1095px) {
-        text-align: center;
-    }
 }
 
 #vocabulary.hidden {
@@ -65,3 +61,4 @@ opacity: 0.6;
 .word_categories_container.hidden {
     display: none;
 }
+    @import 'adaptive.scss';

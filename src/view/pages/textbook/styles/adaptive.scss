@@ -1,0 +1,81 @@
+@media (max-width: 1095px) {
+    .levels_wrapper {
+        width: 510px;
+        margin: 0 auto;
+    }
+    .textbook_text {
+        text-align: center;
+    }
+}
+
+@media (max-width: 1000px) {
+    .word_categories_container {
+        width: 425px;
+        flex-wrap: wrap;
+        margin: 0 auto;
+        padding-top: 30px;
+    }
+}
+
+@media (max-width: 850px) {
+    .word__detail {
+        width: 320px;
+    }
+}
+
+@media (max-width: 755px) {
+    .words__section {
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+}
+
+@media (max-width: 700px) {
+    .heading_section {
+        flex-wrap: wrap;
+        .textbook_title {
+            font-size: 2.1rem;
+        }
+    }
+    .words_title {
+        font-size: 2.1rem;
+        margin-bottom: 12px;
+    }
+}
+
+@media (max-width: 560px) {
+    .header {
+        padding: 15px 10px;
+    }
+    .levels_wrapper {
+        width: 320px;
+        margin: 0 auto;
+    }
+    .level__button {
+        width: 148px;
+    }
+    .level__button {
+        font-size: 2.1rem;
+    }
+    .words__card {
+        width: 140px;
+        height: 85px;
+        padding: 0.2rem;
+        .difficult_word {
+            left: 6.5rem;
+        }
+    }
+    .pagination{
+        width: 315px;
+        margin: 0;
+    }
+    .word_categories_container{
+        justify-content: center;
+    }
+    .word_category_button{
+        width: 168px;
+        h2 {
+            font-size: 1.1rem;
+        }
+    }
+}
