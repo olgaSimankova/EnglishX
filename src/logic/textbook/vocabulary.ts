@@ -6,7 +6,6 @@ import { initDefaultGamesStats } from '../../utils/handleGameStatObjects';
 import { getWordData, getWordsCards } from '../../view/pages/textbook/createTextbookPage';
 import { listenWordCards, setDifficultyToCard, updateWordsContainer, wordListenerCallback } from './textbookEvents';
 import toggleClassActiveButton from './utils/toggleActiveClass';
-import removeDeletedWords from './utils/removeDeletedWords';
 
 export function renderQuantityOfStatusWords(): void {
     console.log('render');
@@ -20,7 +19,7 @@ export function renderQuantityOfStatusWords(): void {
     });
 }
 
-const updateVocabularyWordsSection = async (words: Word[]) => {
+export const updateVocabularyWordsSection = (words: Word[]) => {
     const wordsContainer = document.querySelector('.words__contaiter') as HTMLElement;
     const wordsDetail = document.querySelector('.word__detail') as HTMLElement;
     wordsContainer.innerHTML = '';
@@ -34,6 +33,11 @@ const updateVocabularyWordsSection = async (words: Word[]) => {
     setDifficultyToCard();
 };
 
+export function showHidePagination() {
+    const pagination = document.querySelector('.pagination_wrapper') as HTMLElement;
+    pagination.classList.toggle('hidden', state.textBook.view === 'vocabulary');
+}
+
 export const listenTextbookTitleView = () => {
     const headingContainer = document.querySelector('.heading_section') as HTMLElement;
     headingContainer.addEventListener('click', async (event: Event) => {
@@ -45,7 +49,8 @@ export const listenTextbookTitleView = () => {
         } else if (event.target === vocabularyBtn) {
             state.textBook.view = 'vocabulary';
         }
-        await updateVocabularyWordsSection(state.textBook.wordsOnPage);
+        showHidePagination();
+        updateVocabularyWordsSection(state.textBook.wordsOnPage);
         vocabularyBtn.classList.toggle('active', event.target === vocabularyBtn);
         textbookBtn.classList.toggle('active', event.target === textbookBtn);
         wordCategories.classList.toggle('hidden', state.textBook.view === 'textbook');
@@ -128,18 +133,6 @@ export async function listenWordActionsButtons(): Promise<void> {
         }
     });
 }
-
-// export const listenDifficultWordBtn = () => {
-//     const btn = document.querySelector('#add_difficult_word') as HTMLElement;
-//     btn.addEventListener('click', async () => {
-//         const { currentWordNo } = state.textBook;
-//         const cards = Array.from((document.querySelector('.words__contaiter') as HTMLElement).children);
-//         cards[+currentWordNo].classList.toggle('difficult', true);
-//         await changeWordStatus(state.textBook.wordsOnPage[+currentWordNo].id, WordStatus.hard);
-//         await fillStateWithAllUserWords();
-//         setTimeout(renderQuantityOfStatusWords, 2000); // server needs time to filter words
-//     });
-// };
 
 export function listenVocabularyCategories() {
     const categories = document.querySelector('.word_categories_container') as HTMLElement;
