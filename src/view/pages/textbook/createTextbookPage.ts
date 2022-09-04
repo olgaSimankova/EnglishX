@@ -125,7 +125,6 @@ function getWordCategories(parent: HTMLElement) {
         classes: ['word_categories_container'],
     });
     WORD_CATEGORIES.forEach((item) => {
-        // Object.keys(WordStatus).forEach((item) => {
         const btn = createElement({
             type: 'button',
             parentElement: categoriesWrapper,
