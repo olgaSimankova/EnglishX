@@ -4,10 +4,20 @@ import { Difficulty, GamesStat, GameTags, Levels, Word } from '../../../constant
 import applyLocalStorage from '../../../logic/main/applyLocalStorage';
 import { checkTokenExpiration } from '../../../logic/main/authentication';
 import listenPagination from '../../../logic/textbook/pagination';
-import { listenLevelCards, listenTextbookAudio, listenWordCards } from '../../../logic/textbook/textbookEvents';
+import {
+    listenLevelCards,
+    listenTextbookAudio,
+    listenWordCards,
+    setDifficultyToCard,
+} from '../../../logic/textbook/textbookEvents';
 import getPaginationBtns from '../../../logic/textbook/utils/createPagination';
 import getGameStats from '../../../logic/textbook/utils/gameStats';
-import { listenDifficultWordBtn, listenTextbookTitleView } from '../../../logic/textbook/vocabulary';
+import {
+    fillStateWithAllUserWords,
+    listenDifficultWordBtn,
+    listenTextbookTitleView,
+    listenVocabularyCategories,
+} from '../../../logic/textbook/vocabulary';
 import state from '../../../state/state';
 import createElement from '../../../utils/createElement';
 import createGamesSection from '../main/createGamesSection';
@@ -119,6 +129,7 @@ function getWordCategories(parent: HTMLElement) {
             type: 'button',
             parentElement: categoriesWrapper,
             classes: ['word_category_button'],
+            attributes: [['id', `${item}`]],
         });
         createElement({
             type: 'h2',
@@ -128,6 +139,7 @@ function getWordCategories(parent: HTMLElement) {
         createElement({
             type: 'p',
             parentElement: btn,
+            classes: [item.split(' ').join('').toLocaleLowerCase()],
             text: `Words: 0`,
         });
         createElement({
@@ -375,7 +387,10 @@ export async function getTextbookPage() {
     getTextbookHeading(wrapper);
     getLevelsSection(wrapper);
     getWordCategories(wrapper);
+    listenVocabularyCategories();
     await getWordsSection(wrapper);
     getPaginationSection(wrapper);
     createGamesSection(wrapper);
+    await fillStateWithAllUserWords();
+    setDifficultyToCard();
 }

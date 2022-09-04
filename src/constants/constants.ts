@@ -143,3 +143,10 @@ export const GAMES_RESULTS = {
     sprintGame: 'Sprint Game: 0 / 0',
     audioCallGame: 'AudioCall Game: 0 / 0',
 };
+
+export const CATEGORIES_BRIDGE = {
+    'In Progress': 'weak',
+    Difficult: 'hard',
+    Deleted: 'deleted',
+    Learnt: 'learned',
+};
