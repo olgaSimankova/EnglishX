@@ -1,9 +1,36 @@
 import { getUserAggregatedWords, getWordStatistics, setUserWordStats } from '../../api/words';
-import { Word, WordStatus, WordStats } from '../../constants/types';
+import { CATEGORIES_BRIDGE, WORD_CATEGORIES } from '../../constants/constants';
+import { Word, WordStatus, WordStats, AggregatedResponse, aggregatedWords } from '../../constants/types';
 import state from '../../state/state';
 import { initDefaultGamesStats } from '../../utils/handleGameStatObjects';
 import { getWordData, getWordsCards } from '../../view/pages/textbook/createTextbookPage';
-import { listenWordCards } from './textbookEvents';
+import { listenWordCards, wordListenerCallback } from './textbookEvents';
+import toggleClassActiveButton from './utils/toggleActiveClass';
+
+function renderQuantityOfStatusWords(): void {
+    console.log('render');
+    WORD_CATEGORIES.forEach((category) => {
+        const cls = category.split(' ').join('').toLocaleLowerCase();
+        const el = document.querySelector(`.${cls}`);
+        const status = CATEGORIES_BRIDGE[category as keyof typeof CATEGORIES_BRIDGE];
+        if (el) {
+            el.textContent = `Words: ${state.user.aggregatedWords?.[status as keyof aggregatedWords]?.length || 0}`;
+        }
+    });
+}
+
+export const updateVocabularyWordsSection = (words: Word[]) => {
+    const wordsContainer = document.querySelector('.words__contaiter') as HTMLElement;
+    const wordsDetail = document.querySelector('.word__detail') as HTMLElement;
+    wordsContainer.innerHTML = '';
+    wordsDetail.innerHTML = '';
+    wordsContainer.removeEventListener('click', wordListenerCallback);
+    getWordsCards(words, wordsContainer);
+    if (words.length) {
+        getWordData(words[0], wordsDetail);
+    }
+    listenWordCards();
+};
 
 export function showHidePagination() {
     const pagination = document.querySelector('.pagination_wrapper') as HTMLElement;
@@ -22,9 +49,11 @@ export const listenTextbookTitleView = () => {
             state.textBook.view = 'vocabulary';
         }
         showHidePagination();
+        updateVocabularyWordsSection(state.textBook.wordsOnPage);
         vocabularyBtn.classList.toggle('active', event.target === vocabularyBtn);
         textbookBtn.classList.toggle('active', event.target === textbookBtn);
         wordCategories.classList.toggle('hidden', state.textBook.view === 'textbook');
+        renderQuantityOfStatusWords();
     });
 };
 
@@ -55,48 +84,50 @@ async function changeWordStatus(wordId: string, newStatus: WordStatus): Promise<
     }
 }
 
+function handlePaginationResult(data: AggregatedResponse): Word[] {
+    const output: Word[] = [];
+    Object.values(data).forEach((el) => {
+        output.push(...el.paginatedResults);
+    });
+    return output;
+}
+
+export async function fillStateWithAllUserWords(): Promise<void> {
+    await Promise.all(
+        Object.values(WordStatus).map(async (wordStatus) => {
+            const filter = encodeURIComponent(JSON.stringify({ 'userWord.difficulty': wordStatus }));
+            const words = await getUserAggregatedWords(state.textBook.currentLevel, filter);
+            if (words && state.user.aggregatedWords) {
+                state.user.aggregatedWords[wordStatus] = handlePaginationResult(words);
+            }
+        })
+    );
+}
+
 export const listenDifficultWordBtn = () => {
     const btn = document.querySelector('#add_difficult_word') as HTMLElement;
     btn.addEventListener('click', async () => {
         const { currentWordNo } = state.textBook;
         const cards = Array.from((document.querySelector('.words__contaiter') as HTMLElement).children);
         cards[+currentWordNo].classList.toggle('difficult', true);
-        changeWordStatus(state.textBook.wordsOnPage[+currentWordNo].id, WordStatus.hard);
-        const filter = encodeURIComponent(JSON.stringify({ 'userWord.difficulty': 'hard' }));
-        console.log(await getUserAggregatedWords(state.textBook.currentLevel, filter));
+        await changeWordStatus(state.textBook.wordsOnPage[+currentWordNo].id, WordStatus.hard);
+        await fillStateWithAllUserWords();
+        setTimeout(renderQuantityOfStatusWords, 2000); // server needs time to filter words
     });
 };
-
-export const updateVocabularyWordsSection = (words: Word[]) => {
-    const wordsSection = document.querySelector('.words__section') as HTMLElement;
-    wordsSection.innerHTML = '';
-    getWordsCards(words, wordsSection);
-    getWordData(words[0], wordsSection);
-    listenWordCards();
-};
-
-// export function fillStateWithAllUserWords() {
-//     Object.values(WordStatus).forEach(async (wordStatus) => {
-//         const filter = encodeURIComponent(JSON.stringify({ 'userWord.difficulty': wordStatus }));
-//         const words = await getUserAggregatedWords(state.textBook.currentLevel, filter);
-//         if (words) {
-//             state.user.aggregatedWords![wordStatus] = words[0].paginatedResults;
-//             console.log(words[0].paginatedResults);
-//             console.log(words[0].totalCount);
-//         }
-//     });
-// }
 
 export function listenVocabularyCategories() {
     const categories = document.querySelector('.word_categories_container') as HTMLElement;
     categories.addEventListener('click', (event: Event) => {
-        if ((event.target as HTMLElement).classList.contains('word_category_button')) {
-            // const wordCategory = (event.target as HTMLElement).dataset.id as keyof WordStatus;
-            if (state.user.aggregatedWords) {
-                // fillStateWithAllUserWords();
-                const words = state.user.aggregatedWords.hard;
-                updateVocabularyWordsSection(words || []);
-            }
+        const target = event.target as HTMLElement;
+        const { id } = target.id ? target : (target.parentNode as HTMLElement);
+        if (id) {
+            toggleClassActiveButton('word_category_button', id);
+            const words =
+                state.user.aggregatedWords?.[
+                    CATEGORIES_BRIDGE[id as keyof typeof CATEGORIES_BRIDGE] as keyof aggregatedWords
+                ];
+            updateVocabularyWordsSection(words || []);
         }
     });
 }

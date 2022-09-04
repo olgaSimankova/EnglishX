@@ -4,11 +4,16 @@ import { Difficulty, GamesStat, GameTags, Levels, Word } from '../../../constant
 import applyLocalStorage from '../../../logic/main/applyLocalStorage';
 import { checkTokenExpiration } from '../../../logic/main/authentication';
 import listenPagination from '../../../logic/textbook/pagination';
-import { listenLevelCards, listenTextbookAudio, listenWordCards } from '../../../logic/textbook/textbookEvents';
+import {
+    listenLevelCards,
+    listenTextbookAudio,
+    listenWordCards,
+    setDifficultyToCard,
+} from '../../../logic/textbook/textbookEvents';
 import getPaginationBtns from '../../../logic/textbook/utils/createPagination';
 import getGameStats from '../../../logic/textbook/utils/gameStats';
 import {
-    // fillStateWithAllUserWords,
+    fillStateWithAllUserWords,
     listenDifficultWordBtn,
     listenTextbookTitleView,
     listenVocabularyCategories,
@@ -121,7 +126,6 @@ function getWordCategories(parent: HTMLElement) {
         classes: ['word_categories_container'],
     });
     WORD_CATEGORIES.forEach((item) => {
-        // Object.keys(WordStatus).forEach((item) => {
         const btn = createElement({
             type: 'button',
             parentElement: categoriesWrapper,
@@ -136,6 +140,7 @@ function getWordCategories(parent: HTMLElement) {
         createElement({
             type: 'p',
             parentElement: btn,
+            classes: [item.split(' ').join('').toLocaleLowerCase()],
             text: `Words: 0`,
         });
         createElement({
@@ -382,7 +387,6 @@ export async function getTextbookPage() {
         parentElement: document.body,
         classes: ['wrapper'],
     });
-    // fillStateWithAllUserWords();
     getTextbookHeading(wrapper);
     getLevelsSection(wrapper);
     getWordCategories(wrapper);
@@ -390,4 +394,6 @@ export async function getTextbookPage() {
     await getWordsSection(wrapper);
     getPaginationSection(wrapper);
     createGamesSection(wrapper);
+    await fillStateWithAllUserWords();
+    setDifficultyToCard();
 }
