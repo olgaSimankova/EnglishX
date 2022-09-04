@@ -5,6 +5,11 @@ import { initDefaultGamesStats } from '../../utils/handleGameStatObjects';
 import { getWordData, getWordsCards } from '../../view/pages/textbook/createTextbookPage';
 import { listenWordCards } from './textbookEvents';
 
+export function showHidePagination() {
+    const pagination = document.querySelector('.pagination_wrapper') as HTMLElement;
+    pagination.classList.toggle('hidden', state.textBook.view === 'vocabulary');
+}
+
 export const listenTextbookTitleView = () => {
     const headingContainer = document.querySelector('.heading_section') as HTMLElement;
     headingContainer.addEventListener('click', (event: Event) => {
@@ -16,6 +21,7 @@ export const listenTextbookTitleView = () => {
         } else if (event.target === vocabularyBtn) {
             state.textBook.view = 'vocabulary';
         }
+        showHidePagination();
         vocabularyBtn.classList.toggle('active', event.target === vocabularyBtn);
         textbookBtn.classList.toggle('active', event.target === textbookBtn);
         wordCategories.classList.toggle('hidden', state.textBook.view === 'textbook');
