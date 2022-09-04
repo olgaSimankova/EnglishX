@@ -21,6 +21,7 @@ import {
 import state from '../../../state/state';
 import createElement from '../../../utils/createElement';
 import createGamesSection from '../main/createGamesSection';
+import toggleWordActions from '../../../logic/textbook/utils/toggleWordActions';
 
 function getTextbookHeading(parent: HTMLElement): void {
     const textbookHeading = createElement({
@@ -270,6 +271,14 @@ export function getWordData(word: Word, parent: HTMLElement, stats?: GamesStat) 
         classes: ['word__actions_btn', `words__actions_btn_${Levels[state.textBook.currentLevel]}`],
         text: 'already know it',
     });
+    createElement({
+        type: 'button',
+        parentElement: wordActions,
+        classes: ['word__actions_btn', `words__actions_btn_${Levels[state.textBook.currentLevel]}`, 'hidden'],
+        text: 'restore',
+        attributes: [['id', 'restore_word']],
+    });
+    if (state.textBook.view === 'vocabulary') toggleWordActions();
     if (!state.user.isAuthenticated || !checkTokenExpiration()) wordActions.classList.add('hidden');
 
     const wordDescription = createElement({

@@ -5,6 +5,7 @@ import state from '../../state/state';
 import { initDefaultGamesStats } from '../../utils/handleGameStatObjects';
 import { getWordData, getWordsCards } from '../../view/pages/textbook/createTextbookPage';
 import { listenWordCards, wordListenerCallback } from './textbookEvents';
+import toggleWordActions from './utils/toggleWordActions';
 
 function renderQuantityOfStatusWords(): void {
     console.log('render');
@@ -32,6 +33,7 @@ export const listenTextbookTitleView = () => {
         vocabularyBtn.classList.toggle('active', event.target === vocabularyBtn);
         textbookBtn.classList.toggle('active', event.target === textbookBtn);
         wordCategories.classList.toggle('hidden', state.textBook.view === 'textbook');
+        toggleWordActions();
         renderQuantityOfStatusWords();
     });
 };
