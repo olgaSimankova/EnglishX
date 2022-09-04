@@ -147,6 +147,10 @@
 
   // .footer__message
   &__message {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 6px;
     text-align: center;
     font-weight: 400;
     font-size: 12px;
@@ -164,6 +168,13 @@
         left: 2px;
       }
     }
+  }
+
+  &__course {
+    display: inline-block;
+    width: 70px;
+    height: 20px;
+    background: center/contain no-repeat url("../../../../assets/icons/rsschool.svg");
   }
 
   // .footer__got-top

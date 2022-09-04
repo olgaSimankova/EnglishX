@@ -45,9 +45,11 @@ function listenRegisterModal(): void {
     });
 
     const registerModal = document.getElementById('registration') as HTMLElement;
+    const spinner = document.querySelector('.submit-spinner__registr') as HTMLElement;
     registerModal.addEventListener('click', async (event: Event) => {
         if ((event.target as HTMLInputElement).type === 'submit') {
             event.preventDefault();
+            spinner.classList.toggle('submit-spinner_hide', false);
             const registerForm = document.querySelector('#registration-form') as HTMLFormElement;
             const userName = (document.querySelector('#name-field') as HTMLInputElement).value;
             if (isEmailValid(registerForm.email.value) && isPasswordValid(registerForm.password.value)) {
@@ -56,14 +58,18 @@ function listenRegisterModal(): void {
                     email: registerForm.email.value,
                     password: registerForm.password.value,
                 }).then((user) => {
-                    setLocalStorage('userId', user.userId);
-                    setLocalStorage('token', user.token);
-                    setLocalStorage('isAuthenticated', 'true');
-                    toggleHeaderLoginView();
-                    deleteRegisterModal();
-                    toggleModal(false);
+                    if (user) {
+                        setLocalStorage('userId', user.userId);
+                        setLocalStorage('token', user.token);
+                        setLocalStorage('isAuthenticated', 'true');
+                        toggleHeaderLoginView();
+                        deleteRegisterModal();
+                        toggleModal(false);
+                    }
+                    spinner.classList.toggle('submit-spinner_hide', true);
                 });
             } else {
+                spinner.classList.toggle('submit-spinner_hide', true);
                 console.log('Incorrect email/password');
             }
         }

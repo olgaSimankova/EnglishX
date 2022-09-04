@@ -113,6 +113,11 @@ export default function renderRegistrationModal() {
         classes: ['login-form__links-wrapper'],
     });
     createElement({
+        type: 'span',
+        parentElement: linksWrapper,
+        classes: ['submit-spinner', 'submit-spinner__registr', 'submit-spinner_hide'],
+    });
+    createElement({
         type: 'input',
         parentElement: linksWrapper,
         attributes: [
@@ -126,6 +131,14 @@ export default function renderRegistrationModal() {
         parentElement: linksWrapper,
         text: 'Remember me',
         attributes: [['for', 'keep_signed_in']],
+    });
+
+    createElement({
+        type: 'div',
+        parentElement: form,
+        classes: ['user-exist'],
+        text: 'user already exists',
+        attributes: [['style', 'visibility:hidden']],
     });
 
     createElement({

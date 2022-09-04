@@ -54,21 +54,25 @@ function listenLoginModal(): void {
     });
 
     const modal = document.querySelector('.modal') as HTMLElement;
+    const spinner = document.querySelector('.submit-spinner') as HTMLElement;
     modal.addEventListener('click', async (event: Event) => {
         if ((event.target as HTMLInputElement).type === 'submit') {
             event.preventDefault();
             const loginForm = document.querySelector('form') as HTMLFormElement;
+            spinner.classList.toggle('submit-spinner_hide', false);
             try {
                 const loginResponse = await loginUser({
                     email: loginForm.email.value,
                     password: loginForm.password.value,
                 });
+                spinner.classList.toggle('submit-spinner_hide', true);
                 toggleModal(false);
                 saveTokenAndData(loginResponse);
                 toggleHeaderLoginView();
                 window.location.reload(); // Пока так. Позже сюда пойдет функция, изменяющая вид текстбука при логине.
             } catch {
                 toggleFailLoginMessage(true);
+                spinner.classList.toggle('submit-spinner_hide', true);
             }
         }
     });
