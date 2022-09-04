@@ -33,6 +33,14 @@ const updateVocabularyWordsSection = async (words: Word[]) => {
     setDifficultyToCard();
 };
 
+export async function setWordsToContainer(status: WordStatus): Promise<void> {
+    const currentWords = state.user.aggregatedWords?.[status] || [];
+    state.textBook.currentWordStatus = status;
+    await updateVocabularyWordsSection(currentWords);
+    const id = Object.entries(CATEGORIES_BRIDGE).filter((el) => el[1] === status)[0][0];
+    toggleClassActiveButton('word_category_button', id);
+}
+
 export const listenTextbookTitleView = () => {
     const headingContainer = document.querySelector('.heading_section') as HTMLElement;
     headingContainer.addEventListener('click', async (event: Event) => {
@@ -41,10 +49,11 @@ export const listenTextbookTitleView = () => {
         const wordCategories = document.querySelector('.word_categories_container') as HTMLElement;
         if (event.target === textbookBtn) {
             state.textBook.view = 'textbook';
+            await updateVocabularyWordsSection(state.textBook.wordsOnPage);
         } else if (event.target === vocabularyBtn) {
             state.textBook.view = 'vocabulary';
+            setWordsToContainer(WordStatus.weak);
         }
-        await updateVocabularyWordsSection(state.textBook.wordsOnPage);
         vocabularyBtn.classList.toggle('active', event.target === vocabularyBtn);
         textbookBtn.classList.toggle('active', event.target === textbookBtn);
         wordCategories.classList.toggle('hidden', state.textBook.view === 'textbook');
@@ -118,11 +127,10 @@ export function listenVocabularyCategories() {
         const { id } = target.id ? target : (target.parentNode as HTMLElement);
         if (id) {
             toggleClassActiveButton('word_category_button', id);
-            const words =
-                state.user.aggregatedWords?.[
-                    CATEGORIES_BRIDGE[id as keyof typeof CATEGORIES_BRIDGE] as keyof aggregatedWords
-                ];
+            const currentWordStatus = CATEGORIES_BRIDGE[id as keyof typeof CATEGORIES_BRIDGE];
+            const words = state.user.aggregatedWords?.[currentWordStatus as keyof aggregatedWords];
             updateVocabularyWordsSection(words || []);
+            state.textBook.currentWordStatus = WordStatus[currentWordStatus as keyof typeof WordStatus];
         }
     });
 }
