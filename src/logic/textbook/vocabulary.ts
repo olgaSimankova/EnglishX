@@ -1,5 +1,5 @@
 import { getUserAggregatedWords, getWordStatistics, setUserWordStats } from '../../api/words';
-import { CATEGORIES_BRIDGE, WORD_CATEGORIES } from '../../constants/constants';
+import { CATEGORIES_BRIDGE, GAMES_LINKS, WORD_CATEGORIES } from '../../constants/constants';
 import { Word, WordStatus, WordStats, AggregatedResponse, aggregatedWords } from '../../constants/types';
 import state from '../../state/state';
 import { initDefaultGamesStats } from '../../utils/handleGameStatObjects';
@@ -32,8 +32,22 @@ const updateVocabularyWordsSection = async (words: Word[]) => {
     setDifficultyToCard();
 };
 
+function makeGamesInactive(flag: boolean): void {
+    const games = document.querySelectorAll('.game');
+    games.forEach((game, i) => {
+        game.classList.toggle('inactive', flag);
+        game.setAttribute('href', flag ? '#' : GAMES_LINKS[i]);
+    });
+}
+
 export async function setWordsToContainer(status: WordStatus): Promise<void> {
     const currentWords = state.user.aggregatedWords?.[status] || [];
+    const { currentWordStatus } = state.textBook;
+    if (!currentWords.length || currentWordStatus !== WordStatus.weak) {
+        makeGamesInactive(true);
+    } else {
+        makeGamesInactive(false);
+    }
     state.textBook.currentWordStatus = status;
     await updateVocabularyWordsSection(currentWords);
     const id = Object.entries(CATEGORIES_BRIDGE).filter((el) => el[1] === status)[0][0];
@@ -127,9 +141,8 @@ export function listenVocabularyCategories() {
         if (id) {
             toggleClassActiveButton('word_category_button', id);
             const currentWordStatus = CATEGORIES_BRIDGE[id as keyof typeof CATEGORIES_BRIDGE];
-            const words = state.user.aggregatedWords?.[currentWordStatus as keyof aggregatedWords];
-            updateVocabularyWordsSection(words || []);
             state.textBook.currentWordStatus = WordStatus[currentWordStatus as keyof typeof WordStatus];
+            setWordsToContainer(state.textBook.currentWordStatus);
         }
     });
 }
