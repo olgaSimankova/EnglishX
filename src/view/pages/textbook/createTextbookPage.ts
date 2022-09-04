@@ -126,7 +126,6 @@ function getWordCategories(parent: HTMLElement) {
         classes: ['word_categories_container'],
     });
     WORD_CATEGORIES.forEach((item) => {
-        // Object.keys(WordStatus).forEach((item) => {
         const btn = createElement({
             type: 'button',
             parentElement: categoriesWrapper,
@@ -394,7 +393,6 @@ export async function getTextbookPage() {
         parentElement: document.body,
         classes: ['wrapper'],
     });
-    fillStateWithAllUserWords();
     getTextbookHeading(wrapper);
     getLevelsSection(wrapper);
     getWordCategories(wrapper);

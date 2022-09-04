@@ -1,5 +1,4 @@
 import { getWords, getWordStatistics } from '../../api/words';
-import { WORDS } from '../../constants/constants';
 import { Word, WordStatus } from '../../constants/types';
 import state from '../../state/state';
 import { initDefaultGamesStats } from '../../utils/handleGameStatObjects';
