@@ -5,6 +5,7 @@ import state from '../../state/state';
 import { initDefaultGamesStats } from '../../utils/handleGameStatObjects';
 import { getWordData, getWordsCards } from '../../view/pages/textbook/createTextbookPage';
 import { listenWordCards, wordListenerCallback } from './textbookEvents';
+import toggleClassActiveButton from './utils/toggleActiveClass';
 
 function renderQuantityOfStatusWords(): void {
     console.log('render');
@@ -18,6 +19,19 @@ function renderQuantityOfStatusWords(): void {
     });
 }
 
+const updateVocabularyWordsSection = async (words: Word[]) => {
+    const wordsContainer = document.querySelector('.words__contaiter') as HTMLElement;
+    const wordsDetail = document.querySelector('.word__detail') as HTMLElement;
+    wordsContainer.innerHTML = '';
+    wordsDetail.innerHTML = '';
+    wordsContainer.removeEventListener('click', wordListenerCallback);
+    getWordsCards(words, wordsContainer);
+    if (words.length) {
+        getWordData(words[0], wordsDetail);
+    }
+    listenWordCards();
+};
+
 export const listenTextbookTitleView = () => {
     const headingContainer = document.querySelector('.heading_section') as HTMLElement;
     headingContainer.addEventListener('click', (event: Event) => {
@@ -29,6 +43,7 @@ export const listenTextbookTitleView = () => {
         } else if (event.target === vocabularyBtn) {
             state.textBook.view = 'vocabulary';
         }
+        updateVocabularyWordsSection(state.textBook.wordsOnPage);
         vocabularyBtn.classList.toggle('active', event.target === vocabularyBtn);
         textbookBtn.classList.toggle('active', event.target === textbookBtn);
         wordCategories.classList.toggle('hidden', state.textBook.view === 'textbook');
@@ -95,26 +110,13 @@ export const listenDifficultWordBtn = () => {
     });
 };
 
-const updateVocabularyWordsSection = async (words: Word[]) => {
-    const wordsSection = document.querySelector('.words__section') as HTMLElement;
-    const wordsContainer = document.querySelector('.words__contaiter') as HTMLElement;
-    const wordsDetail = document.querySelector('.word__detail') as HTMLElement;
-    wordsContainer.innerHTML = '';
-    wordsDetail.innerHTML = '';
-    wordsContainer.removeEventListener('click', wordListenerCallback);
-    getWordsCards(words, wordsContainer);
-    if (words.length) {
-        getWordData(words[0], wordsDetail);
-    }
-    listenWordCards();
-};
-
 export function listenVocabularyCategories() {
     const categories = document.querySelector('.word_categories_container') as HTMLElement;
     categories.addEventListener('click', (event: Event) => {
-        const { id } = (event.target as HTMLElement).parentNode as HTMLElement;
-        // for Olia,  help me please :)
+        const target = event.target as HTMLElement;
+        const { id } = target.id ? target : (target.parentNode as HTMLElement);
         if (id) {
+            toggleClassActiveButton('word_category_button', id);
             const words =
                 state.user.aggregatedWords?.[
                     CATEGORIES_BRIDGE[id as keyof typeof CATEGORIES_BRIDGE] as keyof aggregatedWords
