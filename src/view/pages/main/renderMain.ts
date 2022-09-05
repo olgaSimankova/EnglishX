@@ -8,7 +8,7 @@ import createProcessSection from './createProcessSection';
 import createGamesSection from './createGamesSection';
 import createFooter from '../../common/createFooter';
 import { toggleHeaderLoginView } from '../../../logic/main/loginModal';
-import applyLocalStorage from '../../../utils/localStorage';
+import applyLocalStorage, { setLocalStorage } from '../../../utils/localStorage';
 
 export default function renderMain(): void {
     const heroSection = createElement({
@@ -27,4 +27,5 @@ export default function renderMain(): void {
     createProcessSection(document.body);
     createGamesSection(document.body);
     createFooter(document.body);
+    setLocalStorage('isFromTextBook', 'false');
 }

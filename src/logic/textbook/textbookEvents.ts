@@ -8,6 +8,7 @@ import getPaginationBtns from './utils/createPagination';
 import { toggleActivePage } from './utils/isWordsAvailableForGame';
 import { fillStateWithAllUserWords, renderQuantityOfStatusWords, setWordsToContainer } from './vocabulary';
 import removeDeletedWords from './utils/removeDeletedWords';
+import { setLocalStorage } from '../../utils/localStorage';
 
 async function updateWordData(word: Word) {
     const wordData = document.querySelector('.word__detail') as HTMLElement;
@@ -104,6 +105,7 @@ export function listenLevelCards() {
     levelsCards.forEach((card) =>
         card.addEventListener('click', async () => {
             state.textBook.currentLevel = +card.id;
+            setLocalStorage('currentWordsLevel', card.id);
             state.textBook.currentPage = 1;
             state.textBook.currentWordNo = '0';
             updateLevelColor();
