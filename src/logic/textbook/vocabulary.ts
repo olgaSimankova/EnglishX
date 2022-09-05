@@ -142,13 +142,11 @@ export async function listenWordActionsButtons(): Promise<void> {
     const wordActions = document.querySelector('.word__actions') as HTMLElement;
     wordActions.addEventListener('click', async (event: Event) => {
         const button = (event.target as HTMLElement).id;
-
         if (button) {
             const { currentWordNo } = state.textBook;
             const cards = Array.from((document.querySelector('.words__contaiter') as HTMLElement).children);
             const currentStatus = state.textBook.currentWordStatus;
             const currentWords = state.user.aggregatedWords?.[currentStatus];
-            console.log(button);
             switch (button) {
                 case WordActions.difficult:
                     cards[+currentWordNo].classList.toggle('difficult', true);
