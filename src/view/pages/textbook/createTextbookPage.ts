@@ -384,7 +384,6 @@ export async function getWordsSection(parent: HTMLElement): Promise<void> {
         parentElement: wordInfoWrapper,
         classes: ['word__detail'],
     });
-    console.log(wordsContainer.innerHTML);
     getWordData(state.textBook.wordsOnPage[0], wordInfo);
     listenWordCards();
 }

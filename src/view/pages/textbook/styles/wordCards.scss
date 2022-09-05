@@ -8,7 +8,7 @@
 
 .words__section {
     display: flex;
-    gap: 25px;
+    justify-content: space-between;
 }
 
 .words__contaiter {
@@ -90,7 +90,8 @@
         width: 30px;
         left: 8rem;
         background: center/contain no-repeat url(../../../../assets/img/learnt-word.png);
-        
+        filter: grayscale(1);
+        opacity: 1.6;
     }
 }
 
