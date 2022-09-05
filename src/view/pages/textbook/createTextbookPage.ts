@@ -12,7 +12,7 @@ import {
 } from '../../../logic/textbook/textbookEvents';
 import getPaginationBtns from '../../../logic/textbook/utils/createPagination';
 import getGameStats from '../../../logic/textbook/utils/gameStats';
-import isWordsAvailableForGame, { toggleActivePage } from '../../../logic/textbook/utils/isWordsAvailableForGame';
+import { toggleActivePage } from '../../../logic/textbook/utils/isWordsAvailableForGame';
 import {
     fillStateWithAllUserWords,
     listenWordActionsButtons,

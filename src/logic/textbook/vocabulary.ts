@@ -45,7 +45,6 @@ export async function setWordsToContainer(status: WordStatus): Promise<void> {
     const currentWords = state.user.aggregatedWords?.[status] || [];
     state.textBook.currentWordStatus = status;
     const { currentWordStatus } = state.textBook;
-    console.log(currentWords);
     if (!currentWords.length || currentWordStatus === WordStatus.deleted || currentWordStatus === WordStatus.learned) {
         makeGamesInactive(true);
     } else {
