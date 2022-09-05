@@ -1,5 +1,6 @@
+import { toggleActivePage } from './utils/isWordsAvailableForGame';
 import { getUserAggregatedWords, getWordStatistics, setUserWordStats } from '../../api/words';
-import { CATEGORIES_BRIDGE, WORD_CATEGORIES } from '../../constants/constants';
+import { CATEGORIES_BRIDGE, GAMES_LINKS, WORD_CATEGORIES } from '../../constants/constants';
 import { Word, WordStatus, WordStats, AggregatedResponse, aggregatedWords, WordActions } from '../../constants/types';
 import state from '../../state/state';
 import { initDefaultGamesStats } from '../../utils/handleGameStatObjects';
@@ -8,7 +9,6 @@ import { listenWordCards, setDifficultyToCard, updateWordsContainer, wordListene
 import toggleClassActiveButton from './utils/toggleActiveClass';
 
 export function renderQuantityOfStatusWords(): void {
-    console.log('render');
     WORD_CATEGORIES.forEach((category) => {
         const cls = category.split(' ').join('').toLocaleLowerCase();
         const el = document.querySelector(`.${cls}`);
@@ -19,7 +19,7 @@ export function renderQuantityOfStatusWords(): void {
     });
 }
 
-export const updateVocabularyWordsSection = (words: Word[]) => {
+const updateVocabularyWordsSection = async (words: Word[]) => {
     const wordsContainer = document.querySelector('.words__contaiter') as HTMLElement;
     const wordsDetail = document.querySelector('.word__detail') as HTMLElement;
     wordsContainer.innerHTML = '';
@@ -32,6 +32,28 @@ export const updateVocabularyWordsSection = (words: Word[]) => {
     listenWordCards();
     setDifficultyToCard();
 };
+
+export function makeGamesInactive(flag: boolean): void {
+    const games = document.querySelectorAll('.game');
+    games.forEach((game, i) => {
+        game.classList.toggle('inactive', flag);
+        game.setAttribute('href', flag ? '#' : GAMES_LINKS[i]);
+    });
+}
+
+export async function setWordsToContainer(status: WordStatus): Promise<void> {
+    const currentWords = state.user.aggregatedWords?.[status] || [];
+    state.textBook.currentWordStatus = status;
+    const { currentWordStatus } = state.textBook;
+    if (!currentWords.length || currentWordStatus === WordStatus.deleted || currentWordStatus === WordStatus.learned) {
+        makeGamesInactive(true);
+    } else {
+        makeGamesInactive(false);
+    }
+    await updateVocabularyWordsSection(currentWords);
+    const id = Object.entries(CATEGORIES_BRIDGE).filter((el) => el[1] === status)[0][0];
+    toggleClassActiveButton('word_category_button', id);
+}
 
 export function showHidePagination() {
     const pagination = document.querySelector('.pagination_wrapper') as HTMLElement;
@@ -46,8 +68,13 @@ export const listenTextbookTitleView = () => {
         const wordCategories = document.querySelector('.word_categories_container') as HTMLElement;
         if (event.target === textbookBtn) {
             state.textBook.view = 'textbook';
+            await updateVocabularyWordsSection(state.textBook.wordsOnPage);
+            makeGamesInactive(false);
+            toggleActivePage();
         } else if (event.target === vocabularyBtn) {
             state.textBook.view = 'vocabulary';
+            setWordsToContainer(WordStatus.weak);
+            toggleActivePage(true);
         }
         showHidePagination();
         updateVocabularyWordsSection(state.textBook.wordsOnPage);
@@ -141,11 +168,9 @@ export function listenVocabularyCategories() {
         const { id } = target.id ? target : (target.parentNode as HTMLElement);
         if (id) {
             toggleClassActiveButton('word_category_button', id);
-            const words =
-                state.user.aggregatedWords?.[
-                    CATEGORIES_BRIDGE[id as keyof typeof CATEGORIES_BRIDGE] as keyof aggregatedWords
-                ];
-            updateVocabularyWordsSection(words || []);
+            const currentWordStatus = CATEGORIES_BRIDGE[id as keyof typeof CATEGORIES_BRIDGE];
+            state.textBook.currentWordStatus = WordStatus[currentWordStatus as keyof typeof WordStatus];
+            setWordsToContainer(state.textBook.currentWordStatus);
         }
     });
 }

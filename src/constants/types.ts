@@ -85,12 +85,20 @@ export interface AudioCall {
     currentWordId: string;
 }
 
+export enum WordStatus {
+    weak = 'weak',
+    hard = 'hard',
+    deleted = 'deleted',
+    learned = 'learned',
+}
+
 export interface Textbook {
     view: string;
     currentLevel: number;
     currentPage: number;
     currentWordNo: string;
     wordsOnPage: Word[];
+    currentWordStatus: WordStatus;
 }
 
 export interface ControlsState {
@@ -193,13 +201,6 @@ export interface UserStatsResponse {
     learnedWords: number;
     optional: OptionalUser;
     id?: string;
-}
-
-export enum WordStatus {
-    weak = 'weak',
-    hard = 'hard',
-    deleted = 'deleted',
-    learned = 'learned',
 }
 
 export interface GameStat {
