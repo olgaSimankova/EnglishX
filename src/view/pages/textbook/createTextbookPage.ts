@@ -375,10 +375,13 @@ export async function getWordsSection(parent: HTMLElement): Promise<void> {
         classes: ['words__contaiter'],
     });
     getWordsCards(state.textBook.wordsOnPage, wordsContainer);
-
-    const wordInfo = createElement({
+    const wordInfoWrapper = createElement({
         type: 'div',
         parentElement: wordsSection,
+    });
+    const wordInfo = createElement({
+        type: 'div',
+        parentElement: wordInfoWrapper,
         classes: ['word__detail'],
     });
     getWordData(state.textBook.wordsOnPage[0], wordInfo);
