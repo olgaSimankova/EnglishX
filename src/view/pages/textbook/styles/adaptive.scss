@@ -44,8 +44,15 @@
 }
 
 @media (max-width: 560px) {
+    body {
+        width: fit-content;
+    }
     .header {
         padding: 15px 10px;
+    }
+    .icon-menu {
+        top: 24px;
+        right: 5px;
     }
     .levels_wrapper {
         width: 320px;
@@ -66,8 +73,13 @@
         }
     }
     .pagination{
-        width: 315px;
+        width: 290px;
         margin: 0;
+        .pagination_btn, .pagination_element {
+            width: 31px;
+    height: 31px;
+
+        }
     }
     .word_categories_container{
         justify-content: center;
