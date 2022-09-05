@@ -49,28 +49,28 @@ export const INVALID_COLOR_RED = 'rgb(249, 211, 211)';
 export const TEAM_INFO = [
     {
         name: 'Olga Simankova',
-        descr: 'Founder and CEO',
+        descr: 'Developer. Made server deploy, authorization/registration, textbook',
         github: 'https://github.com/olgasimankova',
         linkedIn: '#',
     },
 
     {
         name: 'Alexander Marunich',
-        descr: 'Founder and Program Director',
+        descr: 'TeamLead/Developer. Made sprint game, statistics and textbook pages',
         github: 'https://github.com/freshman10',
         linkedIn: '#',
     },
 
     {
         name: 'Dmitry Nester',
-        descr: 'Marketer, Curator of Marketing Course',
+        descr: 'Developer. Made main page design and layout, audio call game',
         github: 'https://github.com/nester-dev',
         linkedIn: 'https://www.linkedin.com/in/dmitriy-nester-a6aa55228',
     },
 
     {
         name: 'Aleh Harnizonau',
-        descr: 'PM, Curator of Management Course',
+        descr: 'Mentor. Best mentor you can only dream. Constant communication with the team, inestimable support',
         github: 'https://github.com/alehharnizonau',
         linkedIn: 'https://www.linkedin.com/in/aleh-harnizonau-0163801b2/',
     },
