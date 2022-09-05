@@ -60,21 +60,6 @@ function renderLoginForm(parentElement: HTMLElement) {
     });
 
     createElement({
-        type: 'input',
-        parentElement: linksWrapper,
-        attributes: [
-            ['type', 'checkbox'],
-            ['name', 'keep_signed_in'],
-            ['id', 'keep_signed_in'],
-        ],
-    });
-    createElement({
-        type: 'label',
-        parentElement: linksWrapper,
-        text: 'Keep me signed in',
-        attributes: [['for', 'keep_signed_in']],
-    });
-    createElement({
         type: 'a',
         parentElement: linksWrapper,
         classes: ['link_colored', 'link_forgot_pass'],
