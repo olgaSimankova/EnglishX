@@ -1,5 +1,5 @@
 import { toggleActivePage } from './utils/isWordsAvailableForGame';
-import { getUserAggregatedWords, getWordStatistics, setUserWordStats } from '../../api/words';
+import { getUserAggregatedWords, getWords, getWordStatistics, setUserWordStats } from '../../api/words';
 import { CATEGORIES_BRIDGE, GAMES_LINKS, WORD_CATEGORIES } from '../../constants/constants';
 import { Word, WordStatus, WordStats, AggregatedResponse, aggregatedWords, WordActions } from '../../constants/types';
 import state from '../../state/state';
@@ -7,6 +7,7 @@ import { initDefaultGamesStats } from '../../utils/handleGameStatObjects';
 import { getWordData, getWordsCards } from '../../view/pages/textbook/createTextbookPage';
 import { listenWordCards, setDifficultyToCard, updateWordsContainer, wordListenerCallback } from './textbookEvents';
 import toggleClassActiveButton from './utils/toggleActiveClass';
+import getWordIdByName from './utils/getWordAttributes';
 
 export function renderQuantityOfStatusWords(): void {
     WORD_CATEGORIES.forEach((category) => {
@@ -42,8 +43,8 @@ export function makeGamesInactive(flag: boolean): void {
 }
 
 export async function setWordsToContainer(status: WordStatus): Promise<void> {
-    const currentWords = state.user.aggregatedWords?.[status] || [];
     state.textBook.currentWordStatus = status;
+    const currentWords = state.user.aggregatedWords?.[status] || [];
     const { currentWordStatus } = state.textBook;
     if (!currentWords.length || currentWordStatus === WordStatus.deleted || currentWordStatus === WordStatus.learned) {
         makeGamesInactive(true);
@@ -53,6 +54,7 @@ export async function setWordsToContainer(status: WordStatus): Promise<void> {
     await updateVocabularyWordsSection(currentWords);
     const id = Object.entries(CATEGORIES_BRIDGE).filter((el) => el[1] === status)[0][0];
     toggleClassActiveButton('word_category_button', id);
+    state.textBook.currentWordNo = '0';
 }
 
 export function showHidePagination() {
@@ -68,6 +70,7 @@ export const listenTextbookTitleView = () => {
         const wordCategories = document.querySelector('.word_categories_container') as HTMLElement;
         if (event.target === textbookBtn) {
             state.textBook.view = 'textbook';
+            state.textBook.wordsOnPage = await getWords(state.textBook.currentLevel, state.textBook.currentPage - 1);
             await updateVocabularyWordsSection(state.textBook.wordsOnPage);
             makeGamesInactive(false);
             toggleActivePage();
@@ -77,7 +80,6 @@ export const listenTextbookTitleView = () => {
             toggleActivePage(true);
         }
         showHidePagination();
-        updateVocabularyWordsSection(state.textBook.wordsOnPage);
         vocabularyBtn.classList.toggle('active', event.target === vocabularyBtn);
         textbookBtn.classList.toggle('active', event.target === textbookBtn);
         wordCategories.classList.toggle('hidden', state.textBook.view === 'textbook');
@@ -89,11 +91,7 @@ async function changeWordStatus(wordId: string, newStatus: WordStatus): Promise<
     const currentStats = await getWordStatistics(wordId);
     delete currentStats?.id;
     delete currentStats?.wordId;
-    if (
-        !currentStats ||
-        (currentStats && !currentStats.optional?.games) ||
-        (currentStats.optional?.games && newStatus === WordStatus.deleted)
-    ) {
+    if (!currentStats || (currentStats && !currentStats.optional?.games)) {
         const opt: WordStats = {
             difficulty: newStatus,
             optional: {
@@ -106,9 +104,17 @@ async function changeWordStatus(wordId: string, newStatus: WordStatus): Promise<
         currentStats.optional.games.sprintGame.streak = 0;
         currentStats.difficulty = newStatus;
         setUserWordStats(wordId, currentStats, true);
-    } else if (currentStats.optional?.games && newStatus === WordStatus.weak) {
+    } else if (currentStats.optional?.games && (newStatus === WordStatus.weak || newStatus === WordStatus.learned)) {
         currentStats.difficulty = newStatus;
         setUserWordStats(wordId, currentStats, true);
+    } else if (newStatus === WordStatus.deleted) {
+        const opt: WordStats = {
+            difficulty: newStatus,
+            optional: {
+                games: initDefaultGamesStats(),
+            },
+        };
+        setUserWordStats(wordId, opt, true);
     }
 }
 
@@ -140,7 +146,9 @@ export async function listenWordActionsButtons(): Promise<void> {
         if (button) {
             const { currentWordNo } = state.textBook;
             const cards = Array.from((document.querySelector('.words__contaiter') as HTMLElement).children);
-
+            const currentStatus = state.textBook.currentWordStatus;
+            const currentWords = state.user.aggregatedWords?.[currentStatus];
+            console.log(button);
             switch (button) {
                 case WordActions.difficult:
                     cards[+currentWordNo].classList.toggle('difficult', true);
@@ -149,14 +157,30 @@ export async function listenWordActionsButtons(): Promise<void> {
                     break;
                 case WordActions.delete:
                     await changeWordStatus(state.textBook.wordsOnPage[+currentWordNo].id, WordStatus.deleted);
-                    await fillStateWithAllUserWords;
+                    await fillStateWithAllUserWords();
                     await updateWordsContainer();
                     break;
-
+                case WordActions.learnt:
+                    cards[+currentWordNo].classList.toggle('difficult', false);
+                    console.log(state.textBook.wordsOnPage[+currentWordNo].id);
+                    await changeWordStatus(state.textBook.wordsOnPage[+currentWordNo].id, WordStatus.learned);
+                    await fillStateWithAllUserWords();
+                    break;
+                case 'restore_word':
+                    if (currentWords) {
+                        console.log(currentWords, currentWordNo);
+                        await changeWordStatus(
+                            getWordIdByName(currentWords, currentWords[+currentWordNo].word),
+                            WordStatus.weak
+                        );
+                        await fillStateWithAllUserWords();
+                        await setWordsToContainer(currentStatus);
+                    }
+                    break;
                 default:
                     break;
             }
-            setTimeout(renderQuantityOfStatusWords, 2000); // server needs time to filter words
+            renderQuantityOfStatusWords(); // server needs time to filter words
         }
     });
 }
@@ -171,6 +195,7 @@ export function listenVocabularyCategories() {
             const currentWordStatus = CATEGORIES_BRIDGE[id as keyof typeof CATEGORIES_BRIDGE];
             state.textBook.currentWordStatus = WordStatus[currentWordStatus as keyof typeof WordStatus];
             setWordsToContainer(state.textBook.currentWordStatus);
+            state.textBook.currentWordNo = '0';
         }
     });
 }

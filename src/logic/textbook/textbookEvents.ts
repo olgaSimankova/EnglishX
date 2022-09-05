@@ -82,7 +82,14 @@ export const wordListenerCallback = (event: Event) => {
     const btn = (event.target as HTMLElement).closest('.words__card');
     if (btn) {
         state.textBook.currentWordNo = btn.id;
-        updateWordData(state.textBook.wordsOnPage[+btn.id]);
+        if (state.textBook.view === 'textbook') {
+            updateWordData(state.textBook.wordsOnPage[+btn.id]);
+        } else if (state.user.aggregatedWords) {
+            const word = state.user.aggregatedWords[state.textBook.currentWordStatus]?.[+btn.id];
+            if (word) {
+                updateWordData(word);
+            }
+        }
         updateWordsColor();
     }
 };
@@ -98,6 +105,7 @@ export function listenLevelCards() {
         card.addEventListener('click', async () => {
             state.textBook.currentLevel = +card.id;
             state.textBook.currentPage = 1;
+            state.textBook.currentWordNo = '0';
             updateLevelColor();
             await fillStateWithAllUserWords();
             if (state.textBook.view === 'vocabulary') {
