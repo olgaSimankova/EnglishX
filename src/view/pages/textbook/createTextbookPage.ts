@@ -271,8 +271,8 @@ export function getWordData(word: Word, parent: HTMLElement, stats?: GamesStat) 
         type: 'button',
         parentElement: wordActions,
         classes: ['word__actions_btn', `words__actions_btn_${Levels[state.textBook.currentLevel]}`],
-        text: 'already know it',
         attributes: [['id', 'learnt_word']],
+        text: 'learnt word',
     });
     createElement({
         type: 'button',
