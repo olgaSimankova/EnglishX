@@ -70,5 +70,11 @@ opacity: 0.6;
     display: none;
 }
 
+.center-window {
+    position:fixed;
+    top:50%;
+    left:50%;
+}
+
 @import 'adaptive.scss';
 
