@@ -123,6 +123,7 @@ export interface User {
     token?: string;
     refreshToken?: string;
     aggregatedWords?: aggregatedWords;
+    isFromTextBook?: boolean;
 }
 
 export interface StateInterface {

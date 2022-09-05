@@ -1,4 +1,5 @@
 import state from '../../state/state';
+import { setLocalStorage } from '../../utils/localStorage';
 import { updateWordsContainer } from './textbookEvents';
 import getPaginationBtns from './utils/createPagination';
 
@@ -14,6 +15,7 @@ export default function listenPagination(): void {
         } else {
             state.textBook.currentPage = Number(target.innerText);
         }
+        setLocalStorage('currentTextBookPage', state.textBook.currentPage.toString());
         pagination.innerHTML = '';
         getPaginationBtns(pagination);
         await updateWordsContainer();

@@ -44,8 +44,10 @@ export async function setUserWordStats(
             },
             body: JSON.stringify(optional),
         });
+        console.log(response);
         return response.json();
     }
+    console.log(456);
     return undefined;
 }
 
