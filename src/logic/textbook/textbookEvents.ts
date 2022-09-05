@@ -37,7 +37,7 @@ export function setDifficultyToCard(): void {
         if (engWord) {
             const status = findWordInCategory(engWord);
             card.classList.add(status === WordStatus.hard ? 'difficult' : 'words__card');
-            card.classList.add(status === WordStatus.hard ? 'learnt' : 'words__card');
+            card.classList.add(status === WordStatus.learned ? 'learnt' : 'words__card');
         }
     });
 }

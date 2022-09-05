@@ -1,6 +1,6 @@
 import { getWords } from '../../../api/words';
 import { API_BASE_LINK, GAMES_RESULTS, WORD_CATEGORIES } from '../../../constants/constants';
-import { Difficulty, GamesStat, GameTags, Levels, Word } from '../../../constants/types';
+import { Difficulty, GamesStat, GameTags, Levels, Word, WordStatus } from '../../../constants/types';
 import applyLocalStorage from '../../../logic/main/applyLocalStorage';
 import { checkTokenExpiration } from '../../../logic/main/authentication';
 import listenPagination from '../../../logic/textbook/pagination';
@@ -182,6 +182,11 @@ export function getWordsCards(words: Word[], parent: HTMLElement) {
             parentElement: wordCard,
             classes: ['difficult_word'],
         });
+        createElement({
+            type: 'span',
+            parentElement: wordCard,
+            classes: ['learnt_word'],
+        });
     });
 }
 
@@ -275,7 +280,7 @@ export function getWordData(word: Word, parent: HTMLElement, stats?: GamesStat) 
         attributes: [['id', 'learnt_word']],
         text: 'learnt word',
     });
-    createElement({
+    const restore = createElement({
         type: 'button',
         parentElement: wordActions,
         classes: ['word__actions_btn', `words__actions_btn_${Levels[state.textBook.currentLevel]}`, 'hidden'],
@@ -283,6 +288,7 @@ export function getWordData(word: Word, parent: HTMLElement, stats?: GamesStat) 
         attributes: [['id', 'restore_word']],
     });
     if (state.textBook.view === 'vocabulary') toggleWordActions();
+    if (state.textBook.currentWordStatus === WordStatus.weak) restore.classList.add('hidden');
     if (!state.user.isAuthenticated || !checkTokenExpiration()) wordActions.classList.add('hidden');
 
     const wordDescription = createElement({
