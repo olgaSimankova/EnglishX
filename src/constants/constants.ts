@@ -111,7 +111,7 @@ export const GAMES = [
 ];
 export const FOOTER_LINKS_TEXT = ['About Us', 'TextBook', 'Games', 'Statistic', 'Contacts'];
 export const SITEMAP_LINKS = ['#team', '#', '#', '#', '#footer'];
-export const GAMES_LINKS = ['#', '#'];
+export const GAMES_LINKS = ['./sprint.html', './audio-call.html'];
 export const ANSWER_OPTIONS_COUNT = 5;
 export const GAME_LIMIT = 10;
 export const TODAYS_STATISTIC_LABEL = 'Statistic of the Day';

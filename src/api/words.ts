@@ -67,3 +67,26 @@ export async function getUserAggregatedWords(group: number, filter: string): Pro
     }
     return undefined;
 }
+
+export async function getUserAggregatedWordsFromPage(
+    page: number,
+    group: number,
+    filter: string
+): Promise<AggregatedResponse | void> {
+    const { userId, token } = state.user;
+    const response = await fetch(
+        `${API_BASE_LINK}/users/${userId}/aggregatedWords?group=${group}&page=${page}&wordsPerPage=20&filter=${filter}`,
+        {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+        }
+    );
+    if (response.status === 200) {
+        return response.json();
+    }
+    return undefined;
+}

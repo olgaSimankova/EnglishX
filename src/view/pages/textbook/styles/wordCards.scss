@@ -82,10 +82,26 @@
         background: center/contain no-repeat url(../../../../assets/img/difficult-word.png);
         opacity: 0.5;
     }
+
+    .learnt_word {
+        display: none;
+        position: relative;
+        height: 30px;
+        width: 30px;
+        left: 8rem;
+        background: center/contain no-repeat url(../../../../assets/img/learnt-word.png);
+        
+    }
 }
 
 .words__card.difficult {
     .difficult_word {
+        display: block;
+    }
+}
+
+.words__card.learnt {
+    .learnt_word {
         display: block;
     }
 }

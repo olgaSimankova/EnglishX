@@ -1,6 +1,6 @@
 import { getWords } from '../../../api/words';
 import { API_BASE_LINK, GAMES_RESULTS, WORD_CATEGORIES } from '../../../constants/constants';
-import { Difficulty, GamesStat, GameTags, Levels, Word } from '../../../constants/types';
+import { Difficulty, GamesStat, GameTags, Levels, Word, WordStatus } from '../../../constants/types';
 import applyLocalStorage from '../../../logic/main/applyLocalStorage';
 import { checkTokenExpiration } from '../../../logic/main/authentication';
 import listenPagination from '../../../logic/textbook/pagination';
@@ -12,9 +12,10 @@ import {
 } from '../../../logic/textbook/textbookEvents';
 import getPaginationBtns from '../../../logic/textbook/utils/createPagination';
 import getGameStats from '../../../logic/textbook/utils/gameStats';
+import { toggleActivePage } from '../../../logic/textbook/utils/isWordsAvailableForGame';
 import {
     fillStateWithAllUserWords,
-    listenDifficultWordBtn,
+    listenWordActionsButtons,
     listenTextbookTitleView,
     listenVocabularyCategories,
 } from '../../../logic/textbook/vocabulary';
@@ -22,6 +23,8 @@ import state from '../../../state/state';
 import createElement, { deleteHTMLElement } from '../../../utils/createElement';
 import renderLoading from '../../common/loading/renderLoading';
 import createGamesSection from '../main/createGamesSection';
+import toggleWordActions from '../../../logic/textbook/utils/toggleWordActions';
+import removeDeletedWords from '../../../logic/textbook/utils/removeDeletedWords';
 
 function getTextbookHeading(parent: HTMLElement): void {
     const textbookHeading = createElement({
@@ -179,6 +182,11 @@ export function getWordsCards(words: Word[], parent: HTMLElement) {
             parentElement: wordCard,
             classes: ['difficult_word'],
         });
+        createElement({
+            type: 'span',
+            parentElement: wordCard,
+            classes: ['learnt_word'],
+        });
     });
 }
 
@@ -263,13 +271,24 @@ export function getWordData(word: Word, parent: HTMLElement, stats?: GamesStat) 
         parentElement: wordActions,
         classes: ['word__actions_btn', `words__actions_btn_${Levels[state.textBook.currentLevel]}`],
         text: 'delete word',
+        attributes: [['id', 'delete_word']],
     });
     createElement({
         type: 'button',
         parentElement: wordActions,
         classes: ['word__actions_btn', `words__actions_btn_${Levels[state.textBook.currentLevel]}`],
+        attributes: [['id', 'learnt_word']],
         text: 'learnt word',
     });
+    const restore = createElement({
+        type: 'button',
+        parentElement: wordActions,
+        classes: ['word__actions_btn', `words__actions_btn_${Levels[state.textBook.currentLevel]}`, 'hidden'],
+        text: 'restore',
+        attributes: [['id', 'restore_word']],
+    });
+    if (state.textBook.view === 'vocabulary') toggleWordActions();
+    if (state.textBook.currentWordStatus === WordStatus.weak) restore.classList.add('hidden');
     if (!state.user.isAuthenticated || !checkTokenExpiration()) wordActions.classList.add('hidden');
 
     const wordDescription = createElement({
@@ -331,10 +350,10 @@ export function getWordData(word: Word, parent: HTMLElement, stats?: GamesStat) 
 
     if (!state.user.isAuthenticated) answersInGames.classList.add('hidden');
     listenTextbookAudio();
-    listenDifficultWordBtn();
+    listenWordActionsButtons();
 }
 
-async function getWordsSection(parent: HTMLElement): Promise<void> {
+export async function getWordsSection(parent: HTMLElement): Promise<void> {
     createElement({
         type: 'h1',
         parentElement: parent,
@@ -348,6 +367,7 @@ async function getWordsSection(parent: HTMLElement): Promise<void> {
     });
     renderLoading(parent);
     state.textBook.wordsOnPage = await getWords(state.textBook.currentLevel, state.textBook.currentPage - 1);
+    await removeDeletedWords();
     deleteHTMLElement('loading-container');
     const wordsContainer = createElement({
         type: 'div',
@@ -400,4 +420,5 @@ export async function getTextbookPage() {
     createGamesSection(wrapper);
     await fillStateWithAllUserWords();
     setDifficultyToCard();
+    toggleActivePage();
 }

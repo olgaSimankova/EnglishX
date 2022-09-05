@@ -85,12 +85,20 @@ export interface AudioCall {
     currentWordId: string;
 }
 
+export enum WordStatus {
+    weak = 'weak',
+    hard = 'hard',
+    deleted = 'deleted',
+    learned = 'learned',
+}
+
 export interface Textbook {
     view: string;
     currentLevel: number;
     currentPage: number;
     currentWordNo: string;
     wordsOnPage: Word[];
+    currentWordStatus: WordStatus;
 }
 
 export interface ControlsState {
@@ -195,13 +203,6 @@ export interface UserStatsResponse {
     id?: string;
 }
 
-export enum WordStatus {
-    weak = 'weak',
-    hard = 'hard',
-    deleted = 'deleted',
-    learned = 'learned',
-}
-
 export interface GameStat {
     right: number;
     wrong: number;
@@ -244,4 +245,11 @@ interface aggregatedCount {
 export interface AggregatedResponse {
     paginatedResults: Word[];
     totalCount: aggregatedCount[];
+}
+
+export enum WordActions {
+    difficult = 'add_difficult_word',
+    delete = 'delete_word',
+    learnt = 'learnt_word',
+    restore = 'restore_word',
 }

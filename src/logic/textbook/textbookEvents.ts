@@ -5,6 +5,9 @@ import { initDefaultGamesStats } from '../../utils/handleGameStatObjects';
 import { getAllAudios, playAllAudio } from '../../utils/playAudio';
 import { getWordData, getWordsCards } from '../../view/pages/textbook/createTextbookPage';
 import getPaginationBtns from './utils/createPagination';
+import { toggleActivePage } from './utils/isWordsAvailableForGame';
+import { fillStateWithAllUserWords, renderQuantityOfStatusWords, setWordsToContainer } from './vocabulary';
+import removeDeletedWords from './utils/removeDeletedWords';
 
 async function updateWordData(word: Word) {
     const wordData = document.querySelector('.word__detail') as HTMLElement;
@@ -13,7 +16,7 @@ async function updateWordData(word: Word) {
     getWordData(word, wordData, data?.optional?.games || initDefaultGamesStats());
 }
 
-function findWordInCategory(engWord: string): WordStatus {
+export function findWordInCategory(engWord: string): WordStatus {
     let wordStatus = WordStatus.weak;
     Object.values(WordStatus).forEach((status) => {
         if (
@@ -34,18 +37,20 @@ export function setDifficultyToCard(): void {
         if (engWord) {
             const status = findWordInCategory(engWord);
             card.classList.add(status === WordStatus.hard ? 'difficult' : 'words__card');
-            card.classList.add(status === WordStatus.hard ? 'learnt' : 'words__card');
+            card.classList.add(status === WordStatus.learned ? 'learnt' : 'words__card');
         }
     });
 }
 
 export async function updateWordsContainer() {
     state.textBook.wordsOnPage = await getWords(state.textBook.currentLevel, state.textBook.currentPage - 1);
+    await removeDeletedWords();
     const wordsContainer = document.querySelector('.words__contaiter') as HTMLElement;
     wordsContainer.innerHTML = '';
     getWordsCards(state.textBook.wordsOnPage, wordsContainer);
     updateWordData(state.textBook.wordsOnPage[0]);
     setDifficultyToCard();
+    toggleActivePage();
 }
 
 function updateLevelColor(): void {
@@ -77,7 +82,14 @@ export const wordListenerCallback = (event: Event) => {
     const btn = (event.target as HTMLElement).closest('.words__card');
     if (btn) {
         state.textBook.currentWordNo = btn.id;
-        updateWordData(state.textBook.wordsOnPage[+btn.id]);
+        if (state.textBook.view === 'textbook') {
+            updateWordData(state.textBook.wordsOnPage[+btn.id]);
+        } else if (state.user.aggregatedWords) {
+            const word = state.user.aggregatedWords[state.textBook.currentWordStatus]?.[+btn.id];
+            if (word) {
+                updateWordData(word);
+            }
+        }
         updateWordsColor();
     }
 };
@@ -93,8 +105,16 @@ export function listenLevelCards() {
         card.addEventListener('click', async () => {
             state.textBook.currentLevel = +card.id;
             state.textBook.currentPage = 1;
+            state.textBook.currentWordNo = '0';
             updateLevelColor();
-            await updateWordsContainer();
+            await fillStateWithAllUserWords();
+            if (state.textBook.view === 'vocabulary') {
+                setWordsToContainer(state.textBook.currentWordStatus);
+            } else {
+                await updateWordsContainer();
+            }
+            setDifficultyToCard();
+            renderQuantityOfStatusWords();
         })
     );
 }

@@ -61,4 +61,20 @@ opacity: 0.6;
 .word_categories_container.hidden {
     display: none;
 }
-    @import 'adaptive.scss';
+
+.inactive {
+    opacity: 0.25;
+  }
+
+.hidden {
+    display: none;
+}
+
+.center-window {
+    position:fixed;
+    top:50%;
+    left:50%;
+}
+
+@import 'adaptive.scss';
+
