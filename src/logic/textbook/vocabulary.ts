@@ -152,6 +152,7 @@ export async function listenWordActionsButtons(): Promise<void> {
             switch (button) {
                 case WordActions.difficult:
                     cards[+currentWordNo].classList.toggle('difficult', true);
+                    cards[+currentWordNo].classList.toggle('learnt', false);
                     await changeWordStatus(state.textBook.wordsOnPage[+currentWordNo].id, WordStatus.hard);
                     await fillStateWithAllUserWords();
                     break;
@@ -162,13 +163,12 @@ export async function listenWordActionsButtons(): Promise<void> {
                     break;
                 case WordActions.learnt:
                     cards[+currentWordNo].classList.toggle('difficult', false);
-                    console.log(state.textBook.wordsOnPage[+currentWordNo].id);
+                    cards[+currentWordNo].classList.toggle('learnt', true);
                     await changeWordStatus(state.textBook.wordsOnPage[+currentWordNo].id, WordStatus.learned);
                     await fillStateWithAllUserWords();
                     break;
                 case 'restore_word':
                     if (currentWords) {
-                        console.log(currentWords, currentWordNo);
                         await changeWordStatus(
                             getWordIdByName(currentWords, currentWords[+currentWordNo].word),
                             WordStatus.weak
@@ -180,7 +180,7 @@ export async function listenWordActionsButtons(): Promise<void> {
                 default:
                     break;
             }
-            renderQuantityOfStatusWords(); // server needs time to filter words
+            renderQuantityOfStatusWords();
         }
     });
 }

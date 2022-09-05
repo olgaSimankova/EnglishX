@@ -1,4 +1,7 @@
+import { WordStatus } from '../../../constants/types';
+import state from '../../../state/state';
 import renderLoading from '../../../view/common/loading/renderLoading';
+import toggleWordActions from './toggleWordActions';
 
 export default function toggleClassActiveButton(cls: string, id: string): void {
     const levelsCards = document.querySelectorAll(`.${cls}`);
@@ -16,4 +19,10 @@ export function disableWindow(): void {
     loading.classList.add('center-window');
     console.log('start Disabling');
     setTimeout(() => loading.remove(), 4000);
+}
+
+export function handleRestoreButtons(): void {
+    if (state.textBook.currentWordStatus === WordStatus.weak) {
+        toggleWordActions();
+    }
 }
