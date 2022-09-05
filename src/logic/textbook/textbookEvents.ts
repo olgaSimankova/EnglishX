@@ -5,6 +5,8 @@ import { initDefaultGamesStats } from '../../utils/handleGameStatObjects';
 import { getAllAudios, playAllAudio } from '../../utils/playAudio';
 import { getWordData, getWordsCards } from '../../view/pages/textbook/createTextbookPage';
 import getPaginationBtns from './utils/createPagination';
+import { fillStateWithAllUserWords, renderQuantityOfStatusWords } from './vocabulary';
+import removeDeletedWords from './utils/removeDeletedWords';
 
 async function updateWordData(word: Word) {
     const wordData = document.querySelector('.word__detail') as HTMLElement;
@@ -41,6 +43,7 @@ export function setDifficultyToCard(): void {
 
 export async function updateWordsContainer() {
     state.textBook.wordsOnPage = await getWords(state.textBook.currentLevel, state.textBook.currentPage - 1);
+    await removeDeletedWords();
     const wordsContainer = document.querySelector('.words__contaiter') as HTMLElement;
     wordsContainer.innerHTML = '';
     getWordsCards(state.textBook.wordsOnPage, wordsContainer);
@@ -95,6 +98,9 @@ export function listenLevelCards() {
             state.textBook.currentPage = 1;
             updateLevelColor();
             await updateWordsContainer();
+            await fillStateWithAllUserWords();
+            setDifficultyToCard();
+            renderQuantityOfStatusWords();
         })
     );
 }

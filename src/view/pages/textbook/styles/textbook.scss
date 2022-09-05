@@ -61,4 +61,11 @@ opacity: 0.6;
 .word_categories_container.hidden {
     display: none;
 }
-    @import 'adaptive.scss';
+
+
+.hidden {
+    display: none;
+}
+
+@import 'adaptive.scss';
+

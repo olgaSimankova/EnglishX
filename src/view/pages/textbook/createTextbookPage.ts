@@ -14,7 +14,7 @@ import getPaginationBtns from '../../../logic/textbook/utils/createPagination';
 import getGameStats from '../../../logic/textbook/utils/gameStats';
 import {
     fillStateWithAllUserWords,
-    listenDifficultWordBtn,
+    listenWordActionsButtons,
     listenTextbookTitleView,
     listenVocabularyCategories,
 } from '../../../logic/textbook/vocabulary';
@@ -22,6 +22,8 @@ import state from '../../../state/state';
 import createElement, { deleteHTMLElement } from '../../../utils/createElement';
 import renderLoading from '../../common/loading/renderLoading';
 import createGamesSection from '../main/createGamesSection';
+import toggleWordActions from '../../../logic/textbook/utils/toggleWordActions';
+import removeDeletedWords from '../../../logic/textbook/utils/removeDeletedWords';
 
 function getTextbookHeading(parent: HTMLElement): void {
     const textbookHeading = createElement({
@@ -263,13 +265,23 @@ export function getWordData(word: Word, parent: HTMLElement, stats?: GamesStat) 
         parentElement: wordActions,
         classes: ['word__actions_btn', `words__actions_btn_${Levels[state.textBook.currentLevel]}`],
         text: 'delete word',
+        attributes: [['id', 'delete_word']],
     });
     createElement({
         type: 'button',
         parentElement: wordActions,
         classes: ['word__actions_btn', `words__actions_btn_${Levels[state.textBook.currentLevel]}`],
+        attributes: [['id', 'learnt_word']],
         text: 'learnt word',
     });
+    createElement({
+        type: 'button',
+        parentElement: wordActions,
+        classes: ['word__actions_btn', `words__actions_btn_${Levels[state.textBook.currentLevel]}`, 'hidden'],
+        text: 'restore',
+        attributes: [['id', 'restore_word']],
+    });
+    if (state.textBook.view === 'vocabulary') toggleWordActions();
     if (!state.user.isAuthenticated || !checkTokenExpiration()) wordActions.classList.add('hidden');
 
     const wordDescription = createElement({
@@ -331,10 +343,10 @@ export function getWordData(word: Word, parent: HTMLElement, stats?: GamesStat) 
 
     if (!state.user.isAuthenticated) answersInGames.classList.add('hidden');
     listenTextbookAudio();
-    listenDifficultWordBtn();
+    listenWordActionsButtons();
 }
 
-async function getWordsSection(parent: HTMLElement): Promise<void> {
+export async function getWordsSection(parent: HTMLElement): Promise<void> {
     createElement({
         type: 'h1',
         parentElement: parent,
@@ -348,6 +360,7 @@ async function getWordsSection(parent: HTMLElement): Promise<void> {
     });
     renderLoading(parent);
     state.textBook.wordsOnPage = await getWords(state.textBook.currentLevel, state.textBook.currentPage - 1);
+    await removeDeletedWords();
     deleteHTMLElement('loading-container');
     const wordsContainer = createElement({
         type: 'div',
