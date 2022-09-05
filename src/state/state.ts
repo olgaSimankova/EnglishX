@@ -62,6 +62,7 @@ export const state: StateInterface = {
         token: '',
         refreshToken: '',
         aggregatedWords: [],
+        isFromTextBook: false,
     } as User,
 } as StateInterface;
 

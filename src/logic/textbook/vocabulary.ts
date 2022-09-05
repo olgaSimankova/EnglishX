@@ -42,8 +42,31 @@ export function makeGamesInactive(flag: boolean): void {
     });
 }
 
+function handlePaginationResult(data: AggregatedResponse): Word[] {
+    const output: Word[] = [];
+    Object.values(data).forEach((el) => {
+        output.push(...el.paginatedResults);
+    });
+    return output;
+}
+
+export async function fillStateWithAllUserWords(): Promise<void> {
+    const a = await Promise.all(
+        Object.values(WordStatus).map(async (wordStatus, i) => {
+            const filter = encodeURIComponent(JSON.stringify({ 'userWord.difficulty': wordStatus }));
+            const words = await getUserAggregatedWords(state.textBook.currentLevel, filter);
+            if (words && state.user.aggregatedWords) {
+                state.user.aggregatedWords[wordStatus] = handlePaginationResult(words);
+            }
+            console.log('words', i);
+        })
+    );
+    console.log('end promise all', a);
+}
+
 export async function setWordsToContainer(status: WordStatus): Promise<void> {
     state.textBook.currentWordStatus = status;
+    await fillStateWithAllUserWords();
     const currentWords = state.user.aggregatedWords?.[status] || [];
     const { currentWordStatus } = state.textBook;
     if (!currentWords.length || currentWordStatus === WordStatus.deleted || currentWordStatus === WordStatus.learned) {
@@ -51,6 +74,7 @@ export async function setWordsToContainer(status: WordStatus): Promise<void> {
     } else {
         makeGamesInactive(false);
     }
+    console.log(currentWords, 'after fill');
     await updateVocabularyWordsSection(currentWords);
     const id = Object.entries(CATEGORIES_BRIDGE).filter((el) => el[1] === status)[0][0];
     toggleClassActiveButton('word_category_button', id);
@@ -118,26 +142,6 @@ async function changeWordStatus(wordId: string, newStatus: WordStatus): Promise<
     }
 }
 
-function handlePaginationResult(data: AggregatedResponse): Word[] {
-    const output: Word[] = [];
-    Object.values(data).forEach((el) => {
-        output.push(...el.paginatedResults);
-    });
-    return output;
-}
-
-export async function fillStateWithAllUserWords(): Promise<void> {
-    await Promise.all(
-        Object.values(WordStatus).map(async (wordStatus) => {
-            const filter = encodeURIComponent(JSON.stringify({ 'userWord.difficulty': wordStatus }));
-            const words = await getUserAggregatedWords(state.textBook.currentLevel, filter);
-            if (words && state.user.aggregatedWords) {
-                state.user.aggregatedWords[wordStatus] = handlePaginationResult(words);
-            }
-        })
-    );
-}
-
 export async function listenWordActionsButtons(): Promise<void> {
     const wordActions = document.querySelector('.word__actions') as HTMLElement;
     wordActions.addEventListener('click', async (event: Event) => {
@@ -153,17 +157,20 @@ export async function listenWordActionsButtons(): Promise<void> {
                     cards[+currentWordNo].classList.toggle('learnt', false);
                     await changeWordStatus(state.textBook.wordsOnPage[+currentWordNo].id, WordStatus.hard);
                     await fillStateWithAllUserWords();
+                    toggleActivePage();
                     break;
                 case WordActions.delete:
                     await changeWordStatus(state.textBook.wordsOnPage[+currentWordNo].id, WordStatus.deleted);
                     await fillStateWithAllUserWords();
                     await updateWordsContainer();
+                    toggleActivePage();
                     break;
                 case WordActions.learnt:
                     cards[+currentWordNo].classList.toggle('difficult', false);
                     cards[+currentWordNo].classList.toggle('learnt', true);
                     await changeWordStatus(state.textBook.wordsOnPage[+currentWordNo].id, WordStatus.learned);
                     await fillStateWithAllUserWords();
+                    toggleActivePage();
                     break;
                 case 'restore_word':
                     if (currentWords) {

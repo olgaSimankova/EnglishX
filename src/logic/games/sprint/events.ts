@@ -18,6 +18,7 @@ import {
     sprintGameControls,
 } from './controls';
 import { renderAudioCallGame } from '../../../view/pages/games/audio-call/renderAudioCallGame';
+import { getFromLocalStorage } from '../../../utils/localStorage';
 
 export default function listenLevelButtons(tag: GameTags): void {
     const levelsContainer = document.querySelector('.level-container');
@@ -34,36 +35,49 @@ export default function listenLevelButtons(tag: GameTags): void {
     });
 }
 
+async function startGameFromMenu(reload: boolean, tag: GameTags, gameContainer: HTMLElement): Promise<void> {
+    const MIN_PAGE = reload ? Math.floor(MAX_PAGES / 2) : 0;
+    const level =
+        Levels[(state[tag as keyof typeof state] as SprintState | AudioCall).currentLevel as keyof typeof Levels];
+    const page = getRandomNumber(MIN_PAGE, MAX_PAGES);
+    state.sprintGame.currentPage = page;
+    renderLoading(gameContainer);
+    const data = await getWords(level, page);
+    deleteHTMLElement('loading-container');
+    switch (tag) {
+        case GameTags.sprintGame:
+            renderSprintGame(gameContainer, data);
+            sprintGameControls(data, reload);
+            break;
+
+        case GameTags.audioCallGame:
+            renderAudioCallGame(gameContainer, data);
+            break;
+        default:
+            break;
+    }
+}
+
+async function startGameFromTextBook(gameContainer: HTMLElement): Promise<void> {
+    const level = +getFromLocalStorage('currentWordsLevel');
+    const page = +getFromLocalStorage('currentTextBookPage');
+    state.sprintGame.currentPage = +page;
+    renderLoading(gameContainer);
+    const data = await getWords(level, page - 1);
+    deleteHTMLElement('loading-container');
+}
+
 export function listerStartButton(tag: GameTags, reload = false): void {
     const startButton = document.querySelector('.start-button') as HTMLElement;
     startButton?.addEventListener('click', async () => {
         if (startButton.classList.contains('active')) {
             deleteHTMLElement('start-screen');
             const gameContainer = document.querySelector('.game-container') as HTMLElement;
-            if (gameContainer && tag) {
-                const MIN_PAGE = reload ? Math.floor(MAX_PAGES / 2) : 0;
-                const level =
-                    Levels[
-                        (state[tag as keyof typeof state] as SprintState | AudioCall)
-                            .currentLevel as keyof typeof Levels
-                    ];
-                const page = getRandomNumber(MIN_PAGE, MAX_PAGES);
-                state.sprintGame.currentPage = page;
-                renderLoading(gameContainer);
-                const data = await getWords(level, page);
-                deleteHTMLElement('loading-container');
-                switch (tag) {
-                    case GameTags.sprintGame:
-                        renderSprintGame(gameContainer, data);
-                        sprintGameControls(data, reload);
-                        break;
-
-                    case GameTags.audioCallGame:
-                        renderAudioCallGame(gameContainer, data);
-                        break;
-                    default:
-                        break;
-                }
+            const isTextBook = getFromLocalStorage('isFromTextBook') === 'true';
+            if (gameContainer && tag && !isTextBook) {
+                startGameFromMenu(reload, tag, gameContainer);
+            } else if (gameContainer && tag && isTextBook) {
+                startGameFromTextBook(gameContainer);
             }
         }
     });
