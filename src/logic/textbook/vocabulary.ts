@@ -42,7 +42,7 @@ export function makeGamesInactive(flag: boolean): void {
     });
 }
 
-function handlePaginationResult(data: AggregatedResponse): Word[] {
+export function handlePaginationResult(data: AggregatedResponse): Word[] {
     const output: Word[] = [];
     Object.values(data).forEach((el) => {
         output.push(...el.paginatedResults);
@@ -51,17 +51,15 @@ function handlePaginationResult(data: AggregatedResponse): Word[] {
 }
 
 export async function fillStateWithAllUserWords(): Promise<void> {
-    const a = await Promise.all(
-        Object.values(WordStatus).map(async (wordStatus, i) => {
+    await Promise.all(
+        Object.values(WordStatus).map(async (wordStatus) => {
             const filter = encodeURIComponent(JSON.stringify({ 'userWord.difficulty': wordStatus }));
             const words = await getUserAggregatedWords(state.textBook.currentLevel, filter);
             if (words && state.user.aggregatedWords) {
                 state.user.aggregatedWords[wordStatus] = handlePaginationResult(words);
             }
-            console.log('words', i);
         })
     );
-    console.log('end promise all', a);
 }
 
 export async function setWordsToContainer(status: WordStatus): Promise<void> {
@@ -74,7 +72,6 @@ export async function setWordsToContainer(status: WordStatus): Promise<void> {
     } else {
         makeGamesInactive(false);
     }
-    console.log(currentWords, 'after fill');
     await updateVocabularyWordsSection(currentWords);
     const id = Object.entries(CATEGORIES_BRIDGE).filter((el) => el[1] === status)[0][0];
     toggleClassActiveButton('word_category_button', id);
