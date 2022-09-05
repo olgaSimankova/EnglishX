@@ -83,6 +83,14 @@
     }
     .word_categories_container{
         justify-content: center;
+        width: 320px;
+        .word_category_button {
+            width: 150px;
+            padding: 7px 2px 7px 56px;
+            .circle_category {
+                left: -3.5rem;
+            }
+        }
     }
     .word_category_button{
         width: 168px;
