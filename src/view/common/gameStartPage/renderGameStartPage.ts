@@ -5,6 +5,7 @@ import createElement from '../../../utils/createElement';
 import renderGameButtons from '../renderGameControlButtons';
 import './startGame.scss';
 import '../../pages/main/scss/style.scss';
+import { getFromLocalStorage } from '../../../utils/localStorage';
 
 function renderUpperBlock(parentElement: HTMLElement, tag: string): void {
     const upperContainer = createElement({
@@ -111,4 +112,9 @@ export default function renderGameStartPage(tag: string): void {
     renderGameButtons(container);
     renderStartScreen(container, tag);
     gameButtonsControls();
+    if (getFromLocalStorage('isFromTextBook') === 'true') {
+        document.querySelector('.lower-container > .game-description')?.classList.add('hidden');
+        document.querySelector('.level-container')?.classList.add('hidden');
+        document.querySelector('.start-button')?.classList.add('active');
+    }
 }
