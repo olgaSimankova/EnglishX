@@ -117,21 +117,6 @@ export default function renderRegistrationModal() {
         parentElement: linksWrapper,
         classes: ['submit-spinner', 'submit-spinner__registr', 'submit-spinner_hide'],
     });
-    createElement({
-        type: 'input',
-        parentElement: linksWrapper,
-        attributes: [
-            ['type', 'checkbox'],
-            ['name', 'keep_signed_in'],
-            ['id', 'keep_signed_in'],
-        ],
-    });
-    createElement({
-        type: 'label',
-        parentElement: linksWrapper,
-        text: 'Remember me',
-        attributes: [['for', 'keep_signed_in']],
-    });
 
     createElement({
         type: 'div',
