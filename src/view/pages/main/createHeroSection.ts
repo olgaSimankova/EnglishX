@@ -30,7 +30,7 @@ export default function createHeroSection(parent: HTMLElement): void {
         parentElement: video,
         classes: ['round', 'main-video__btn'],
         attributes: [
-            ['href', 'https://www.youtube.com/watch?v=eJnQBXmZ7Ek'],
+            ['href', 'https://youtu.be/2W0VOny_jLk'],
             ['data-fancybox', ''],
         ],
     });
