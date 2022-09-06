@@ -10,6 +10,7 @@ import './styles/textbook.scss';
 
 (async function startTextbookPage() {
     setLocalStorage('isFromTextBook', 'true');
+    setLocalStorage('isFromVocabulary', '');
     createHeader(document.body);
     applyLocalStorage();
     renderModal();

@@ -28,6 +28,7 @@ export default function renderMain(): void {
     createGamesSection(document.body);
     createFooter(document.body);
     setLocalStorage('isFromTextBook', 'false');
+    setLocalStorage('isFromVocabulary', '');
     if (!getFromLocalStorage('isAlert')) {
         alert('PR c самооцениванием лежит в консоли. Приятного пользования программой :)');
     }

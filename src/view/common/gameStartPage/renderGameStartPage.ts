@@ -112,7 +112,7 @@ export default function renderGameStartPage(tag: string): void {
     renderGameButtons(container);
     renderStartScreen(container, tag);
     gameButtonsControls();
-    if (getFromLocalStorage('isFromTextBook') === 'true') {
+    if (getFromLocalStorage('isFromTextBook') === 'true' || getFromLocalStorage('isFromVocabulary') === 'true') {
         document.querySelector('.lower-container > .game-description')?.classList.add('hidden');
         document.querySelector('.level-container')?.classList.add('hidden');
         document.querySelector('.start-button')?.classList.add('active');

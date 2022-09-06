@@ -8,6 +8,7 @@ import { getWordData, getWordsCards } from '../../view/pages/textbook/createText
 import { listenWordCards, setDifficultyToCard, updateWordsContainer, wordListenerCallback } from './textbookEvents';
 import toggleClassActiveButton from './utils/toggleActiveClass';
 import getWordIdByName from './utils/getWordAttributes';
+import { setLocalStorage } from '../../utils/localStorage';
 
 export function renderQuantityOfStatusWords(): void {
     WORD_CATEGORIES.forEach((category) => {
@@ -93,11 +94,15 @@ export const listenTextbookTitleView = () => {
             state.textBook.view = 'textbook';
             state.textBook.wordsOnPage = await getWords(state.textBook.currentLevel, state.textBook.currentPage - 1);
             await updateVocabularyWordsSection(state.textBook.wordsOnPage);
+            setLocalStorage('isFromVocabulary', 'false');
+            setLocalStorage('currentWordStatus', '');
             makeGamesInactive(false);
             toggleActivePage();
         } else if (event.target === vocabularyBtn) {
             state.textBook.view = 'vocabulary';
             setWordsToContainer(WordStatus.weak);
+            setLocalStorage('isFromVocabulary', 'true');
+            setLocalStorage('currentWordStatus', WordStatus.weak);
             toggleActivePage(true);
         }
         showHidePagination();
@@ -198,6 +203,7 @@ export function listenVocabularyCategories() {
             state.textBook.currentWordStatus = WordStatus[currentWordStatus as keyof typeof WordStatus];
             setWordsToContainer(state.textBook.currentWordStatus);
             state.textBook.currentWordNo = '0';
+            setLocalStorage('currentWordStatus', state.textBook.currentWordStatus);
         }
     });
 }

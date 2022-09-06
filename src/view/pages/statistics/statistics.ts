@@ -9,7 +9,8 @@ async function startStatisticsPage(): Promise<void> {
     await renderStatisticsPage();
     toggleHeaderLoginView();
     renderModal();
-    setLocalStorage('isFromTextBook', 'false');
+    setLocalStorage('isFromTextBook', '');
+    setLocalStorage('isFromVocabulary', '');
 }
 
 startStatisticsPage();
