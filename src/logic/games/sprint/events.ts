@@ -76,6 +76,7 @@ async function startGameFromMenu(reload: boolean, tag: GameTags, gameContainer: 
     state.sprintGame.currentPage = page;
     renderLoading(gameContainer);
     const data = await getWords(level, page);
+    state.audioCallGame.wordsFromPage = data;
     deleteHTMLElement('loading-container');
     runGame(tag, data, gameContainer, reload);
 }

@@ -7,7 +7,7 @@
   height: 100%;
   top: 0;
   left: 0;
-  background-color: rgba(0,0,0,0.7);
+  background-color: rgba(0, 0, 0, 0.7);
   z-index: 10;
 }
 
@@ -19,7 +19,6 @@
   display: none;
   position: absolute;
   width: 486px;
-  height: 652px;
   margin: 0 auto;
   top: 5%;
   left: calc((100% - 486px) / 2);
@@ -32,6 +31,13 @@
   padding: 15px 48px;
   color: $darkGray;
   z-index: 100;
+
+  @media (max-width: $mobile) {
+    width: 300px;
+    left: calc((100% - 300px) / 2);
+    padding: 15px 10px;
+    gap: 10px;
+  }
 }
 
 .modal.active {
@@ -39,93 +45,100 @@
 }
 
 .modal__cross, .modal__cross_register {
-    height: 20px;
-    width: 20px;
-    display: block;
-    cursor: pointer;
+  height: 20px;
+  width: 20px;
+  display: block;
+  cursor: pointer;
 }
 
-.modal__title { @include font-face('Lato', 28px, 700, 42px, center) }
+.modal__title {
+  @include font-face('Lato', 28px, 700, 42px, center)
+}
 
 .modal_text {
   @include font-face('Lato', 14px, 400, 21px, center);
 }
 
 .login-form {
-    align-self: flex-start;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    justify-items: center;
-    align-items: left;
-    width: 390px;
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  justify-items: center;
+  align-items: left;
+  width: 390px;
+
+  @media (max-width: $mobile) {
+    width: 280px;
+    gap: 7px;
   }
+}
 
 .register-form {
   gap: 10px;
 }
 
-  label[for=email],
-  label[for=password] {
-    @include font-face('Lato', 14px, 400, 21px, left);
-  }
+label[for=email],
+label[for=password] {
+  @include font-face('Lato', 14px, 400, 21px, left);
+}
 
-  .login-form-field {
-    @include font-face('Lato', 14px, 400, 21px, left);
-    height: 44px;
-    border-radius: 4px;
-    padding: 0 15px;
-    border: $gray 1px solid;
-  }
+.login-form-field {
+  @include font-face('Lato', 14px, 400, 21px, left);
+  height: 44px;
+  border-radius: 4px;
+  padding: 0 15px;
+  border: $gray 1px solid;
+}
 
-  .login-form-field::placeholder {
-    color: $gray;
-  }
+.login-form-field::placeholder {
+  color: $gray;
+}
 
-  .login-form__links-wrapper{
-    position: relative;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 5px;
-    height: 15px;
-  }
+.login-form__links-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 5px;
+  height: 15px;
+}
 
-  .link_forgot_pass {
-    @include font-face('Lato', 14px, 700, 44px, right);
-    justify-content: flex-end;
-    display: inline-block;
-    margin-left: auto;
-  }
+.link_forgot_pass {
+  @include font-face('Lato', 14px, 700, 44px, right);
+  justify-content: flex-end;
+  display: inline-block;
+  margin-left: auto;
+}
 
-  .link_colored {
-    color: $red;
-  }
+.link_colored {
+  color: $red;
+}
 
-  #login-form-submit, #register-form-submit {
-    @include font-face('Lato', 14px, 700, 44px, center);
-    letter-spacing: 0.5px;
-    width: 100%;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    background-color: $red;
-    cursor: pointer;
-    outline: none;
-  }
+#login-form-submit, #register-form-submit {
+  @include font-face('Lato', 14px, 700, 44px, center);
+  letter-spacing: 0.5px;
+  width: 100%;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  background-color: $red;
+  cursor: pointer;
+  outline: none;
+}
 
-  .wrong_pass_message {
-    @include font-face('Lato', 12px, 400, 44px, center);
-    color: $red;
-    height: 15px;
-  }
+.wrong_pass_message {
+  @include font-face('Lato', 12px, 400, 44px, center);
+  color: $red;
+  height: 15px;
+}
 
-  .user-exist {
-    font-size: 12px;
-    font-weight: 400;
-    text-align: center;
-    color: #FF3F3A;
-  }
+.user-exist {
+  font-size: 12px;
+  font-weight: 400;
+  text-align: center;
+  color: #FF3F3A;
+}
 
 .submit-spinner {
   position: absolute;
