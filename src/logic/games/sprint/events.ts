@@ -52,7 +52,6 @@ async function runGame(tag: GameTags, data: Word[], gameContainer: HTMLElement, 
 
         case GameTags.audioCallGame:
             data = await reloadData(data);
-            console.log(data);
             renderAudioCallGame(gameContainer, data);
             break;
         default:
@@ -90,6 +89,7 @@ async function startGameFromTextBook(gameContainer: HTMLElement, tag: GameTags, 
     state.sprintGame.currentLevel = Levels[level];
     renderLoading(gameContainer);
     const data = await getWords(level, state.sprintGame.currentPage);
+    state.audioCallGame.wordsFromPage = data;
     let filteredWords = filterOnlyWeakWords(data);
     if (isVocabulary) {
         const filter = encodeURIComponent(JSON.stringify({ 'userWord.difficulty': difficulty }));

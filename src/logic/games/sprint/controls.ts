@@ -1,5 +1,5 @@
 import { getWords, getWordStatistics, setUserWordStats } from '../../../api/words';
-import { GAME_BUTTONS, RANDOM_MIDDLE, START_POINTS } from '../../../constants/constants';
+import { GAME_BUTTONS, RANDOM_MIDDLE, START_GAME_LABELS, START_POINTS } from '../../../constants/constants';
 import { Choice, GamesStat, GameTags, Levels, Word, WordStats, WordStatus } from '../../../constants/types';
 import state from '../../../state/state';
 import { deleteHTMLElement } from '../../../utils/createElement';
@@ -207,12 +207,14 @@ export function sprintGameControls(data: Word[], reload = false): void {
 }
 
 export function processResultGameButtons(data: string): void {
+    const currentGame = document.body.className;
+    const isSprintGame = START_GAME_LABELS.sprint.background === currentGame;
     switch (data.toLocaleLowerCase()) {
         case 'go':
             window.location.href = './textbook.html';
             break;
         case 'play':
-            window.location.href = './sprint.html';
+            window.location.href = isSprintGame ? './sprint.html' : './audio-call.html';
             break;
         default:
             break;
