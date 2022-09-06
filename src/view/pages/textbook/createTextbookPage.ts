@@ -1,4 +1,4 @@
-import { getWords } from '../../../api/words';
+import { getWords, getWordStatistics } from '../../../api/words';
 import { API_BASE_LINK, GAMES_RESULTS, WORD_CATEGORIES } from '../../../constants/constants';
 import { Difficulty, GamesStat, GameTags, Levels, Word, WordStatus } from '../../../constants/types';
 import { checkTokenExpiration } from '../../../logic/main/authentication';
@@ -25,6 +25,7 @@ import createGamesSection from '../main/createGamesSection';
 import toggleWordActions from '../../../logic/textbook/utils/toggleWordActions';
 import removeDeletedWords from '../../../logic/textbook/utils/removeDeletedWords';
 import applyLocalStorage from '../../../utils/localStorage';
+import getWordIdByName from '../../../logic/textbook/utils/getWordAttributes';
 
 function getTextbookHeading(parent: HTMLElement): void {
     const textbookHeading = createElement({
@@ -215,7 +216,7 @@ function renderGameStatBlock(parentElement: HTMLElement, tag: GameTags, data?: G
     });
 }
 
-export function getWordData(word: Word, parent: HTMLElement, stats?: GamesStat) {
+export async function getWordData(word: Word, parent: HTMLElement, stats?: GamesStat) {
     createElement({
         type: 'div',
         parentElement: parent,
@@ -345,7 +346,8 @@ export function getWordData(word: Word, parent: HTMLElement, stats?: GamesStat) 
         parentElement: answersInGames,
         classes: ['answers__games_container'],
     });
-    renderGameStatBlock(answersContainer, GameTags.sprintGame, stats);
+    const wordStats = await getWordStatistics(word.id || getWordIdByName([word], word.word));
+    renderGameStatBlock(answersContainer, GameTags.sprintGame, wordStats?.optional?.games);
     renderGameStatBlock(answersContainer, GameTags.audioCallGame, stats);
 
     if (!state.user.isAuthenticated) answersInGames.classList.add('hidden');

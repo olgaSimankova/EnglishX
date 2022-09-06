@@ -41,6 +41,7 @@ export interface Word {
     wordTranslate: string;
     textMeaningTranslate: string;
     textExampleTranslate: string;
+    _id?: string;
 }
 
 export type WordType = Word;

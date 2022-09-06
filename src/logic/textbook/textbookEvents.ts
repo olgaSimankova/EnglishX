@@ -9,11 +9,14 @@ import { toggleActivePage } from './utils/isWordsAvailableForGame';
 import { fillStateWithAllUserWords, renderQuantityOfStatusWords, setWordsToContainer } from './vocabulary';
 import removeDeletedWords from './utils/removeDeletedWords';
 import { setLocalStorage } from '../../utils/localStorage';
+import getWordIdByName from './utils/getWordAttributes';
 
 async function updateWordData(word: Word) {
     const wordData = document.querySelector('.word__detail') as HTMLElement;
     wordData.innerHTML = '';
-    const data = await getWordStatistics(word.id);
+    const id = word.id ? word.id : getWordIdByName([word], word.word);
+    const data = await getWordStatistics(id);
+    console.log(id);
     getWordData(word, wordData, data?.optional?.games || initDefaultGamesStats());
 }
 
@@ -88,6 +91,7 @@ export const wordListenerCallback = (event: Event) => {
         } else if (state.user.aggregatedWords) {
             const word = state.user.aggregatedWords[state.textBook.currentWordStatus]?.[+btn.id];
             if (word) {
+                console.log(word);
                 updateWordData(word);
             }
         }
@@ -106,6 +110,7 @@ export function listenLevelCards() {
         card.addEventListener('click', async () => {
             state.textBook.currentLevel = +card.id;
             setLocalStorage('currentWordsLevel', card.id);
+            setLocalStorage('currentTextBookPage', '1');
             state.textBook.currentPage = 1;
             state.textBook.currentWordNo = '0';
             updateLevelColor();

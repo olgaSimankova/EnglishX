@@ -1,4 +1,4 @@
-import { getUserAggregatedWordsFromPage, getWords } from '../../../api/words';
+import { getUserAggregatedWords, getWords } from '../../../api/words';
 import { KEY_ARROWS, MAX_PAGES, GAME_BUTTONS } from '../../../constants/constants';
 import { AudioCall, GameTags, Levels, SprintState, Word, WordStatus } from '../../../constants/types';
 import { state } from '../../../state/state';
@@ -19,7 +19,7 @@ import {
 } from './controls';
 import { renderAudioCallGame } from '../../../view/pages/games/audio-call/renderAudioCallGame';
 import { getFromLocalStorage } from '../../../utils/localStorage';
-import { handlePaginationResult } from '../../textbook/vocabulary';
+import { fillStateWithAllUserWords, handlePaginationResult } from '../../textbook/vocabulary';
 
 export default function listenLevelButtons(tag: GameTags): void {
     const levelsContainer = document.querySelector('.level-container');
@@ -36,7 +36,14 @@ export default function listenLevelButtons(tag: GameTags): void {
     });
 }
 
-function runGame(tag: GameTags, data: Word[], gameContainer: HTMLElement, reload: boolean): void {
+async function reloadData(data: Word[]): Promise<Word[]> {
+    if (getFromLocalStorage('isFromVocabulary') === 'true' || data.length > 9) {
+        return data;
+    } // implement reload
+    return data;
+}
+
+async function runGame(tag: GameTags, data: Word[], gameContainer: HTMLElement, reload: boolean): Promise<void> {
     switch (tag) {
         case GameTags.sprintGame:
             renderSprintGame(gameContainer, data);
@@ -44,11 +51,22 @@ function runGame(tag: GameTags, data: Word[], gameContainer: HTMLElement, reload
             break;
 
         case GameTags.audioCallGame:
+            data = await reloadData(data);
+            console.log(data);
             renderAudioCallGame(gameContainer, data);
             break;
         default:
             break;
     }
+}
+
+export function filterOnlyWeakWords(data: Word[]): Word[] {
+    const totalRestrictedWords = [
+        ...(state.user.aggregatedWords?.[WordStatus.deleted] || []),
+        ...(state.user.aggregatedWords?.[WordStatus.hard] || []),
+        ...(state.user.aggregatedWords?.[WordStatus.learned] || []),
+    ].map((word) => word.word);
+    return data.filter((word) => !totalRestrictedWords.includes(word.word));
 }
 
 async function startGameFromMenu(reload: boolean, tag: GameTags, gameContainer: HTMLElement): Promise<void> {
@@ -66,15 +84,23 @@ async function startGameFromMenu(reload: boolean, tag: GameTags, gameContainer: 
 async function startGameFromTextBook(gameContainer: HTMLElement, tag: GameTags, reload: boolean): Promise<void> {
     const level = +getFromLocalStorage('currentWordsLevel');
     const page = +getFromLocalStorage('currentTextBookPage');
-    const filter = encodeURIComponent(JSON.stringify({ 'userWord.difficulty': WordStatus.weak }));
-    state.sprintGame.currentPage = +page;
+    const difficulty = getFromLocalStorage('currentWordStatus');
+    const isVocabulary = getFromLocalStorage('isFromVocabulary') === 'true';
+    state.sprintGame.currentPage = Number(page) - 1;
+    state.sprintGame.currentLevel = Levels[level];
     renderLoading(gameContainer);
-    const data = await getUserAggregatedWordsFromPage(page - 1, level, filter);
-    deleteHTMLElement('loading-container');
-    if (data) {
-        const words = handlePaginationResult(data);
-        runGame(tag, words, gameContainer, reload);
+    const data = await getWords(level, state.sprintGame.currentPage);
+    let filteredWords = filterOnlyWeakWords(data);
+    if (isVocabulary) {
+        const filter = encodeURIComponent(JSON.stringify({ 'userWord.difficulty': difficulty }));
+        const values = await getUserAggregatedWords(level, filter);
+        if (values) {
+            filteredWords = handlePaginationResult(values);
+            reload = false;
+        }
     }
+    deleteHTMLElement('loading-container');
+    runGame(tag, filteredWords, gameContainer, reload);
 }
 
 export function listerStartButton(tag: GameTags, reload = false): void {
@@ -84,9 +110,11 @@ export function listerStartButton(tag: GameTags, reload = false): void {
             deleteHTMLElement('start-screen');
             const gameContainer = document.querySelector('.game-container') as HTMLElement;
             const isTextBook = getFromLocalStorage('isFromTextBook') === 'true';
+            const isVocabulary = getFromLocalStorage('isFromVocabulary') === 'true';
+            await fillStateWithAllUserWords();
             if (gameContainer && tag && !isTextBook) {
                 startGameFromMenu(reload, tag, gameContainer);
-            } else if (gameContainer && tag && isTextBook) {
+            } else if (gameContainer && tag && (isTextBook || isVocabulary)) {
                 startGameFromTextBook(gameContainer, tag, reload);
             }
         }
@@ -152,10 +180,10 @@ export function listenKeyboard(data: Word[], reload = false): void {
         const choice = keyName === KEY_ARROWS.left ? GAME_BUTTONS.YES : GAME_BUTTONS.NO;
         const action = checkAnswerSprintGame(choice);
         setPoints(action);
+        state.sprintGame.wordsLearnt += 1;
         if (Object.values(KEY_ARROWS).includes(keyName) && !state.sprintGame.isFreeze) {
             if (state.sprintGame.wordsLearnt < length - 1) {
                 setAnswerBlock(newData);
-                state.sprintGame.wordsLearnt += 1;
             } else if (reload && state.sprintGame.currentPage) {
                 newData = await reloadNewWord();
                 length += newData.length;

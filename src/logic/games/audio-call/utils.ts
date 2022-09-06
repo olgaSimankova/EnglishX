@@ -9,6 +9,7 @@ import { renderQuestion } from '../../../view/pages/games/audio-call/renderAudio
 import { deleteHTMLElement } from '../../../utils/createElement';
 import gameResultControls from '../../../view/common/gameResult/gameResultControls';
 import { saveAnswerToDB } from '../sprint/controls';
+import getWordIdByName from '../../textbook/utils/getWordAttributes';
 
 const setWords = (data: Word[]): void => {
     state.audioCallGame.givenWords = data;
@@ -58,7 +59,12 @@ const setLearningWord = (): void => {
     const { length } = state.audioCallGame.needLearnWords;
     const learningWordIndex = getRandomNumber(0, length);
     state.audioCallGame.learningWord = state.audioCallGame.needLearnWords.splice(learningWordIndex, 1).pop();
-    state.audioCallGame.currentWordId = state.audioCallGame.learningWord?.id || '';
+    state.audioCallGame.currentWordId = '';
+    if (state.audioCallGame.learningWord) {
+        state.audioCallGame.currentWordId =
+            state.audioCallGame.learningWord?.id ||
+            getWordIdByName([state.audioCallGame.learningWord], state.audioCallGame.learningWord?.word);
+    }
 };
 
 const showWordInfo = (): void => {
