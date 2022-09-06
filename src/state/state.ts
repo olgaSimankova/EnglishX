@@ -35,6 +35,7 @@ export const state: StateInterface = {
         needLearnWords: [],
         currentLearned: [],
         currentMistakes: [],
+        wordsFromPage: [],
         wordsLearnt: 0,
         status: AudioCallStatus.waitingAnswer,
         bestStreak: 0,

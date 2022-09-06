@@ -79,6 +79,7 @@ export interface AudioCall {
     needLearnWords: Word[];
     currentLearned: Word[];
     currentMistakes: Word[];
+    wordsFromPage: Word[];
     wordsLearnt: number;
     status: AudioCallStatus;
     bestStreak: number;

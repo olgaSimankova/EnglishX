@@ -36,14 +36,15 @@ const isAnswerReceived = (): boolean => {
 
 const setAnswerOptions = (): Array<string> => {
     const answerOptions: Array<string> = [];
-    const { length } = state.audioCallGame.givenWords;
+    const data = state.audioCallGame.wordsFromPage;
+    const { length } = state.audioCallGame.wordsFromPage;
     const {
-        audioCallGame: { givenWords, learningWord },
+        audioCallGame: { learningWord },
     } = state;
 
     while (answerOptions.length < ANSWER_OPTIONS_COUNT) {
         const index = getRandomNumber(0, length);
-        const { wordTranslate } = givenWords[index];
+        const { wordTranslate } = data[index];
         if (wordTranslate !== learningWord?.wordTranslate && !answerOptions.includes(wordTranslate)) {
             answerOptions.push(wordTranslate);
         }

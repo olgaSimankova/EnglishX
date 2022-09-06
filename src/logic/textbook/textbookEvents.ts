@@ -91,7 +91,6 @@ export const wordListenerCallback = (event: Event) => {
         } else if (state.user.aggregatedWords) {
             const word = state.user.aggregatedWords[state.textBook.currentWordStatus]?.[+btn.id];
             if (word) {
-                console.log(word);
                 updateWordData(word);
             }
         }

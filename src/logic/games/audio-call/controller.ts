@@ -20,7 +20,7 @@ const answerOptionHandler = (event: Event): void => {
     }
 };
 
-const nextButtonHandler = (): void => {
+const nextButtonHandler = async (): Promise<void> => {
     const {
         audioCallGame: { learningWord },
     } = state;
