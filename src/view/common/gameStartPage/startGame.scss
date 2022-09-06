@@ -162,6 +162,16 @@ body {
     display: flex;
     flex-direction: column;
     gap: 10px;
+
+    @media (max-width: $mobileSmall) {
+        right: 0;
+    }
+
+    @media (max-width: 350px) {
+        flex-direction: row;
+        top: 10px;
+        right: 75px;
+    }
 }
 
 .close-span-container {
@@ -409,7 +419,7 @@ body {
 }
 //  copy from https://stackoverflow.com/questions/18012420/draw-diagonal-lines-in-div-background-with-css
 .crossed {
-    background: 
+    background:
         linear-gradient(to top left,
             rgba(235, 6, 6, 0) 0%,
             rgba(255,0,0,0) calc(50% - 0.8px),

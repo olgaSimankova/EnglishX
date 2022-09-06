@@ -97,7 +97,7 @@ export default function createHeroSection(parent: HTMLElement): void {
     createElement({
         type: 'span',
         parentElement: text,
-        text: '4',
+        text: '2',
     });
 
     text.innerHTML += 'Completed games';
