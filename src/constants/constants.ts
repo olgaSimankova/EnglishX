@@ -26,7 +26,7 @@ export const KEY_ARROWS = {
 export const RESULT_TAB_LABELS = ['RESULT', 'WATCH WORDS'];
 export const CHOOSE_LEVEL = 'Chooce level:';
 export const START = 'Start';
-export const SPRINT_START_TIME = 7;
+export const SPRINT_START_TIME = 30;
 export const MAX_PAGES = 30;
 export const RANDOM_MIDDLE = 0.5;
 export const MULTIPLY = 'multiply';
@@ -37,8 +37,6 @@ export const GAME_BUTTONS = {
     YES: true,
     NO: false,
 };
-// export const WORDS = 'http://localhost:8000/words';
-// export const API_BASE_LINK = 'http://localhost:8000';
 export const WORDS = 'https://eng-guru.herokuapp.com/words';
 export const API_BASE_LINK = 'https://eng-guru.herokuapp.com';
 

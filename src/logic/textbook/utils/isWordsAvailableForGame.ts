@@ -17,7 +17,7 @@ export function toggleActivePage(flag = false): void {
     const title = document.querySelector('.words_title');
     const gameElements = [paginationBtn, wordsSection, title];
     let isAvailable = isWordsAvailableForGame();
-    setLocalStorage('isFromTextBook', !isAvailable ? 'true' : 'false');
+    setLocalStorage('isFromTextBook', isAvailable ? 'true' : 'false');
     if (flag) {
         isAvailable = true;
     }

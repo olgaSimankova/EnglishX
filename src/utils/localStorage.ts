@@ -18,11 +18,20 @@ export function removeFromLocalStorage(field: string): void {
 export default function applyLocalStorage(): void {
     const userId = getFromLocalStorage('userId');
     const token = getFromLocalStorage('token');
+    const currentTextBookPage = getFromLocalStorage('currentTextBookPage');
+    const currentWordsLevel = getFromLocalStorage('currentWordsLevel');
     if (userId) {
         state.user.isAuthenticated = true;
         state.user.userId = userId;
+        state.user.token = token;
     }
     if (token) {
         state.user.token = token;
+    }
+    if (currentTextBookPage) {
+        state.textBook.currentPage = +currentTextBookPage;
+    }
+    if (currentWordsLevel) {
+        state.textBook.currentLevel = +currentWordsLevel;
     }
 }

@@ -1,7 +1,6 @@
 import { getWords } from '../../../api/words';
 import { API_BASE_LINK, GAMES_RESULTS, WORD_CATEGORIES } from '../../../constants/constants';
 import { Difficulty, GamesStat, GameTags, Levels, Word, WordStatus } from '../../../constants/types';
-import applyLocalStorage from '../../../logic/main/applyLocalStorage';
 import { checkTokenExpiration } from '../../../logic/main/authentication';
 import listenPagination from '../../../logic/textbook/pagination';
 import {
@@ -25,6 +24,7 @@ import renderLoading from '../../common/loading/renderLoading';
 import createGamesSection from '../main/createGamesSection';
 import toggleWordActions from '../../../logic/textbook/utils/toggleWordActions';
 import removeDeletedWords from '../../../logic/textbook/utils/removeDeletedWords';
+import applyLocalStorage from '../../../utils/localStorage';
 
 function getTextbookHeading(parent: HTMLElement): void {
     const textbookHeading = createElement({

@@ -1,6 +1,6 @@
-import { getWords } from '../../../api/words';
+import { getUserAggregatedWordsFromPage, getWords } from '../../../api/words';
 import { KEY_ARROWS, MAX_PAGES, GAME_BUTTONS } from '../../../constants/constants';
-import { AudioCall, GameTags, Levels, SprintState, Word } from '../../../constants/types';
+import { AudioCall, GameTags, Levels, SprintState, Word, WordStatus } from '../../../constants/types';
 import { state } from '../../../state/state';
 import { deleteHTMLElement } from '../../../utils/createElement';
 import playAudio, { getFullPath } from '../../../utils/playAudio';
@@ -19,6 +19,7 @@ import {
 } from './controls';
 import { renderAudioCallGame } from '../../../view/pages/games/audio-call/renderAudioCallGame';
 import { getFromLocalStorage } from '../../../utils/localStorage';
+import { handlePaginationResult } from '../../textbook/vocabulary';
 
 export default function listenLevelButtons(tag: GameTags): void {
     const levelsContainer = document.querySelector('.level-container');
@@ -35,15 +36,7 @@ export default function listenLevelButtons(tag: GameTags): void {
     });
 }
 
-async function startGameFromMenu(reload: boolean, tag: GameTags, gameContainer: HTMLElement): Promise<void> {
-    const MIN_PAGE = reload ? Math.floor(MAX_PAGES / 2) : 0;
-    const level =
-        Levels[(state[tag as keyof typeof state] as SprintState | AudioCall).currentLevel as keyof typeof Levels];
-    const page = getRandomNumber(MIN_PAGE, MAX_PAGES);
-    state.sprintGame.currentPage = page;
-    renderLoading(gameContainer);
-    const data = await getWords(level, page);
-    deleteHTMLElement('loading-container');
+function runGame(tag: GameTags, data: Word[], gameContainer: HTMLElement, reload: boolean): void {
     switch (tag) {
         case GameTags.sprintGame:
             renderSprintGame(gameContainer, data);
@@ -58,13 +51,30 @@ async function startGameFromMenu(reload: boolean, tag: GameTags, gameContainer: 
     }
 }
 
-async function startGameFromTextBook(gameContainer: HTMLElement): Promise<void> {
+async function startGameFromMenu(reload: boolean, tag: GameTags, gameContainer: HTMLElement): Promise<void> {
+    const MIN_PAGE = reload ? Math.floor(MAX_PAGES / 2) : 0;
+    const level =
+        Levels[(state[tag as keyof typeof state] as SprintState | AudioCall).currentLevel as keyof typeof Levels];
+    const page = getRandomNumber(MIN_PAGE, MAX_PAGES);
+    state.sprintGame.currentPage = page;
+    renderLoading(gameContainer);
+    const data = await getWords(level, page);
+    deleteHTMLElement('loading-container');
+    runGame(tag, data, gameContainer, reload);
+}
+
+async function startGameFromTextBook(gameContainer: HTMLElement, tag: GameTags, reload: boolean): Promise<void> {
     const level = +getFromLocalStorage('currentWordsLevel');
     const page = +getFromLocalStorage('currentTextBookPage');
+    const filter = encodeURIComponent(JSON.stringify({ 'userWord.difficulty': WordStatus.weak }));
     state.sprintGame.currentPage = +page;
     renderLoading(gameContainer);
-    const data = await getWords(level, page - 1);
+    const data = await getUserAggregatedWordsFromPage(page - 1, level, filter);
     deleteHTMLElement('loading-container');
+    if (data) {
+        const words = handlePaginationResult(data);
+        runGame(tag, words, gameContainer, reload);
+    }
 }
 
 export function listerStartButton(tag: GameTags, reload = false): void {
@@ -77,7 +87,7 @@ export function listerStartButton(tag: GameTags, reload = false): void {
             if (gameContainer && tag && !isTextBook) {
                 startGameFromMenu(reload, tag, gameContainer);
             } else if (gameContainer && tag && isTextBook) {
-                startGameFromTextBook(gameContainer);
+                startGameFromTextBook(gameContainer, tag, reload);
             }
         }
     });
