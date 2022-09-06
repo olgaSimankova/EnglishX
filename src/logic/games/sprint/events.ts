@@ -11,7 +11,6 @@ import renderSprintGame from '../../../view/pages/games/sprint/renderSprintGame'
 import {
     checkAnswerSprintGame,
     choiceAction,
-    finishGame,
     processResultGameButtons,
     reloadNewWord,
     setAnswerBlock,
@@ -37,7 +36,14 @@ export default function listenLevelButtons(tag: GameTags): void {
     });
 }
 
-function runGame(tag: GameTags, data: Word[], gameContainer: HTMLElement, reload: boolean): void {
+async function reloadData(data: Word[]): Promise<Word[]> {
+    if (getFromLocalStorage('isFromVocabulary') === 'true' || data.length > 9) {
+        return data;
+    } // implement reload
+    return data;
+}
+
+async function runGame(tag: GameTags, data: Word[], gameContainer: HTMLElement, reload: boolean): Promise<void> {
     switch (tag) {
         case GameTags.sprintGame:
             renderSprintGame(gameContainer, data);
@@ -45,6 +51,8 @@ function runGame(tag: GameTags, data: Word[], gameContainer: HTMLElement, reload
             break;
 
         case GameTags.audioCallGame:
+            data = await reloadData(data);
+            console.log(data);
             renderAudioCallGame(gameContainer, data);
             break;
         default:

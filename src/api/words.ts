@@ -7,7 +7,13 @@ export async function getWords(group: number, page: number): Promise<Word[]> {
     return response.json();
 }
 
+export async function getWordById(id: string): Promise<Word> {
+    const response = await fetch(`${WORDS}/${id}`);
+    return response.json();
+}
+
 export async function getWordStatistics(wordId: string): Promise<WordStats | void> {
+    console.log(wordId);
     try {
         const { userId, token } = state.user;
         if (userId) {

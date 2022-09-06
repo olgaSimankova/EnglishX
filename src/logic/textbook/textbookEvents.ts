@@ -16,7 +16,7 @@ async function updateWordData(word: Word) {
     wordData.innerHTML = '';
     const id = word.id ? word.id : getWordIdByName([word], word.word);
     const data = await getWordStatistics(id);
-    console.log(word.id, 'wordid');
+    console.log(id);
     getWordData(word, wordData, data?.optional?.games || initDefaultGamesStats());
 }
 

@@ -114,7 +114,6 @@ function renderAudioCallGame(parentElement: HTMLElement, data: Word[]): void {
         parentElement,
         classes: ['audioCall-container'],
     });
-
     setWords(data);
     setLearningWord();
     renderQuestion(gameContainer);
