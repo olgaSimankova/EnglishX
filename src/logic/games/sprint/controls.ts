@@ -10,7 +10,7 @@ import renderResultPage from '../../../view/common/gameResult/renderGameResults'
 import listenLevelButtons, { listenChoiceButtons, listenKeyboard, listerStartButton } from './events';
 import gameResultControls from '../../../view/common/gameResult/gameResultControls';
 import { initDefaultGamesStats, processGamesStatObject } from '../../../utils/handleGameStatObjects';
-import applyLocalStorage from '../../main/applyLocalStorage';
+import applyLocalStorage from '../../../utils/localStorage';
 
 export function setAnswerBlock(data: Word[]): void {
     const { length } = data;
