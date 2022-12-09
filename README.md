@@ -1,7 +1,12 @@
-## Финальный проект stage 2 RS School команды TEAM_93 - приложение для изучения английского языка.
 
+![image](https://user-images.githubusercontent.com/90651122/206711080-22a16480-01ef-44e2-830b-1793a10d42a0.png)
+## About
+EnglishX is a web application for learning English which includes 2 games, a dictionary page and a statistics page. Also, application contains more than 4000 words of different complexity. The project is written in TypeScript, HTML and SCSS.
 
-### Технологии, которые были задействованы в процессе разработки приложения:
-1. Typescript - надмножество языка JavaScript, которое добавляет в него статическую типизацию.
-2. ESLint с конфигом airbnb - инструмент для поддержания единого стиля кода.
-3. Chart.js - библиотека для создания красивых графиков и диаграмм.
+## Distribute
+- https://rslang.nester-dev.ru/
+
+## Developers
+- [olgasimankova](https://github.com/olgasimankova)
+- [nester-dev](https://github.com/nester-dev)
+- [freshman10](https://github.com/freshman10)
